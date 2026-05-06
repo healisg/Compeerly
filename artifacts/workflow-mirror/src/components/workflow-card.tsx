@@ -19,6 +19,7 @@ export function WorkflowCard({ workflow }: { workflow: Workflow }) {
           <div className="flex flex-wrap gap-2 items-center text-xs">
             <Badge variant="secondary" className="font-normal" data-testid="badge-role">{workflow.role}</Badge>
             <Badge variant="secondary" className={`font-medium ${getToolColor(workflow.aiTool)}`} data-testid="badge-ai-tool">{workflow.aiTool}</Badge>
+            <Badge variant="outline" className="font-normal text-muted-foreground" data-testid="badge-category">{workflow.category}</Badge>
             <span className="text-muted-foreground text-xs ml-auto font-medium" data-testid="text-time-saved">Saves {workflow.timeSaved}</span>
           </div>
           <h3 className="font-semibold text-[1.1rem] leading-snug group-hover:text-primary transition-colors text-foreground" data-testid="text-title">

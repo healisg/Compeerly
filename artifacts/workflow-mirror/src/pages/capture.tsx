@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useWorkflows } from "@/lib/workflows";
 import { useStructureWorkflow } from "@workspace/api-client-react";
+import type { StructuredWorkflow } from "@workspace/api-client-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -16,7 +17,7 @@ export default function CapturePage() {
   const { toast } = useToast();
   
   const [rawText, setRawText] = useState("");
-  const [structuredData, setStructuredData] = useState<any | null>(null);
+  const [structuredData, setStructuredData] = useState<StructuredWorkflow | null>(null);
 
   const structureMutation = useStructureWorkflow();
 
@@ -126,7 +127,7 @@ export default function CapturePage() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="aiTool">AI Tool</Label>
                       <Input id="aiTool" value={structuredData.aiTool} onChange={e => setStructuredData({...structuredData, aiTool: e.target.value})} data-testid="input-aiTool" />
@@ -138,6 +139,10 @@ export default function CapturePage() {
                     <div className="space-y-2">
                       <Label htmlFor="timeSaved">Time Saved</Label>
                       <Input id="timeSaved" value={structuredData.timeSaved} onChange={e => setStructuredData({...structuredData, timeSaved: e.target.value})} data-testid="input-timeSaved" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="frequency">Frequency</Label>
+                      <Input id="frequency" value={structuredData.frequency} onChange={e => setStructuredData({...structuredData, frequency: e.target.value})} data-testid="input-frequency" />
                     </div>
                   </div>
 
