@@ -5,14 +5,6 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-export interface HealthStatus {
-  status: string;
-}
-
-export interface StructureWorkflowRequest {
-  /** Raw free-text description of the workflow */
-  rawText: string;
-}
 
 export interface StructuredWorkflow {
   title: string;
@@ -24,8 +16,4 @@ export interface StructuredWorkflow {
   summary: string;
   steps: string[];
   tips: string;
-}
-
-export interface ErrorResponse {
-  error: string;
 }

@@ -5,18 +5,26 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
+  MutationFunction,
   QueryFunction,
   QueryKey,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult,
 } from "@tanstack/react-query";
 
-import type { HealthStatus } from "./api.schemas";
+import type {
+  ErrorResponse,
+  HealthStatus,
+  StructureWorkflowRequest,
+  StructuredWorkflow,
+} from "./api.schemas";
 
 import { customFetch } from "../custom-fetch";
-import type { ErrorType } from "../custom-fetch";
+import type { ErrorType, BodyType } from "../custom-fetch";
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
@@ -99,3 +107,90 @@ export function useHealthCheck<
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
+
+/**
+ * Takes raw free-text description of a workflow and returns a structured workflow object
+ * @summary Structure a raw workflow description using Claude AI
+ */
+export const getStructureWorkflowUrl = () => {
+  return `/api/structure-workflow`;
+};
+
+export const structureWorkflow = async (
+  structureWorkflowRequest: StructureWorkflowRequest,
+  options?: RequestInit,
+): Promise<StructuredWorkflow> => {
+  return customFetch<StructuredWorkflow>(getStructureWorkflowUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(structureWorkflowRequest),
+  });
+};
+
+export const getStructureWorkflowMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof structureWorkflow>>,
+    TError,
+    { data: BodyType<StructureWorkflowRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof structureWorkflow>>,
+  TError,
+  { data: BodyType<StructureWorkflowRequest> },
+  TContext
+> => {
+  const mutationKey = ["structureWorkflow"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof structureWorkflow>>,
+    { data: BodyType<StructureWorkflowRequest> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return structureWorkflow(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type StructureWorkflowMutationResult = NonNullable<
+  Awaited<ReturnType<typeof structureWorkflow>>
+>;
+export type StructureWorkflowMutationBody = BodyType<StructureWorkflowRequest>;
+export type StructureWorkflowMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Structure a raw workflow description using Claude AI
+ */
+export const useStructureWorkflow = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof structureWorkflow>>,
+    TError,
+    { data: BodyType<StructureWorkflowRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof structureWorkflow>>,
+  TError,
+  { data: BodyType<StructureWorkflowRequest> },
+  TContext
+> => {
+  return useMutation(getStructureWorkflowMutationOptions(options));
+};

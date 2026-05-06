@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: workflows
+    description: Workflow operations
 paths:
   /healthz:
     get:
@@ -24,6 +26,37 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /structure-workflow:
+    post:
+      operationId: structureWorkflow
+      tags: [workflows]
+      summary: Structure a raw workflow description using Claude AI
+      description: Takes raw free-text description of a workflow and returns a structured workflow object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StructureWorkflowRequest"
+      responses:
+        "200":
+          description: Structured workflow
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StructuredWorkflow"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +66,51 @@ components:
           type: string
       required:
         - status
-
+    StructureWorkflowRequest:
+      type: object
+      properties:
+        rawText:
+          type: string
+          description: Raw free-text description of the workflow
+      required:
+        - rawText
+    StructuredWorkflow:
+      type: object
+      properties:
+        title:
+          type: string
+        role:
+          type: string
+        aiTool:
+          type: string
+        category:
+          type: string
+        timeSaved:
+          type: string
+        frequency:
+          type: string
+        summary:
+          type: string
+        steps:
+          type: array
+          items:
+            type: string
+        tips:
+          type: string
+      required:
+        - title
+        - role
+        - aiTool
+        - category
+        - timeSaved
+        - frequency
+        - summary
+        - steps
+        - tips
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error

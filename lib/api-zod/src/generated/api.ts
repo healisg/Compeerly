@@ -14,3 +14,23 @@ import * as zod from "zod";
 export const HealthCheckResponse = zod.object({
   status: zod.string(),
 });
+
+/**
+ * Takes raw free-text description of a workflow and returns a structured workflow object
+ * @summary Structure a raw workflow description using Claude AI
+ */
+export const StructureWorkflowBody = zod.object({
+  rawText: zod.string().describe("Raw free-text description of the workflow"),
+});
+
+export const StructureWorkflowResponse = zod.object({
+  title: zod.string(),
+  role: zod.string(),
+  aiTool: zod.string(),
+  category: zod.string(),
+  timeSaved: zod.string(),
+  frequency: zod.string(),
+  summary: zod.string(),
+  steps: zod.array(zod.string()),
+  tips: zod.string(),
+});
