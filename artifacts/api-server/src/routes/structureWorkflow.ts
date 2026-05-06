@@ -1,8 +1,24 @@
 import { Router } from "express";
 import Anthropic from "@anthropic-ai/sdk";
+import { z } from "zod";
 
 const router = Router();
 const client = new Anthropic();
+
+const DEFAULT_MODEL = "claude-opus-4-5";
+const CLAUDE_MODEL = process.env["CLAUDE_MODEL"] ?? DEFAULT_MODEL;
+
+const StructuredWorkflowSchema = z.object({
+  title: z.string().min(1),
+  role: z.string().min(1),
+  aiTool: z.string().min(1),
+  category: z.string().min(1),
+  timeSaved: z.string().min(1),
+  frequency: z.string().min(1),
+  summary: z.string().min(1),
+  steps: z.array(z.string()).min(1),
+  tips: z.string().min(1),
+});
 
 const SYSTEM_PROMPT = `You are a workflow structuring assistant for an enterprise AI adoption platform. The user will describe something they did using an AI tool this week. Extract and structure their description into the following JSON format. Be concise and practical. If information is missing, make a reasonable inference based on the description.
 
@@ -30,7 +46,7 @@ router.post("/structure-workflow", async (req, res) => {
 
   try {
     const message = await client.messages.create({
-      model: "claude-opus-4-5",
+      model: CLAUDE_MODEL,
       max_tokens: 1024,
       system: SYSTEM_PROMPT,
       messages: [
@@ -47,17 +63,31 @@ router.post("/structure-workflow", async (req, res) => {
       return;
     }
 
-    let structured: unknown;
+    let parsed: unknown;
     try {
-      structured = JSON.parse(content.text);
+      parsed = JSON.parse(content.text);
     } catch {
-      res.status(500).json({ error: "Failed to parse Claude response as JSON" });
+      res.status(500).json({ error: "Claude returned a response that could not be parsed as JSON. Please try again." });
       return;
     }
 
-    res.json(structured);
+    const result = StructuredWorkflowSchema.safeParse(parsed);
+    if (!result.success) {
+      res.status(500).json({ error: "Claude returned an incomplete workflow structure. Please try again with more detail." });
+      return;
+    }
+
+    res.json(result.data);
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
+    if (message.toLowerCase().includes("quota") || message.toLowerCase().includes("rate limit") || message.toLowerCase().includes("credit")) {
+      res.status(500).json({ error: "API quota or credit limit reached. Please check your Anthropic account." });
+      return;
+    }
+    if (message.toLowerCase().includes("model")) {
+      res.status(500).json({ error: `The configured AI model is unavailable. Try setting CLAUDE_MODEL to a model your API key can access.` });
+      return;
+    }
     res.status(500).json({ error: `Failed to structure workflow: ${message}` });
   }
 });
