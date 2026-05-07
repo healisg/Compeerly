@@ -2,13 +2,14 @@ import { useState, useMemo } from "react";
 import { Link } from "wouter";
 import { useWorkflows } from "@/lib/workflows";
 import { WorkflowCard } from "@/components/workflow-card";
+import { PromptBar } from "@/components/prompt-bar";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus } from "lucide-react";
 
 export default function FeedPage() {
   const { workflows } = useWorkflows();
-  
+
   const [roleFilter, setRoleFilter] = useState("all");
   const [aiToolFilter, setAiToolFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
@@ -25,6 +26,11 @@ export default function FeedPage() {
       return matchRole && matchAiTool && matchCategory;
     });
   }, [workflows, roleFilter, aiToolFilter, categoryFilter]);
+
+  const handleFindWorkflow = (role: string) => {
+    setRoleFilter(role);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -45,7 +51,7 @@ export default function FeedPage() {
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-6 py-8">
+      <main className="max-w-6xl mx-auto px-6 py-8 pb-32">
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
           <Select value={roleFilter} onValueChange={setRoleFilter}>
             <SelectTrigger className="w-[200px]" data-testid="select-role">
@@ -97,6 +103,8 @@ export default function FeedPage() {
           </div>
         )}
       </main>
+
+      <PromptBar roles={roles} onFindWorkflow={handleFindWorkflow} />
     </div>
   );
 }

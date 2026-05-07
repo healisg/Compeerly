@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation } from "wouter";
+import { Link, useLocation, useSearch } from "wouter";
 import { useWorkflows } from "@/lib/workflows";
 import { useStructureWorkflow } from "@workspace/api-client-react";
 import type { StructuredWorkflow } from "@workspace/api-client-react";
@@ -13,10 +13,19 @@ import { useToast } from "@/hooks/use-toast";
 
 export default function CapturePage() {
   const [, setLocation] = useLocation();
+  const search = useSearch();
+  const params = new URLSearchParams(search);
+  const prefilledRole = params.get("role") ?? "";
+  const prefilledDescription = params.get("description") ?? "";
+
   const { addWorkflow } = useWorkflows();
   const { toast } = useToast();
-  
-  const [rawText, setRawText] = useState("");
+
+  const initialRawText = prefilledRole && prefilledDescription
+    ? `I work as a ${prefilledRole}. ${prefilledDescription}`
+    : prefilledDescription || prefilledRole ? `I work as a ${prefilledRole}. ` : "";
+
+  const [rawText, setRawText] = useState(initialRawText);
   const [structuredData, setStructuredData] = useState<StructuredWorkflow | null>(null);
 
   const structureMutation = useStructureWorkflow();
