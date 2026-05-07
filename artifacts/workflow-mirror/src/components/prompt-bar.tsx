@@ -52,18 +52,18 @@ export function PromptBar({ roles, onFindWorkflow }: PromptBarProps) {
       }}
       className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-3xl px-4"
     >
-      <div className="bg-white rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-gray-100 p-4">
+      <div className="bg-background rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-border p-4">
         <div className="flex items-start gap-3">
           <span className="text-2xl leading-none mt-0.5 shrink-0" role="img" aria-label="lightbulb">💡</span>
 
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-800 mb-3">
+            <p className="text-sm font-medium text-foreground mb-3">
               It looks like you're working on something repetitive.
             </p>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
               <Select value={selectedRole} onValueChange={setSelectedRole}>
-                <SelectTrigger className="w-full sm:w-[200px] h-9 text-sm bg-gray-50 border-gray-200">
+                <SelectTrigger className="w-full sm:w-[200px] h-9 text-sm bg-card border-border">
                   <SelectValue placeholder="Your role" />
                 </SelectTrigger>
                 <SelectContent>
@@ -75,7 +75,7 @@ export function PromptBar({ roles, onFindWorkflow }: PromptBarProps) {
               </Select>
 
               <Input
-                className="flex-1 h-9 text-sm bg-gray-50 border-gray-200"
+                className="flex-1 h-9 text-sm bg-card border-border"
                 placeholder="e.g. writing a weekly status report"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -88,14 +88,14 @@ export function PromptBar({ roles, onFindWorkflow }: PromptBarProps) {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="h-9 text-sm border-gray-300 text-gray-700 hover:bg-gray-50"
+                  className="h-9 text-sm"
                   onClick={handleFindWorkflow}
                 >
                   Find a workflow
                 </Button>
                 <Button
                   size="sm"
-                  className="h-9 text-sm bg-[#5B1F8A] hover:bg-[#4a1870] text-white"
+                  className="h-9 text-sm"
                   onClick={handleStructureMine}
                 >
                   Structure mine
@@ -106,7 +106,7 @@ export function PromptBar({ roles, onFindWorkflow }: PromptBarProps) {
 
           <button
             onClick={() => setDismissed(true)}
-            className="shrink-0 text-gray-400 hover:text-gray-600 transition-colors mt-0.5 rounded-full p-0.5 hover:bg-gray-100"
+            className="shrink-0 text-muted-foreground hover:text-foreground transition-colors mt-0.5 rounded-full p-0.5 hover:bg-muted"
             aria-label="Dismiss"
           >
             <X className="w-4 h-4" />

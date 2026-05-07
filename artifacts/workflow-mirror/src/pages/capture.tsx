@@ -79,7 +79,7 @@ export default function CapturePage() {
         {!structuredData ? (
           <div className="space-y-6">
             <div>
-              <h2 className="text-2xl font-semibold mb-2 text-foreground">How do you use AI at Chico.ai?</h2>
+              <h2 className="font-serif text-3xl md:text-4xl font-medium italic mb-3 text-foreground leading-tight">How do you use AI at Chico.ai?</h2>
               <p className="text-muted-foreground">
                 Paste your prompt, explain your steps, or just brain dump how you save time with AI. We'll structure it into a clean, reusable format.
               </p>
@@ -116,7 +116,7 @@ export default function CapturePage() {
         ) : (
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div>
-              <h2 className="text-2xl font-semibold mb-2 text-foreground">Review & Publish</h2>
+              <h2 className="font-serif text-3xl md:text-4xl font-medium italic mb-3 text-foreground leading-tight">Review & Publish</h2>
               <p className="text-muted-foreground">
                 Here's how your workflow will look to the team. Feel free to tweak any details.
               </p>

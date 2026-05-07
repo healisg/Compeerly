@@ -1,8 +1,22 @@
 import { useParams, Link } from "wouter";
 import { useWorkflows } from "@/lib/workflows";
-import { ArrowLeft, Clock, Activity, ThumbsUp, ExternalLink, Lightbulb } from "lucide-react";
+import { ArrowLeft, Clock, Activity, ThumbsUp, ExternalLink, Lightbulb, Check } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+
+const TOOL_DOTS: Record<string, string> = {
+  claude: "#D97757",
+  chatgpt: "#10A37F",
+  gemini: "#4285F4",
+};
+
+function toolDotColor(tool: string) {
+  const key = tool.toLowerCase();
+  for (const k of Object.keys(TOOL_DOTS)) {
+    if (key.includes(k)) return TOOL_DOTS[k];
+  }
+  return "#78716c";
+}
 
 export default function DetailPage() {
   const params = useParams();
@@ -23,13 +37,6 @@ export default function DetailPage() {
       </div>
     );
   }
-
-  const getToolColor = (tool: string) => {
-    if (tool.toLowerCase().includes("claude")) return "bg-orange-100 text-orange-800 hover:bg-orange-100 border-orange-200";
-    if (tool.toLowerCase().includes("chatgpt")) return "bg-green-100 text-green-800 hover:bg-green-100 border-green-200";
-    if (tool.toLowerCase().includes("gemini")) return "bg-blue-100 text-blue-800 hover:bg-blue-100 border-blue-200";
-    return "bg-gray-100 text-gray-800 hover:bg-gray-100 border-gray-200";
-  };
 
   const getToolUrl = (tool: string) => {
     if (tool.toLowerCase().includes("claude")) return "https://claude.ai";
@@ -53,7 +60,7 @@ export default function DetailPage() {
               onClick={() => incrementWorkedForMe(workflow.id)}
               data-testid="button-worked"
             >
-              <ThumbsUp className="w-4 h-4 text-primary" />
+              <Check className="w-4 h-4 text-accent" />
               Worked for me ({workflow.workedForMeCount})
             </Button>
             <Button 
@@ -73,11 +80,21 @@ export default function DetailPage() {
           {/* Header Section */}
           <div className="space-y-6">
             <div className="flex flex-wrap gap-2 items-center">
-              <Badge variant="outline" className="text-sm px-3 py-1 font-medium bg-card" data-testid="badge-role">{workflow.role}</Badge>
-              <Badge variant="outline" className="text-sm px-3 py-1 font-medium bg-card" data-testid="badge-category">{workflow.category}</Badge>
-              <Badge className={`text-sm px-3 py-1 font-medium ${getToolColor(workflow.aiTool)}`} data-testid="badge-aiTool">{workflow.aiTool}</Badge>
+              <Badge variant="outline" className="text-xs px-2.5 py-1 font-semibold uppercase tracking-wider text-muted-foreground bg-card" data-testid="badge-role">{workflow.role}</Badge>
+              <Badge variant="outline" className="text-xs px-2.5 py-1 font-semibold uppercase tracking-wider text-muted-foreground bg-card" data-testid="badge-category">{workflow.category}</Badge>
+              <span
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground border border-border rounded-md bg-card"
+                data-testid="badge-aiTool"
+              >
+                <span
+                  className="w-1.5 h-1.5 rounded-full"
+                  style={{ backgroundColor: toolDotColor(workflow.aiTool) }}
+                  aria-hidden
+                />
+                {workflow.aiTool}
+              </span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground leading-tight tracking-tight" data-testid="text-title">
+            <h1 className="font-serif text-4xl md:text-5xl font-medium text-foreground leading-tight tracking-tight" data-testid="text-title">
               {workflow.title}
             </h1>
             

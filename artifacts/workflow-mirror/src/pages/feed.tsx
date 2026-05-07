@@ -5,7 +5,7 @@ import { WorkflowCard } from "@/components/workflow-card";
 import { PromptBar } from "@/components/prompt-bar";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus } from "lucide-react";
+import { Plus, Sparkles } from "lucide-react";
 
 export default function FeedPage() {
   const { workflows } = useWorkflows();
@@ -34,16 +34,19 @@ export default function FeedPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b bg-card">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded bg-primary flex items-center justify-center text-primary-foreground font-bold">
-              C
-            </div>
-            <h1 className="text-lg font-semibold tracking-tight text-foreground">Workflow Mirror</h1>
+      <header className="sticky top-0 z-20 border-b border-border/60 bg-background/85 backdrop-blur-md">
+        <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Sparkles className="w-5 h-5 text-primary" />
+            <h1 className="font-serif text-2xl font-semibold tracking-tight text-foreground flex items-baseline gap-3">
+              Workflow Mirror
+              <span className="text-[10px] font-sans font-bold text-muted-foreground uppercase tracking-widest">
+                Chico.ai Internal
+              </span>
+            </h1>
           </div>
           <Link href="/capture" className="no-underline">
-            <Button data-testid="button-share-workflow" className="gap-2">
+            <Button data-testid="button-share-workflow" className="gap-2 rounded-xl px-5 h-10 shadow-sm">
               <Plus className="w-4 h-4" />
               Share a workflow
             </Button>
@@ -51,8 +54,17 @@ export default function FeedPage() {
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-6 py-8 pb-32">
-        <div className="flex flex-col sm:flex-row gap-4 mb-8">
+      <main className="max-w-6xl mx-auto px-6 pt-12 pb-32">
+        <div className="max-w-2xl mb-12">
+          <h2 className="font-serif text-4xl md:text-5xl font-medium italic text-foreground leading-tight tracking-tight mb-4">
+            Real workflows from your colleagues.
+          </h2>
+          <p className="text-lg text-muted-foreground leading-relaxed">
+            See how teams across Chico.ai are using AI to save time and work smarter. Try one this week and let them know it helped.
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-3 mb-10 pb-6 border-b border-border/60">
           <Select value={roleFilter} onValueChange={setRoleFilter}>
             <SelectTrigger className="w-[200px]" data-testid="select-role">
               <SelectValue placeholder="Filter by Role" />
@@ -91,7 +103,7 @@ export default function FeedPage() {
         </div>
 
         {filteredWorkflows.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {filteredWorkflows.map((workflow) => (
               <WorkflowCard key={workflow.id} workflow={workflow} />
             ))}
