@@ -1,0 +1,100 @@
+.signal-theme {
+  --bg-app: #0B0B12;
+  --bg-card: #15151F;
+  --bg-card-hover: #191924;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-focus: rgba(124, 58, 237, 0.4);
+  --text-high: rgba(255, 255, 255, 0.95);
+  --text-mid: rgba(255, 255, 255, 0.6);
+  --text-low: rgba(255, 255, 255, 0.4);
+  --violet: #7C3AED;
+  --violet-hover: #6D28D9;
+  --cyan: #06B6D4;
+  
+  background-color: var(--bg-app);
+  color: var(--text-high);
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+.signal-theme * {
+  border-color: var(--border-subtle);
+}
+
+.signal-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 10px;
+}
+
+.signal-card:hover {
+  background-color: var(--bg-card-hover);
+  border-color: var(--border-focus);
+  box-shadow: 0 12px 40px -12px rgba(124, 58, 237, 0.2);
+  transform: translateY(-2px);
+}
+
+.signal-glass {
+  background: rgba(11, 11, 18, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.signal-input {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-high);
+}
+
+.signal-input:focus-within {
+  border-color: rgba(124, 58, 237, 0.5);
+  background: rgba(255, 255, 255, 0.05);
+  outline: none;
+}
+
+.signal-select {
+  appearance: none;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-high);
+  border-radius: 6px;
+  padding: 8px 32px 8px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.signal-select:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.signal-select:focus {
+  outline: none;
+  border-color: rgba(124, 58, 237, 0.5);
+}
+
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.select-wrapper::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.6)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+.mono-nums {
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+  font-variant-numeric: tabular-nums;
+}
