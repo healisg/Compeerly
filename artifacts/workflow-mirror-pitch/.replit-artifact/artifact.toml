@@ -1,0 +1,31 @@
+kind = "slides"
+previewPath = "/pitch/"
+title = "Workflow Mirror — Pitch"
+version = "1.0.0"
+id = "artifacts/workflow-mirror-pitch"
+router = "path"
+
+[[integratedSkills]]
+name = "slides"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/pitch/" ]
+localPort = 24877
+
+[services.development]
+run = "pnpm --filter @workspace/workflow-mirror-pitch run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/workflow-mirror-pitch", "run", "build" ]
+publicDir = "artifacts/workflow-mirror-pitch/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24877"
+BASE_PATH = "/pitch/"
