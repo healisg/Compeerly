@@ -30,8 +30,15 @@ function avatarStyle(seed: string) {
   return AVATAR_PALETTE[h % AVATAR_PALETTE.length];
 }
 
+function monogram(name: string) {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return "?";
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
 export function WorkflowCard({ workflow }: { workflow: Workflow }) {
-  const initial = (workflow.author || "?").trim().charAt(0).toUpperCase();
+  const initials = monogram(workflow.author || "?");
   const av = avatarStyle(workflow.author || workflow.role);
 
   return (
@@ -44,10 +51,11 @@ export function WorkflowCard({ workflow }: { workflow: Workflow }) {
         <div className="flex justify-between items-start mb-5">
           <div className="flex items-center gap-3">
             <div
-              className="w-9 h-9 rounded-full flex items-center justify-center font-semibold text-xs border"
+              className="w-9 h-9 rounded-full flex items-center justify-center font-semibold text-[11px] tracking-wide border"
               style={{ backgroundColor: av.bg, color: av.fg, borderColor: av.border }}
+              data-testid="avatar-author"
             >
-              {initial}
+              {initials}
             </div>
             <div className="leading-tight">
               <p className="font-semibold text-foreground text-sm" data-testid="text-author">

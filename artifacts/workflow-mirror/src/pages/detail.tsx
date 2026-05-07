@@ -1,8 +1,14 @@
+import { useEffect } from "react";
 import { useParams, Link } from "wouter";
 import { useWorkflows } from "@/lib/workflows";
-import { ArrowLeft, Clock, Activity, ThumbsUp, ExternalLink, Lightbulb, Check } from "lucide-react";
+import { ArrowLeft, Clock, Activity, ExternalLink, Lightbulb, Check } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+
+function authorAvatarUrl(name: string) {
+  const seed = encodeURIComponent(name || "anon");
+  return `https://api.dicebear.com/7.x/notionists/svg?seed=${seed}&backgroundColor=fef3c7,dcfce7,dbeafe,fee2e2,ede9fe&radius=50`;
+}
 
 const TOOL_DOTS: Record<string, string> = {
   claude: "#D97757",
@@ -21,9 +27,13 @@ function toolDotColor(tool: string) {
 export default function DetailPage() {
   const params = useParams();
   const { workflows, incrementWorkedForMe } = useWorkflows();
-  
+
   const workflowId = Number(params.id);
   const workflow = workflows.find((w) => w.id === workflowId);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, [workflowId]);
 
   if (!workflow) {
     return (
@@ -80,7 +90,6 @@ export default function DetailPage() {
           {/* Header Section */}
           <div className="space-y-6">
             <div className="flex flex-wrap gap-2 items-center">
-              <Badge variant="outline" className="text-xs px-2.5 py-1 font-semibold uppercase tracking-wider text-muted-foreground bg-card" data-testid="badge-role">{workflow.role}</Badge>
               <Badge variant="outline" className="text-xs px-2.5 py-1 font-semibold uppercase tracking-wider text-muted-foreground bg-card" data-testid="badge-category">{workflow.category}</Badge>
               <span
                 className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground border border-border rounded-md bg-card"
@@ -97,7 +106,25 @@ export default function DetailPage() {
             <h1 className="font-serif text-4xl md:text-5xl font-medium text-foreground leading-tight tracking-tight" data-testid="text-title">
               {workflow.title}
             </h1>
-            
+
+            {/* Author byline */}
+            <div className="flex items-center gap-3 pt-1" data-testid="author-byline">
+              <img
+                src={authorAvatarUrl(workflow.author)}
+                alt={`Avatar for ${workflow.author}`}
+                className="w-11 h-11 rounded-full bg-secondary border border-border object-cover"
+                data-testid="img-author-avatar"
+              />
+              <div className="leading-tight">
+                <p className="text-sm font-semibold text-foreground" data-testid="text-author-name">
+                  {workflow.author}
+                </p>
+                <p className="text-xs text-muted-foreground" data-testid="badge-role">
+                  {workflow.role}
+                </p>
+              </div>
+            </div>
+
             <div className="flex items-center gap-6 text-sm font-medium text-muted-foreground bg-secondary/50 p-4 rounded-xl inline-flex">
               <div className="flex items-center gap-2" data-testid="text-timeSaved">
                 <Clock className="w-4 h-4 text-primary" />
