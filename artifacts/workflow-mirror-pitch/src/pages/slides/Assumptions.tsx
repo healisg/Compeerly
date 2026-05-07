@@ -22,25 +22,25 @@ export default function AssumptionsSlide() {
             <div className="flex items-baseline gap-[1.5vw]">
               <span className="font-display italic text-[1.6vw] text-accent w-[3vw] shrink-0">01</span>
               <p className="font-body text-[1.5vw] leading-[1.45] text-text">
-                People will share workflows when asked, without explicit incentive.
+                Active users will share if friction is low enough — under 90 seconds.
               </p>
             </div>
             <div className="flex items-baseline gap-[1.5vw]">
               <span className="font-display italic text-[1.6vw] text-accent w-[3vw] shrink-0">02</span>
               <p className="font-body text-[1.5vw] leading-[1.45] text-text">
-                Workflows generalize across people in the same role.
+                Non-adopters will engage with peer workflows filtered to their role.
               </p>
             </div>
             <div className="flex items-baseline gap-[1.5vw]">
               <span className="font-display italic text-[1.6vw] text-accent w-[3vw] shrink-0">03</span>
               <p className="font-body text-[1.5vw] leading-[1.45] text-text">
-                A colleague's name on a post is enough trust to try it.
+                Peer observation alone is sufficient to trigger trial.
               </p>
             </div>
             <div className="flex items-baseline gap-[1.5vw]">
               <span className="font-display italic text-[1.6vw] text-accent w-[3vw] shrink-0">04</span>
               <p className="font-body text-[1.5vw] leading-[1.45] text-text">
-                Adoption follows visibility. If they see it, they will try it.
+                Opt-in produces more authentic content than mandatory sharing.
               </p>
             </div>
           </div>
@@ -50,11 +50,11 @@ export default function AssumptionsSlide() {
           <div className="text-[1.5vw] uppercase tracking-[0.3em] text-accent font-semibold mb-[2vh]">
             Riskiest assumption
           </div>
-          <p className="font-display italic text-[2.6vw] leading-[1.2] text-text" style={{ textWrap: "balance" }}>
-            That workflows generalize across roles.
+          <p className="font-display italic text-[2.4vw] leading-[1.2] text-text" style={{ textWrap: "balance" }}>
+            That the active 40 will share at all.
           </p>
-          <p className="font-body text-[1.55vw] leading-[1.5] text-text/70 mt-[3vh]">
-            If they don't, the feed becomes noise. We have to test this in the pilot before anything else.
+          <p className="font-body text-[1.5vw] leading-[1.5] text-text/70 mt-[2.5vh]">
+            First test is concierge-style: interview 5 active users, structure their workflows by hand, publish them, and measure whether non-adopters engage — before investing in the self-serve capture tool.
           </p>
         </div>
       </div>
