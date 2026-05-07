@@ -16,16 +16,13 @@ export default function RootCauseSlide() {
         <span className="font-display text-[12vw] leading-none text-accent/30 select-none -mb-[6vh]">
           &ldquo;
         </span>
-        <p className="font-display italic text-[4.6vw] leading-[1.15] text-text text-center" style={{ textWrap: "balance" }}>
-          78% of AI users at work are bringing their own AI tools.
-        </p>
-        <p className="font-display text-[2.4vw] leading-[1.3] text-text/75 text-center mt-[5vh] max-w-[60vw]" style={{ textWrap: "balance" }}>
-          Adoption is already happening — peer to peer, in the shadows.
-          Not through enterprise rollouts.
+        <p className="font-display italic text-[3.6vw] leading-[1.18] text-text text-center max-w-[78vw]" style={{ textWrap: "balance" }}>
+          88% of heavy AI users cited peers as influential in shaping their AI behaviour
+          <span className="text-text/55"> — vs 50% of low users.</span>
         </p>
         <div className="mt-[6vh] flex items-center gap-[1.5vw] text-[1.5vw] uppercase tracking-[0.3em] text-muted font-semibold">
           <span className="h-[1px] w-[3vw] bg-rule" />
-          Microsoft Work Trend Index, 2024
+          Microsoft Research, 2026
         </div>
       </div>
     </div>
