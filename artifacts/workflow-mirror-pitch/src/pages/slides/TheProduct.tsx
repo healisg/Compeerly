@@ -1,5 +1,5 @@
 import SlideChrome from "@/components/SlideChrome";
-import { Camera, Eye, Repeat } from "lucide-react";
+import { List, Mic, Zap } from "lucide-react";
 
 export default function TheProductSlide() {
   return (
@@ -22,35 +22,35 @@ export default function TheProductSlide() {
       <div className="absolute top-[46vh] left-[5.5vw] right-[5.5vw] grid grid-cols-3 gap-x-[3.5vw]">
         <div className="border-t-2 border-primary pt-[3vh]">
           <div className="w-[5vw] h-[5vw] rounded-full bg-primary/10 flex items-center justify-center mb-[3vh]">
-            <Camera className="w-[2.6vw] h-[2.6vw] text-primary" strokeWidth={1.5} />
+            <List className="w-[2.6vw] h-[2.6vw] text-primary" strokeWidth={1.5} />
           </div>
           <h3 className="font-display text-[2.6vw] leading-[1.1] text-text mb-[1.5vh]">
-            Capture
+            Workflow Feed
           </h3>
           <p className="font-body text-[1.55vw] leading-[1.5] text-text/75">
-            Record what worked, in 60 seconds. No write-up. No template. Just the prompt and the why.
+            A role-filtered library of peer-submitted AI workflows. See what people who do your job are actually doing.
           </p>
         </div>
         <div className="border-t-2 border-primary pt-[3vh]">
           <div className="w-[5vw] h-[5vw] rounded-full bg-primary/10 flex items-center justify-center mb-[3vh]">
-            <Eye className="w-[2.6vw] h-[2.6vw] text-primary" strokeWidth={1.5} />
+            <Mic className="w-[2.6vw] h-[2.6vw] text-primary" strokeWidth={1.5} />
           </div>
           <h3 className="font-display text-[2.6vw] leading-[1.1] text-text mb-[1.5vh]">
-            Mirror
+            Workflow Capture
           </h3>
           <p className="font-body text-[1.55vw] leading-[1.5] text-text/75">
-            Browse what colleagues in your role are actually doing. Filtered by team, tool, and frequency.
+            90 seconds of natural language. Claude structures the rest into a shareable workflow with prompts, tools, and context.
           </p>
         </div>
         <div className="border-t-2 border-primary pt-[3vh]">
           <div className="w-[5vw] h-[5vw] rounded-full bg-primary/10 flex items-center justify-center mb-[3vh]">
-            <Repeat className="w-[2.6vw] h-[2.6vw] text-primary" strokeWidth={1.5} />
+            <Zap className="w-[2.6vw] h-[2.6vw] text-primary" strokeWidth={1.5} />
           </div>
           <h3 className="font-display text-[2.6vw] leading-[1.1] text-text mb-[1.5vh]">
-            Adopt
+            Nudge Bar
           </h3>
           <p className="font-body text-[1.55vw] leading-[1.5] text-text/75">
-            Try the workflow yourself in one click. Mark "worked for me" so the next colleague sees the signal.
+            A floating prompt that surfaces relevant peer workflows mid-session, exactly when a colleague's pattern would help.
           </p>
         </div>
       </div>
