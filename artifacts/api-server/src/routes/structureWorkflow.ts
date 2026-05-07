@@ -63,9 +63,11 @@ router.post("/structure-workflow", async (req, res) => {
       return;
     }
 
+    const cleanedText = content.text.trim().replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
+
     let parsed: unknown;
     try {
-      parsed = JSON.parse(content.text);
+      parsed = JSON.parse(cleanedText);
     } catch {
       res.status(500).json({ error: "Claude returned a response that could not be parsed as JSON. Please try again." });
       return;
