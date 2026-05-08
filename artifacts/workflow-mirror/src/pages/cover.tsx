@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { ArrowRight } from "lucide-react";
-import compassMarkUrl from "@assets/image_1778283978011.png";
+import { CompassMark } from "@/components/compass-mark";
 
 const TOKENS = {
   primary: "#166534",
@@ -60,8 +60,8 @@ export default function CoverPage() {
         }}
       >
         <div className="flex w-full flex-col justify-center px-[8vw] pt-12 pb-10 lg:w-[55%] lg:px-[6vw] lg:pt-12 lg:pb-14">
-          <div className="mb-10 lg:mb-12">
-            <img src={compassMarkUrl} alt="Compass" className="block h-12 w-12" />
+          <div className="mb-10 lg:mb-12" style={{ color: TOKENS.primary }}>
+            <CompassMark size={48} />
           </div>
 
           <div className="max-w-[640px] space-y-5 lg:space-y-6">
