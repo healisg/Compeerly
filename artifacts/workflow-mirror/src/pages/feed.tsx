@@ -22,6 +22,8 @@ export default function FeedPage() {
   const aiTools = useMemo(() => Array.from(new Set(workflows.map((w) => w.aiTool))).sort(), [workflows]);
   const categories = useMemo(() => Array.from(new Set(workflows.map((w) => w.category))).sort(), [workflows]);
 
+  const filterKey = `${roleFilter}|${aiToolFilter}|${categoryFilter}`;
+
   const filteredWorkflows = useMemo(() => {
     return workflows.filter((w) => {
       const matchRole = roleFilter === "all" || w.role === roleFilter;
@@ -189,7 +191,7 @@ export default function FeedPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {filteredWorkflows.map((workflow, index) => (
               <motion.div
-                key={workflow.id}
+                key={`${workflow.id}-${filterKey}`}
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35, ease: "easeOut", delay: Math.min(index * 0.06, 0.4) }}
