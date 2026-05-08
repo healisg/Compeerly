@@ -21,6 +21,7 @@ type Phase = {
   headline: string;
   points: string[];
   tools: string[];
+  skills: string[];
 };
 
 const PHASES: Phase[] = [
@@ -35,6 +36,7 @@ const PHASES: Phase[] = [
       "31% of knowledge workers actively work around their company's AI initiatives. Surveillance-first products feed that number. Peer-led ones reduce it.",
     ],
     tools: ["Manus", "Claude Sonnet 4.5"],
+    skills: ["web-search", "ai-integrations-anthropic"],
   },
   {
     key: "thesis",
@@ -47,6 +49,7 @@ const PHASES: Phase[] = [
       "One metric picked and defended: activation rate of latent users exposed to peer workflows. Everything else is noise until that number moves.",
     ],
     tools: ["A text file", "Claude (as sceptical reader)"],
+    skills: ["delegation", "code-review"],
   },
   {
     key: "brand",
@@ -59,6 +62,7 @@ const PHASES: Phase[] = [
       "ROI numbers in the deck reconcile exactly to the £ figures shown in the admin view. If they diverge, the pitch fails.",
     ],
     tools: ["Replit Agent", "Playfair Display", "Inter"],
+    skills: ["slides", "design", "mockup-sandbox"],
   },
   {
     key: "build",
@@ -72,6 +76,7 @@ const PHASES: Phase[] = [
       "Mock data co-located with the page that uses it. In a prototype, that's an honest signal of what's real and what isn't.",
     ],
     tools: ["Replit Agent", "Vite + React + Tailwind", "wouter", "Lucide", "dicebear"],
+    skills: ["react-vite", "artifacts", "workflows", "pnpm-workspace"],
   },
   {
     key: "polish",
@@ -84,6 +89,7 @@ const PHASES: Phase[] = [
       "This page added last. Showing the process is part of the pitch. If the prototype is about transparency, the about page has to be too.",
     ],
     tools: ["Replit code review", "screenshot QA"],
+    skills: ["code-review", "validation", "diagnostics"],
   },
 ];
 
@@ -396,40 +402,78 @@ export default function AboutPage() {
                 ))}
               </ul>
 
-              {/* Tools chips */}
+              {/* Tools + Skills chips */}
               <div
                 style={{
                   marginTop: "28px",
                   paddingTop: "20px",
                   borderTop: `1px solid ${TOKENS.rule}`,
+                  display: "flex",
+                  gap: "32px",
+                  flexWrap: "wrap",
                 }}
               >
-                <div
-                  style={{
-                    fontSize: "10px",
-                    color: TOKENS.muted,
-                    letterSpacing: "0.32em",
-                    textTransform: "uppercase",
-                    marginBottom: "10px",
-                  }}
-                >
-                  Tools used
+                {/* Tools used */}
+                <div style={{ flex: "1 1 160px" }}>
+                  <div
+                    style={{
+                      fontSize: "10px",
+                      color: TOKENS.muted,
+                      letterSpacing: "0.32em",
+                      textTransform: "uppercase",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    Tools used
+                  </div>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                    {phase.tools.map((t) => (
+                      <span
+                        key={t}
+                        style={{
+                          fontSize: "12px",
+                          padding: "4px 10px",
+                          color: TOKENS.text,
+                          backgroundColor: TOKENS.bg,
+                          border: `1px solid ${TOKENS.rule}`,
+                        }}
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                  {phase.tools.map((t) => (
-                    <span
-                      key={t}
-                      style={{
-                        fontSize: "12px",
-                        padding: "4px 10px",
-                        color: TOKENS.text,
-                        backgroundColor: TOKENS.bg,
-                        border: `1px solid ${TOKENS.rule}`,
-                      }}
-                    >
-                      {t}
-                    </span>
-                  ))}
+
+                {/* Skills used */}
+                <div style={{ flex: "1 1 160px" }}>
+                  <div
+                    style={{
+                      fontSize: "10px",
+                      color: TOKENS.muted,
+                      letterSpacing: "0.32em",
+                      textTransform: "uppercase",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    Skills used
+                  </div>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                    {phase.skills.map((s) => (
+                      <span
+                        key={s}
+                        style={{
+                          fontSize: "12px",
+                          padding: "4px 10px",
+                          color: TOKENS.primary,
+                          backgroundColor: "transparent",
+                          border: `1px solid ${TOKENS.primary}`,
+                          opacity: 0.75,
+                        }}
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
