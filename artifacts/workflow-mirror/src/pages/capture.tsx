@@ -68,7 +68,7 @@ export default function CapturePage() {
     <div className="min-h-screen bg-background">
       <header className="border-b bg-card">
         <div className="max-w-3xl mx-auto px-6 h-16 flex items-center gap-4">
-          <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-back">
+          <Link href="/feed" className="text-muted-foreground hover:text-foreground transition-colors" data-testid="link-back">
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <h1 className="text-lg font-semibold tracking-tight text-foreground">Share a Workflow</h1>
