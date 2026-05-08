@@ -127,10 +127,10 @@ export default function AboutPage() {
         backgroundColor: TOKENS.bg,
         color: TOKENS.text,
         fontFamily: "'Inter', system-ui, sans-serif",
+        overflowX: "hidden",
       }}
       data-testid="about-page"
     >
-      {/* Header */}
       <header
         className="sticky top-0 z-10"
         style={{
@@ -159,8 +159,6 @@ export default function AboutPage() {
       </header>
 
       <main className="max-w-5xl mx-auto px-6 md:px-10 pt-16 pb-32">
-
-        {/* Eyebrow + title */}
         <section className="max-w-3xl mb-10">
           <div
             className="text-[11px] font-medium uppercase mb-5"
@@ -185,7 +183,6 @@ export default function AboutPage() {
           </p>
         </section>
 
-        {/* The bet callout */}
         <section
           className="mb-14 p-7 md:p-9 max-w-4xl relative"
           style={{
@@ -240,7 +237,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Phase tab navigator */}
         <section className="mb-20" aria-labelledby="timeline-heading">
           <h2
             id="timeline-heading"
@@ -250,9 +246,8 @@ export default function AboutPage() {
             The build, phase by phase.
           </h2>
 
-          {/* Tab bar */}
           <div
-            className="flex gap-0 overflow-x-auto mb-0"
+            className="flex flex-wrap gap-0 mb-0"
             style={{ borderBottom: `1px solid ${TOKENS.rule}` }}
             role="tablist"
             aria-label="Build phases"
@@ -295,7 +290,6 @@ export default function AboutPage() {
             })}
           </div>
 
-          {/* Phase content panel */}
           <div
             id={`phase-panel-${phase.key}`}
             role="tabpanel"
@@ -308,7 +302,6 @@ export default function AboutPage() {
             }}
             data-testid={`panel-${phase.key}`}
           >
-            {/* Left: headline + bullets */}
             <div className="lg:col-span-2 p-7 md:p-8">
               <div className="flex items-baseline gap-3 mb-4">
                 <span
@@ -338,12 +331,10 @@ export default function AboutPage() {
               </ul>
             </div>
 
-            {/* Right: tools + timeline sidebar */}
             <div
               className="lg:col-span-1 p-7 md:p-8 flex flex-col gap-8"
               style={{ borderLeft: `1px solid ${TOKENS.rule}` }}
             >
-              {/* Tools used */}
               <div>
                 <div
                   className="text-[10px] font-medium uppercase mb-3"
@@ -368,7 +359,6 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              {/* Build timeline */}
               <div>
                 <div
                   className="text-[10px] font-medium uppercase mb-3"
@@ -377,7 +367,7 @@ export default function AboutPage() {
                   Build timeline
                 </div>
                 <div className="space-y-2">
-                  {PHASES.map((p, i) => {
+                  {PHASES.map((p) => {
                     const isCurrent = p.key === activePhase;
                     return (
                       <div
@@ -411,7 +401,6 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              {/* Phase navigation */}
               <div className="flex items-center gap-3 mt-auto">
                 <button
                   type="button"
@@ -453,7 +442,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Stack + What's next */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-20">
           <div>
             <h2
@@ -519,7 +507,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* One-pager CTA */}
         <section className="mb-20">
           <div
             className="p-8 md:p-10 flex flex-col md:flex-row md:items-center justify-between gap-6"
@@ -559,7 +546,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Footer */}
         <div
           className="pt-8 flex items-baseline justify-between flex-wrap gap-4 text-[12px]"
           style={{ color: TOKENS.muted, borderTop: `1px solid ${TOKENS.rule}` }}
