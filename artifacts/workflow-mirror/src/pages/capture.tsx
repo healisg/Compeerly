@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Link, useLocation, useSearch } from "wouter";
 import { useWorkflows } from "@/lib/workflows";
+import type { FileInput } from "@/lib/workflows";
 import { useStructureWorkflow } from "@workspace/api-client-react";
 import type { StructuredWorkflow } from "@workspace/api-client-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, Loader2, Sparkles } from "lucide-react";
+import { ArrowLeft, Loader2, Sparkles, Plus, X as XIcon, Paperclip } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 
@@ -27,6 +28,7 @@ export default function CapturePage() {
 
   const [rawText, setRawText] = useState(initialRawText);
   const [structuredData, setStructuredData] = useState<StructuredWorkflow | null>(null);
+  const [fileInputs, setFileInputs] = useState<FileInput[]>([]);
 
   const structureMutation = useStructureWorkflow();
 
@@ -58,10 +60,20 @@ export default function CapturePage() {
 
   const handlePublish = () => {
     if (structuredData) {
-      addWorkflow(structuredData);
+      const cleanedInputs = fileInputs
+        .map((fi) => ({ label: fi.label.trim(), hint: fi.hint?.trim() || undefined }))
+        .filter((fi) => fi.label.length > 0);
+      addWorkflow({ ...structuredData, fileInputs: cleanedInputs });
       toast({ title: "Workflow published successfully!" });
       setLocation("/");
     }
+  };
+
+  const addFileInput = () => setFileInputs([...fileInputs, { label: "", hint: "" }]);
+  const removeFileInput = (idx: number) =>
+    setFileInputs(fileInputs.filter((_, i) => i !== idx));
+  const updateFileInput = (idx: number, patch: Partial<FileInput>) => {
+    setFileInputs(fileInputs.map((fi, i) => (i === idx ? { ...fi, ...patch } : fi)));
   };
 
   return (
@@ -181,6 +193,64 @@ export default function CapturePage() {
                   <div className="space-y-2">
                     <Label htmlFor="tips">Pro Tip</Label>
                     <Input id="tips" value={structuredData.tips} onChange={e => setStructuredData({...structuredData, tips: e.target.value})} data-testid="input-tips" />
+                  </div>
+
+                  <div className="space-y-3 pt-2 border-t border-border">
+                    <div className="space-y-1">
+                      <Label className="flex items-center gap-2">
+                        <Paperclip className="w-4 h-4 text-primary" />
+                        File inputs (optional)
+                      </Label>
+                      <p className="text-xs text-muted-foreground">
+                        Tell the next person which files they'll need. They'll see labelled drop zones, and text files get embedded straight into the prompt.
+                      </p>
+                    </div>
+
+                    {fileInputs.length > 0 && (
+                      <div className="space-y-2">
+                        {fileInputs.map((fi, idx) => (
+                          <div key={idx} className="flex gap-2 items-start" data-testid={`file-input-row-${idx}`}>
+                            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-2">
+                              <Input
+                                placeholder="Label (e.g. Pipeline data export)"
+                                value={fi.label}
+                                onChange={(e) => updateFileInput(idx, { label: e.target.value })}
+                                data-testid={`input-file-label-${idx}`}
+                              />
+                              <Input
+                                placeholder="Hint (optional, e.g. CSV from your CRM)"
+                                value={fi.hint ?? ""}
+                                onChange={(e) => updateFileInput(idx, { hint: e.target.value })}
+                                data-testid={`input-file-hint-${idx}`}
+                              />
+                            </div>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => removeFileInput(idx)}
+                              className="shrink-0 text-muted-foreground hover:text-foreground"
+                              aria-label="Remove file input"
+                              data-testid={`button-remove-file-input-${idx}`}
+                            >
+                              <XIcon className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={addFileInput}
+                      className="gap-2"
+                      data-testid="button-add-file-input"
+                    >
+                      <Plus className="w-4 h-4" />
+                      Add a file input
+                    </Button>
                   </div>
                 </div>
               </CardContent>

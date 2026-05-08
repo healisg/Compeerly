@@ -1,5 +1,10 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 
+export type FileInput = {
+  label: string;
+  hint?: string;
+};
+
 export type Workflow = {
   id: number;
   title: string;
@@ -16,6 +21,7 @@ export type Workflow = {
   tips: string;
   workedForMeCount: number;
   author: string;
+  fileInputs?: FileInput[];
 };
 
 const seedData: Workflow[] = [
@@ -40,6 +46,10 @@ const seedData: Workflow[] = [
     ],
     tips: "Use your previous report as a voice reference so Claude matches your writing style, not its own.",
     workedForMeCount: 14,
+    fileInputs: [
+      { label: "Last quarter's board update", hint: "Used as a voice and structure reference" },
+      { label: "New quarterly numbers and highlights", hint: "What needs to go into this update" },
+    ],
   },
   {
     id: 2,
@@ -62,6 +72,9 @@ const seedData: Workflow[] = [
     ],
     tips: "Add the client's name and any specific next steps to the prompt — it makes the email feel personal rather than templated.",
     workedForMeCount: 18,
+    fileInputs: [
+      { label: "Your rough call notes", hint: "Plain text — bullets are fine" },
+    ],
   },
   {
     id: 3,
@@ -84,6 +97,10 @@ const seedData: Workflow[] = [
     ],
     tips: "Give Claude the previous week's report so it can compare and highlight week-on-week changes automatically.",
     workedForMeCount: 9,
+    fileInputs: [
+      { label: "Pipeline data export", hint: "CSV from your CRM" },
+      { label: "Last week's report (optional)", hint: "Lets Claude compare week-on-week" },
+    ],
   },
   {
     id: 4,
@@ -106,6 +123,9 @@ const seedData: Workflow[] = [
     ],
     tips: "Always verify the specific clause references Gemini cites — it sometimes paraphrases section numbers incorrectly.",
     workedForMeCount: 7,
+    fileInputs: [
+      { label: "Regulatory bulletin or guidance document", hint: "Text or PDF — text gets embedded, PDF re-attaches in Gemini" },
+    ],
   },
   {
     id: 5,
@@ -150,6 +170,10 @@ const seedData: Workflow[] = [
     ],
     tips: "Only use winning submissions as references — losing ones will propagate the wrong messaging.",
     workedForMeCount: 5,
+    fileInputs: [
+      { label: "Previous winning RFP responses", hint: "2-3 documents — text gets embedded, DOCX re-attaches in Claude" },
+      { label: "New RFP requirements", hint: "The brief you're responding to" },
+    ],
   },
 ];
 
