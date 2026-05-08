@@ -132,29 +132,96 @@ const SPARKLINE = [
 
 function Sparkline() {
   const W = 520;
-  const H = 140;
-  const padX = 24;
-  const padY = 24;
+  const H = 170;
+  const padX = 32;
+  const padY = 36;
+  const padBottom = 26;
+
   const max = Math.max(...SPARKLINE.map((d) => d.value));
   const points = SPARKLINE.map((d, i) => {
     const x = padX + (i * (W - padX * 2)) / (SPARKLINE.length - 1);
-    const y = H - padY - ((H - padY * 2) * d.value) / max;
+    const y = padY + ((H - padY - padBottom) * (1 - d.value / max));
     return { x, y, ...d };
   });
-  const path = points.map((p, i) => `${i === 0 ? "M" : "L"}${p.x},${p.y}`).join(" ");
-  const areaPath = `${path} L${points[points.length - 1].x},${H - padY} L${points[0].x},${H - padY} Z`;
+
+  const linePath = points.map((p, i) => `${i === 0 ? "M" : "L"}${p.x},${p.y}`).join(" ");
+  const areaPath = `${linePath} L${points[points.length - 1].x},${H - padBottom} L${points[0].x},${H - padBottom} Z`;
   const annotated = points[2];
+  const annotAnchorX = annotated.x - 10;
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" role="img" aria-label="Adoption over four weeks">
-      <path d={areaPath} fill={TOKENS.primary} fillOpacity="0.08" />
-      <path d={path} stroke={TOKENS.primary} strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      {points.map((p) => (
-        <circle key={p.week} cx={p.x} cy={p.y} r="3" fill={TOKENS.primary} />
+    <svg
+      viewBox={`0 0 ${W} ${H}`}
+      className="w-full h-auto overflow-visible"
+      role="img"
+      aria-label="Adoption over four weeks"
+    >
+      <defs>
+        <style>{`
+          @keyframes sparkDrawLine {
+            from { stroke-dashoffset: 1; }
+            to   { stroke-dashoffset: 0; }
+          }
+          @keyframes sparkFadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+          }
+          .spark-area {
+            opacity: 0;
+            animation: sparkFadeIn 0.7s ease 1.55s forwards;
+          }
+          .spark-line {
+            stroke-dasharray: 1;
+            stroke-dashoffset: 1;
+            animation: sparkDrawLine 1.3s cubic-bezier(0.4, 0, 0.2, 1) 0.25s forwards;
+          }
+          .spark-dot-0 { opacity:0; animation: sparkFadeIn 0.35s ease 0.30s forwards; }
+          .spark-dot-1 { opacity:0; animation: sparkFadeIn 0.35s ease 0.72s forwards; }
+          .spark-dot-2 { opacity:0; animation: sparkFadeIn 0.35s ease 1.12s forwards; }
+          .spark-dot-3 { opacity:0; animation: sparkFadeIn 0.35s ease 1.55s forwards; }
+          .spark-annotation {
+            opacity: 0;
+            animation: sparkFadeIn 0.5s ease 1.85s forwards;
+          }
+        `}</style>
+      </defs>
+
+      {/* Area fill */}
+      <path
+        d={areaPath}
+        fill={TOKENS.primary}
+        fillOpacity="0.07"
+        className="spark-area"
+      />
+
+      {/* Animated line */}
+      <path
+        d={linePath}
+        pathLength="1"
+        stroke={TOKENS.primary}
+        strokeWidth="1.75"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="spark-line"
+      />
+
+      {/* Dots — sequential */}
+      {points.map((p, i) => (
+        <circle
+          key={p.week}
+          cx={p.x}
+          cy={p.y}
+          r="3.5"
+          fill={TOKENS.primary}
+          className={`spark-dot-${i}`}
+        />
       ))}
+
+      {/* X-axis labels */}
       {points.map((p) => (
         <text
-          key={`l-${p.week}`}
+          key={`lbl-${p.week}`}
           x={p.x}
           y={H - 6}
           textAnchor="middle"
@@ -165,24 +232,40 @@ function Sparkline() {
           {p.week}
         </text>
       ))}
-      <line
-        x1={annotated.x}
-        y1={annotated.y - 8}
-        x2={annotated.x}
-        y2={padY - 4}
-        stroke={TOKENS.accent}
-        strokeWidth="1"
-        strokeDasharray="2 3"
-      />
-      <text
-        x={annotated.x + 8}
-        y={padY + 4}
-        fontSize="10.5"
-        fill={TOKENS.accent}
-        fontFamily="'Inter', system-ui, sans-serif"
-      >
-        Wk 3 · Marcus T. shared the client-email workflow
-      </text>
+
+      {/* Annotation — anchored LEFT of dashed line */}
+      <g className="spark-annotation">
+        <line
+          x1={annotated.x}
+          y1={annotated.y - 9}
+          x2={annotated.x}
+          y2={padY - 2}
+          stroke={TOKENS.accent}
+          strokeWidth="1"
+          strokeDasharray="2 3"
+        />
+        <text
+          x={annotAnchorX}
+          y={padY + 3}
+          textAnchor="end"
+          fontSize="9"
+          fontWeight="600"
+          fill={TOKENS.accent}
+          fontFamily="'Inter', system-ui, sans-serif"
+        >
+          Wk 3 · Marcus T.
+        </text>
+        <text
+          x={annotAnchorX}
+          y={padY + 14}
+          textAnchor="end"
+          fontSize="9"
+          fill={TOKENS.accent}
+          fontFamily="'Inter', system-ui, sans-serif"
+        >
+          shared the client-email workflow
+        </text>
+      </g>
     </svg>
   );
 }
