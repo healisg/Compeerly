@@ -71,15 +71,30 @@ export default function FeedPage() {
         </div>
 
         <div className="mb-10 pb-6 border-b border-border/60">
-          <Button
-            variant="outline"
-            className="gap-2 rounded-xl px-4 h-9"
-            onClick={() => setFiltersOpen((prev) => !prev)}
-            data-testid="button-filter-toggle"
-          >
-            <SlidersHorizontal className="w-4 h-4" />
-            {activeFilterCount > 0 ? `Filter · ${activeFilterCount}` : "Filter"}
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              className="gap-2 rounded-xl px-4 h-9"
+              onClick={() => setFiltersOpen((prev) => !prev)}
+              data-testid="button-filter-toggle"
+            >
+              <SlidersHorizontal className="w-4 h-4" />
+              {activeFilterCount > 0 ? `Filter · ${activeFilterCount}` : "Filter"}
+            </Button>
+            {activeFilterCount > 0 && (
+              <button
+                onClick={() => {
+                  setRoleFilter("all");
+                  setAiToolFilter("all");
+                  setCategoryFilter("all");
+                }}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors underline-offset-2 hover:underline"
+                data-testid="button-clear-filters"
+              >
+                Clear
+              </button>
+            )}
+          </div>
 
           {filtersOpen && (
             <div className="flex flex-col sm:flex-row gap-3 mt-4">
