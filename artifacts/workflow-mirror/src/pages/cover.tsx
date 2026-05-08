@@ -199,21 +199,37 @@ export default function CoverPage() {
             Non-adopters discover it — filtered by role, surfaced at the right moment.
           </p>
 
-          <button
-            type="button"
-            onClick={handleEnter}
-            data-testid="button-enter-feed"
-            className="mt-10 md:mt-12 inline-flex items-center gap-3 px-7 py-4 text-[15px] font-medium text-white transition-all duration-200 hover:opacity-90 active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-            style={{
-              backgroundColor: TOKENS.primary,
-              fontFamily: "'Inter', system-ui, sans-serif",
-              borderRadius: "2px",
-              letterSpacing: "0.01em",
-            }}
-          >
-            Explore Workflow Mirror
-            <ArrowRight className="w-4 h-4" strokeWidth={1.75} />
-          </button>
+          <div className="mt-10 md:mt-12 flex flex-wrap items-center gap-x-8 gap-y-4">
+            <button
+              type="button"
+              onClick={handleEnter}
+              data-testid="button-enter-feed"
+              className="inline-flex items-center gap-3 px-7 py-4 text-[15px] font-medium text-white transition-all duration-200 hover:opacity-90 active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+              style={{
+                backgroundColor: TOKENS.primary,
+                fontFamily: "'Inter', system-ui, sans-serif",
+                borderRadius: "2px",
+                letterSpacing: "0.01em",
+              }}
+            >
+              Explore Workflow Mirror
+              <ArrowRight className="w-4 h-4" strokeWidth={1.75} />
+            </button>
+            <a
+              href={`${import.meta.env.BASE_URL}admin`}
+              data-testid="link-admin-view"
+              className="inline-flex items-center gap-2 text-[14px] font-medium hover:opacity-70 transition-opacity"
+              style={{
+                color: TOKENS.muted,
+                borderBottom: `1px solid ${TOKENS.rule}`,
+                paddingBottom: "2px",
+                letterSpacing: "0.01em",
+              }}
+            >
+              See the admin view
+              <ArrowRight className="w-3.5 h-3.5" strokeWidth={1.75} />
+            </a>
+          </div>
         </div>
       </div>
 
