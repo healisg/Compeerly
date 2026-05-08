@@ -87,7 +87,7 @@ const PHASES: Phase[] = [
 
 const TOOLS = [
   { name: "Replit Agent", note: "scaffold, iterate, deploy" },
-  { name: "Claude Opus 4.6", note: "thesis pressure-testing, copy" },
+  { name: "Manus AI", note: "thesis pressure-testing, copy" },
   { name: "Anthropic API", note: "powers demo workflows" },
   { name: "Manus", note: "research brief synthesis" },
   { name: "Playfair Display + Inter", note: "type system" },
