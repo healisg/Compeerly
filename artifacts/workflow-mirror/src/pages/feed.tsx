@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { Link } from "wouter";
+import { AnimatePresence, motion } from "framer-motion";
 import { useWorkflows } from "@/lib/workflows";
 import { WorkflowCard } from "@/components/workflow-card";
 import { PromptBar } from "@/components/prompt-bar";
@@ -96,45 +97,56 @@ export default function FeedPage() {
             )}
           </div>
 
-          {filtersOpen && (
-            <div className="flex flex-col sm:flex-row gap-3 mt-4">
-              <Select value={roleFilter} onValueChange={setRoleFilter}>
-                <SelectTrigger className="w-[200px]" data-testid="select-role">
-                  <SelectValue placeholder="Filter by Role" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Roles</SelectItem>
-                  {roles.map((r) => (
-                    <SelectItem key={r} value={r}>{r}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+          <AnimatePresence initial={false}>
+            {filtersOpen && (
+              <motion.div
+                key="filter-panel"
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.18, ease: "easeInOut" }}
+                style={{ overflow: "hidden" }}
+              >
+                <div className="flex flex-col sm:flex-row gap-3 mt-4">
+                  <Select value={roleFilter} onValueChange={setRoleFilter}>
+                    <SelectTrigger className="w-[200px]" data-testid="select-role">
+                      <SelectValue placeholder="Filter by Role" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Roles</SelectItem>
+                      {roles.map((r) => (
+                        <SelectItem key={r} value={r}>{r}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
 
-              <Select value={aiToolFilter} onValueChange={setAiToolFilter}>
-                <SelectTrigger className="w-[200px]" data-testid="select-ai-tool">
-                  <SelectValue placeholder="Filter by AI Tool" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All AI Tools</SelectItem>
-                  {aiTools.map((t) => (
-                    <SelectItem key={t} value={t}>{t}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                  <Select value={aiToolFilter} onValueChange={setAiToolFilter}>
+                    <SelectTrigger className="w-[200px]" data-testid="select-ai-tool">
+                      <SelectValue placeholder="Filter by AI Tool" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All AI Tools</SelectItem>
+                      {aiTools.map((t) => (
+                        <SelectItem key={t} value={t}>{t}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
 
-              <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                <SelectTrigger className="w-[200px]" data-testid="select-category">
-                  <SelectValue placeholder="Filter by Category" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Categories</SelectItem>
-                  {categories.map((c) => (
-                    <SelectItem key={c} value={c}>{c}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          )}
+                  <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                    <SelectTrigger className="w-[200px]" data-testid="select-category">
+                      <SelectValue placeholder="Filter by Category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Categories</SelectItem>
+                      {categories.map((c) => (
+                        <SelectItem key={c} value={c}>{c}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {filteredWorkflows.length > 0 ? (
