@@ -35,7 +35,7 @@ const PHASES: Phase[] = [
       "Key finding: 88% of heavy AI users name peers as their strongest influence. Only 50% of light users do. That is a visibility gap, not a training gap.",
       "31% of knowledge workers actively work around their company's AI initiatives. Surveillance-first products feed that number. Peer-led ones reduce it.",
     ],
-    tools: ["Manus AI", "Claude Sonnet 4.5"],
+    tools: ["Manus AI", "Claude Sonnet 4.5", "Wispr Flow"],
     skills: ["web-search", "ai-integrations-anthropic"],
   },
   {
@@ -45,10 +45,10 @@ const PHASES: Phase[] = [
     headline: "Wrote the one-line bet before anything else.",
     points: [
       "Peer-led, opt-in, surveillance-free. That's the whole product bet on a single line.",
-      "Built a 'do not build' list: no assignment, no completion tracking, no skill credentials, no nudge campaigns. Negative scope is the most underrated PM artefact.",
+      "JTBD four-forces analysis run before any feature decisions. Push: 31% shadow AI. Pull: role-relevant peer discovery. Anxiety: surveillance exposure. Habit: informal Slack sharing already exists. The 'do not build' list — no tracking, no credentials, no nudge campaigns — is the direct anxiety-reduction response.",
       "One metric picked and defended: activation rate of latent users exposed to peer workflows. Everything else is noise until that number moves.",
     ],
-    tools: ["A text file", "Claude (as sceptical reader)"],
+    tools: ["A text file", "Claude (as sceptical reader)", "Wispr Flow"],
     skills: ["delegation", "code-review"],
   },
   {
@@ -57,11 +57,11 @@ const PHASES: Phase[] = [
     time: "~4 hrs",
     headline: "Brand system built before the slides — not after.",
     points: [
-      "Cream + forest green + Playfair italic signals editorial restraint. The register earns trust in a pitch about trust.",
-      "12 slides written to be read in 60 seconds standing up. Title → problem → bet → ROI → pilot → thank you. No filler.",
+      "Cream + forest green + Playfair italic signals editorial restraint. The register earns trust in a pitch about trust — the visual language had to model the same opt-in, low-pressure quality the product promises.",
+      "Deck narrative follows the JTBD switch sequence: push (the adoption gap) → pull (peer-led alternative) → anxiety reduction (no manager view, no mandate) → habit disruption (sub-2-minute capture). 12 slides, readable in 60 seconds standing up.",
       "ROI numbers in the deck reconcile exactly to the £ figures shown in the admin view. If they diverge, the pitch fails.",
     ],
-    tools: ["Replit Agent", "Playfair Display", "Inter"],
+    tools: ["Replit Agent", "Playfair Display", "Inter", "Wispr Flow"],
     skills: ["slides", "design", "mockup-sandbox"],
   },
   {
@@ -75,7 +75,7 @@ const PHASES: Phase[] = [
       "Detail page: author name and avatar come before the workflow text. Credit is the currency — the design signals that.",
       "Mock data co-located with the page that uses it. In a prototype, that's an honest signal of what's real and what isn't.",
     ],
-    tools: ["Replit Agent", "Vite + React + Tailwind", "wouter", "Lucide", "dicebear"],
+    tools: ["Replit Agent", "Vite + React + Tailwind", "wouter", "Lucide", "dicebear", "Wispr Flow"],
     skills: ["react-vite", "artifacts", "workflows", "pnpm-workspace"],
   },
   {
@@ -88,16 +88,16 @@ const PHASES: Phase[] = [
       "Architect code review run after every major page. Caught copy that drifted into surveillance-adjacent phrasing — cut it.",
       "This page added last. Showing the process is part of the pitch. If the prototype is about transparency, the about page has to be too.",
     ],
-    tools: ["Replit code review", "screenshot QA"],
+    tools: ["Replit code review", "screenshot QA", "Wispr Flow"],
     skills: ["code-review", "validation", "diagnostics"],
   },
 ];
 
 const TOOLS = [
   { name: "Replit Agent", note: "scaffold, iterate, deploy" },
-  { name: "Manus AI", note: "thesis pressure-testing, copy" },
+  { name: "Wispr Flow", note: "voice-to-text across every phase" },
+  { name: "Manus AI", note: "research brief synthesis, copy" },
   { name: "Anthropic API", note: "powers demo workflows" },
-  { name: "Manus", note: "research brief synthesis" },
   { name: "Playfair Display + Inter", note: "type system" },
   { name: "Tailwind + Vite", note: "build chain" },
   { name: "Lucide icons", note: "1.5px stroke, used sparingly" },
