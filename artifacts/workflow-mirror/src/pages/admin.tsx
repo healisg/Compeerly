@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { ArrowLeft, ArrowUpRight, Check } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Check, ChevronDown } from "lucide-react";
 
 const TOKENS = {
   primary: "#166534",
@@ -45,7 +45,21 @@ const KPIS = [
   },
 ];
 
-const PEER_NETWORK = [
+type PropStep = { name: string; action: string; week: string };
+
+type PeerRow = {
+  contributor: string;
+  role: string;
+  title: string;
+  tried: number;
+  worked: number;
+  hours: string;
+  weeklyDelta: number;
+  suggestRole: string | null;
+  propagation: PropStep[];
+};
+
+const PEER_NETWORK: PeerRow[] = [
   {
     contributor: "Priya N.",
     role: "Operations Manager",
@@ -53,6 +67,13 @@ const PEER_NETWORK = [
     tried: 14,
     worked: 9,
     hours: "17.2 hrs",
+    weeklyDelta: 3,
+    suggestRole: "Finance Analysts",
+    propagation: [
+      { name: "Priya N.", action: "shared", week: "Wk 2" },
+      { name: "Devon R.", action: "tried", week: "Wk 2" },
+      { name: "Devon R.", action: "shared to 2 others", week: "Wk 3" },
+    ],
   },
   {
     contributor: "Marcus T.",
@@ -61,6 +82,13 @@ const PEER_NETWORK = [
     tried: 22,
     worked: 18,
     hours: "23.5 hrs",
+    weeklyDelta: 4,
+    suggestRole: null,
+    propagation: [
+      { name: "Marcus T.", action: "shared", week: "Wk 1" },
+      { name: "Jordan K.", action: "tried · then shared to 3 others", week: "Wk 2" },
+      { name: "Devon R.", action: "tried", week: "Wk 3" },
+    ],
   },
   {
     contributor: "Jordan K.",
@@ -69,6 +97,13 @@ const PEER_NETWORK = [
     tried: 11,
     worked: 7,
     hours: "14.0 hrs",
+    weeklyDelta: 2,
+    suggestRole: "Finance Analysts",
+    propagation: [
+      { name: "Jordan K.", action: "shared", week: "Wk 2" },
+      { name: "Priya N.", action: "tried", week: "Wk 3" },
+      { name: "Priya N.", action: "shared to 1 other", week: "Wk 3" },
+    ],
   },
   {
     contributor: "Sana A.",
@@ -77,6 +112,12 @@ const PEER_NETWORK = [
     tried: 6,
     worked: 4,
     hours: "8.4 hrs",
+    weeklyDelta: 0,
+    suggestRole: "HR Business Partners",
+    propagation: [
+      { name: "Sana A.", action: "shared", week: "Wk 3" },
+      { name: "Devon R.", action: "tried", week: "Wk 3" },
+    ],
   },
   {
     contributor: "Devon R.",
@@ -85,6 +126,13 @@ const PEER_NETWORK = [
     tried: 9,
     worked: 6,
     hours: "6.1 hrs",
+    weeklyDelta: 1,
+    suggestRole: "Compliance Officers",
+    propagation: [
+      { name: "Devon R.", action: "shared", week: "Wk 3" },
+      { name: "Sana A.", action: "tried", week: "Wk 3" },
+      { name: "3 others", action: "tried via team share", week: "Wk 4" },
+    ],
   },
 ];
 
@@ -129,6 +177,172 @@ const SPARKLINE = [
   { week: "W3", value: 61 },
   { week: "W4", value: 89 },
 ];
+
+// ─── Network graph data ────────────────────────────────────────────────────
+
+const GRAPH_NODES = [
+  { name: "Marcus T.", x: 280, y: 112, r: 22 },
+  { name: "Priya N.", x: 108, y: 68, r: 17 },
+  { name: "Jordan K.", x: 452, y: 68, r: 15 },
+  { name: "Devon R.", x: 158, y: 178, r: 13 },
+  { name: "Sana A.", x: 415, y: 182, r: 11 },
+];
+
+const GRAPH_EDGES = [
+  { from: "Marcus T.", to: "Jordan K.", weight: 3 },
+  { from: "Marcus T.", to: "Devon R.", weight: 2 },
+  { from: "Priya N.", to: "Devon R.", weight: 2 },
+  { from: "Jordan K.", to: "Priya N.", weight: 1 },
+  { from: "Sana A.", to: "Devon R.", weight: 1 },
+];
+
+function nodeInitials(name: string) {
+  return name
+    .split(/\s+/)
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
+
+// ─── NetworkGraph component ────────────────────────────────────────────────
+
+function NetworkGraph({
+  hoveredNode,
+  onNodeHover,
+}: {
+  hoveredNode: string | null;
+  onNodeHover: (name: string | null) => void;
+}) {
+  const W = 560;
+  const H = 230;
+
+  const connectedTo = (name: string): Set<string> => {
+    const s = new Set<string>();
+    GRAPH_EDGES.forEach((e) => {
+      if (e.from === name) s.add(e.to);
+      if (e.to === name) s.add(e.from);
+    });
+    return s;
+  };
+
+  const connected = hoveredNode ? connectedTo(hoveredNode) : null;
+
+  const nodeOpacity = (name: string) => {
+    if (!hoveredNode) return 1;
+    if (name === hoveredNode || connected?.has(name)) return 1;
+    return 0.2;
+  };
+
+  const edgeOpacity = (e: (typeof GRAPH_EDGES)[0]) => {
+    if (!hoveredNode) return 0.28;
+    if (e.from === hoveredNode || e.to === hoveredNode) return 0.7;
+    return 0.05;
+  };
+
+  const edgeWidth = (w: number) => (w >= 3 ? 2.5 : w >= 2 ? 1.75 : 1);
+
+  return (
+    <svg
+      viewBox={`0 0 ${W} ${H}`}
+      className="w-full h-auto"
+      style={{ display: "block", maxHeight: "210px" }}
+      aria-label="Peer influence network"
+    >
+      <defs>
+        <style>{`
+          .net-node { transition: opacity 0.18s ease; }
+          .net-edge { transition: opacity 0.18s ease; }
+        `}</style>
+      </defs>
+
+      {/* Edges */}
+      {GRAPH_EDGES.map((edge, i) => {
+        const f = GRAPH_NODES.find((n) => n.name === edge.from)!;
+        const t = GRAPH_NODES.find((n) => n.name === edge.to)!;
+        const mx = (f.x + t.x) / 2 + (f.y - t.y) * 0.12;
+        const my = (f.y + t.y) / 2 + (t.x - f.x) * 0.12;
+        return (
+          <path
+            key={i}
+            className="net-edge"
+            d={`M ${f.x} ${f.y} Q ${mx} ${my} ${t.x} ${t.y}`}
+            stroke={TOKENS.primary}
+            strokeWidth={edgeWidth(edge.weight)}
+            strokeOpacity={edgeOpacity(edge)}
+            fill="none"
+            strokeLinecap="round"
+          />
+        );
+      })}
+
+      {/* Nodes */}
+      {GRAPH_NODES.map((node) => {
+        const isHovered = hoveredNode === node.name;
+        const opacity = nodeOpacity(node.name);
+        return (
+          <g
+            key={node.name}
+            className="net-node"
+            style={{ cursor: "pointer", opacity }}
+            onMouseEnter={() => onNodeHover(node.name)}
+            onMouseLeave={() => onNodeHover(null)}
+          >
+            {/* Pulse ring when hovered */}
+            {isHovered && (
+              <circle
+                cx={node.x}
+                cy={node.y}
+                r={node.r + 6}
+                fill="none"
+                stroke={TOKENS.primary}
+                strokeWidth="1"
+                strokeOpacity="0.25"
+              />
+            )}
+            {/* Node circle */}
+            <circle
+              cx={node.x}
+              cy={node.y}
+              r={node.r}
+              fill={isHovered ? TOKENS.primary : TOKENS.card}
+              stroke={TOKENS.primary}
+              strokeWidth="1.5"
+            />
+            {/* Initials */}
+            <text
+              x={node.x}
+              y={node.y + 1}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fontSize={node.r * 0.62}
+              fontWeight="600"
+              fill={isHovered ? "#fff" : TOKENS.primary}
+              fontFamily="'Inter', system-ui, sans-serif"
+              style={{ pointerEvents: "none", userSelect: "none" }}
+            >
+              {nodeInitials(node.name)}
+            </text>
+            {/* Name label */}
+            <text
+              x={node.x}
+              y={node.y + node.r + 13}
+              textAnchor="middle"
+              fontSize="9"
+              fill={isHovered ? TOKENS.text : TOKENS.muted}
+              fontFamily="'Inter', system-ui, sans-serif"
+              style={{ pointerEvents: "none", userSelect: "none" }}
+            >
+              {node.name.split(" ")[0]}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+// ─── Sparkline ─────────────────────────────────────────────────────────────
 
 function Sparkline() {
   const W = 520;
@@ -186,15 +400,7 @@ function Sparkline() {
         `}</style>
       </defs>
 
-      {/* Area fill */}
-      <path
-        d={areaPath}
-        fill={TOKENS.primary}
-        fillOpacity="0.07"
-        className="spark-area"
-      />
-
-      {/* Animated line */}
+      <path d={areaPath} fill={TOKENS.primary} fillOpacity="0.07" className="spark-area" />
       <path
         d={linePath}
         pathLength="1"
@@ -205,20 +411,9 @@ function Sparkline() {
         strokeLinejoin="round"
         className="spark-line"
       />
-
-      {/* Dots — sequential */}
       {points.map((p, i) => (
-        <circle
-          key={p.week}
-          cx={p.x}
-          cy={p.y}
-          r="3.5"
-          fill={TOKENS.primary}
-          className={`spark-dot-${i}`}
-        />
+        <circle key={p.week} cx={p.x} cy={p.y} r="3.5" fill={TOKENS.primary} className={`spark-dot-${i}`} />
       ))}
-
-      {/* X-axis labels */}
       {points.map((p) => (
         <text
           key={`lbl-${p.week}`}
@@ -232,8 +427,6 @@ function Sparkline() {
           {p.week}
         </text>
       ))}
-
-      {/* Annotation — anchored LEFT of dashed line */}
       <g className="spark-annotation">
         <line
           x1={annotated.x}
@@ -270,14 +463,13 @@ function Sparkline() {
   );
 }
 
+// ─── KPI tile ──────────────────────────────────────────────────────────────
+
 function KpiTile({ label, value, delta, caption }: (typeof KPIS)[number]) {
   return (
     <div
       className="p-6 md:p-7"
-      style={{
-        backgroundColor: TOKENS.card,
-        border: `1px solid ${TOKENS.rule}`,
-      }}
+      style={{ backgroundColor: TOKENS.card, border: `1px solid ${TOKENS.rule}` }}
     >
       <div
         className="text-[10px] font-medium uppercase mb-4"
@@ -287,11 +479,7 @@ function KpiTile({ label, value, delta, caption }: (typeof KPIS)[number]) {
       </div>
       <div
         className="font-serif italic leading-none"
-        style={{
-          fontFamily: "'Playfair Display', Georgia, serif",
-          fontSize: "44px",
-          color: TOKENS.text,
-        }}
+        style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "44px", color: TOKENS.text }}
       >
         {value}
       </div>
@@ -305,17 +493,73 @@ function KpiTile({ label, value, delta, caption }: (typeof KPIS)[number]) {
   );
 }
 
+// ─── Trend indicator ───────────────────────────────────────────────────────
+
+function TrendBadge({ delta }: { delta: number }) {
+  if (delta > 0) {
+    return (
+      <span
+        style={{
+          fontSize: "11px",
+          color: TOKENS.primary,
+          backgroundColor: "#dcfce7",
+          padding: "2px 7px",
+          borderRadius: "2px",
+          fontWeight: 500,
+          whiteSpace: "nowrap",
+        }}
+      >
+        ↑ +{delta} this week
+      </span>
+    );
+  }
+  if (delta < 0) {
+    return (
+      <span
+        style={{
+          fontSize: "11px",
+          color: TOKENS.accent,
+          backgroundColor: "#fef3c7",
+          padding: "2px 7px",
+          borderRadius: "2px",
+          fontWeight: 500,
+          whiteSpace: "nowrap",
+        }}
+      >
+        ↓ {delta} this week
+      </span>
+    );
+  }
+  return (
+    <span
+      style={{
+        fontSize: "11px",
+        color: TOKENS.muted,
+        backgroundColor: TOKENS.bg,
+        border: `1px solid ${TOKENS.rule}`,
+        padding: "2px 7px",
+        borderRadius: "2px",
+        fontWeight: 500,
+        whiteSpace: "nowrap",
+      }}
+    >
+      → flat
+    </span>
+  );
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────
+
 export default function AdminPage() {
   const [actioned, setActioned] = useState<Record<number, boolean>>({});
+  const [expandedRow, setExpandedRow] = useState<string | null>(null);
+  const [recognised, setRecognised] = useState<Record<string, boolean>>({});
+  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
 
   return (
     <div
       className="min-h-screen w-full"
-      style={{
-        backgroundColor: TOKENS.bg,
-        color: TOKENS.text,
-        fontFamily: "'Inter', system-ui, sans-serif",
-      }}
+      style={{ backgroundColor: TOKENS.bg, color: TOKENS.text, fontFamily: "'Inter', system-ui, sans-serif" }}
       data-testid="admin-page"
     >
       {/* Header */}
@@ -337,42 +581,29 @@ export default function AdminPage() {
             <ArrowLeft className="w-4 h-4" />
             Back to cover
           </Link>
-          <div
-            className="text-[11px] font-medium uppercase"
-            style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}
-          >
+          <div className="text-[11px] font-medium uppercase" style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}>
             Workflow Mirror · Admin
           </div>
         </div>
       </header>
 
       <main className="max-w-6xl mx-auto px-6 md:px-10 pt-16 pb-32">
-        {/* Hero / ROI headline */}
+        {/* Hero */}
         <section className="max-w-3xl mb-20">
-          <div
-            className="text-[11px] font-medium uppercase mb-6"
-            style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}
-          >
+          <div className="text-[11px] font-medium uppercase mb-6" style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}>
             Month 1 of pilot
           </div>
           <h1
             className="font-serif italic leading-[1.05] tracking-tight text-[44px] md:text-[64px]"
-            style={{
-              fontFamily: "'Playfair Display', Georgia, serif",
-              color: TOKENS.text,
-            }}
+            style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}
           >
             £6,900 reclaimed this week across 28 peer-shared workflows.
             <br />
             <span style={{ color: TOKENS.primary }}>At full adoption: £358,800/year.</span>
           </h1>
           <div className="h-px w-[120px] mt-10" style={{ backgroundColor: TOKENS.rule }} />
-          <p
-            className="mt-8 text-[16px] md:text-[18px] leading-[1.6] max-w-[640px]"
-            style={{ color: TOKENS.text }}
-          >
-            69 active peers × 2 hours/week × £50, per enterprise client. The pilot is
-            testing the curve, not the ceiling.
+          <p className="mt-8 text-[16px] md:text-[18px] leading-[1.6] max-w-[640px]" style={{ color: TOKENS.text }}>
+            69 active peers × 2 hours/week × £50, per enterprise client. The pilot is testing the curve, not the ceiling.
           </p>
         </section>
 
@@ -392,7 +623,7 @@ export default function AdminPage() {
           </div>
         </section>
 
-        {/* Peer network panel */}
+        {/* ─── Peer network panel ─────────────────────────────────────────── */}
         <section className="mb-24" aria-labelledby="peer-heading">
           <div className="flex items-baseline justify-between mb-6">
             <h2
@@ -406,49 +637,217 @@ export default function AdminPage() {
               What's spreading, and where
             </div>
           </div>
+
+          {/* Network graph */}
+          <div
+            className="mb-6 p-6 md:p-8"
+            style={{ backgroundColor: TOKENS.card, border: `1px solid ${TOKENS.rule}` }}
+          >
+            <div className="text-[10px] font-medium uppercase mb-4" style={{ color: TOKENS.muted, letterSpacing: "0.28em" }}>
+              Influence map — hover a node to trace connections
+            </div>
+            <NetworkGraph hoveredNode={hoveredNode} onNodeHover={setHoveredNode} />
+          </div>
+
+          {/* Expandable rows */}
           <div style={{ borderTop: `1px solid ${TOKENS.rule}` }}>
-            {PEER_NETWORK.map((row) => (
-              <div
-                key={row.contributor + row.title}
-                className="grid grid-cols-12 gap-4 items-center py-5"
-                style={{ borderBottom: `1px solid ${TOKENS.rule}` }}
-              >
-                <div className="col-span-12 md:col-span-5 flex items-center gap-3">
-                  <img
-                    src={avatarUrl(row.contributor)}
-                    alt=""
-                    width={40}
-                    height={40}
-                    className="rounded-full"
-                    style={{ filter: "saturate(0.85)" }}
-                  />
-                  <div>
-                    <div className="text-[14.5px] font-medium" style={{ color: TOKENS.text }}>
-                      {row.contributor}
-                    </div>
-                    <div className="text-[12px]" style={{ color: TOKENS.muted }}>
-                      {row.role}
-                    </div>
-                  </div>
-                </div>
-                <div className="col-span-12 md:col-span-4">
-                  <div className="text-[14.5px]" style={{ color: TOKENS.text }}>
-                    {row.title}
-                  </div>
-                </div>
-                <div className="col-span-6 md:col-span-2 text-[13px]" style={{ color: TOKENS.muted }}>
-                  Tried by{" "}
-                  <span style={{ color: TOKENS.text, fontWeight: 500 }}>{row.tried}</span> ·{" "}
-                  <span style={{ color: TOKENS.primary, fontWeight: 500 }}>{row.worked} worked</span>
-                </div>
+            {PEER_NETWORK.map((row) => {
+              const isExpanded = expandedRow === row.contributor;
+              const isHighlighted = hoveredNode === row.contributor;
+              const isRecognised = recognised[row.contributor];
+
+              return (
                 <div
-                  className="col-span-6 md:col-span-1 text-right font-serif italic text-[18px]"
-                  style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}
+                  key={row.contributor + row.title}
+                  style={{
+                    borderBottom: `1px solid ${TOKENS.rule}`,
+                    backgroundColor: isHighlighted ? "#f0fdf4" : "transparent",
+                    transition: "background-color 0.18s ease",
+                  }}
                 >
-                  {row.hours}
+                  {/* Main row — clickable */}
+                  <button
+                    type="button"
+                    onClick={() => setExpandedRow(isExpanded ? null : row.contributor)}
+                    className="w-full text-left"
+                    aria-expanded={isExpanded}
+                    style={{ background: "none", cursor: "pointer", display: "block", width: "100%" }}
+                  >
+                    <div className="grid grid-cols-12 gap-4 items-center py-5 px-1">
+                      {/* Avatar + name */}
+                      <div className="col-span-12 md:col-span-4 flex items-center gap-3">
+                        <img
+                          src={avatarUrl(row.contributor)}
+                          alt=""
+                          width={40}
+                          height={40}
+                          className="rounded-full"
+                          style={{ filter: "saturate(0.85)", flexShrink: 0 }}
+                        />
+                        <div>
+                          <div className="text-[14.5px] font-medium" style={{ color: TOKENS.text }}>
+                            {row.contributor}
+                          </div>
+                          <div className="text-[12px]" style={{ color: TOKENS.muted }}>
+                            {row.role}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Workflow title */}
+                      <div className="col-span-12 md:col-span-3">
+                        <div className="text-[14px]" style={{ color: TOKENS.text }}>
+                          {row.title}
+                        </div>
+                        {/* "Who to reach next" chip — inline */}
+                        {row.suggestRole && (
+                          <div className="mt-1.5">
+                            <span
+                              style={{
+                                fontSize: "10.5px",
+                                color: TOKENS.accent,
+                                border: `1px solid ${TOKENS.accent}`,
+                                padding: "1px 7px",
+                                borderRadius: "2px",
+                                opacity: 0.85,
+                              }}
+                            >
+                              → Suggest to {row.suggestRole}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Stats */}
+                      <div className="col-span-6 md:col-span-2 text-[13px]" style={{ color: TOKENS.muted }}>
+                        Tried by{" "}
+                        <span style={{ color: TOKENS.text, fontWeight: 500 }}>{row.tried}</span> ·{" "}
+                        <span style={{ color: TOKENS.primary, fontWeight: 500 }}>{row.worked} worked</span>
+                      </div>
+
+                      {/* Hours + trend + chevron */}
+                      <div className="col-span-6 md:col-span-3 flex items-center justify-end gap-3">
+                        <TrendBadge delta={row.weeklyDelta} />
+                        <span
+                          className="font-serif italic text-[18px] hidden md:block"
+                          style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}
+                        >
+                          {row.hours}
+                        </span>
+                        <ChevronDown
+                          className="w-4 h-4 shrink-0 transition-transform"
+                          strokeWidth={1.75}
+                          style={{
+                            color: TOKENS.muted,
+                            transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* Expanded content */}
+                  <div
+                    style={{
+                      overflow: "hidden",
+                      maxHeight: isExpanded ? "400px" : "0px",
+                      transition: "max-height 0.3s ease",
+                    }}
+                  >
+                    <div
+                      style={{
+                        padding: "0 4px 20px 56px",
+                        borderTop: `1px solid ${TOKENS.rule}`,
+                        paddingTop: "18px",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "18px",
+                      }}
+                    >
+                      {/* Propagation chain */}
+                      <div>
+                        <div
+                          className="text-[10px] font-medium uppercase mb-3"
+                          style={{ color: TOKENS.muted, letterSpacing: "0.28em" }}
+                        >
+                          Propagation chain
+                        </div>
+                        <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
+                          {row.propagation.map((step, i) => (
+                            <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0" }}>
+                              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginRight: "12px" }}>
+                                <img
+                                  src={step.name === "3 others" ? `https://api.dicebear.com/7.x/notionists/svg?seed=group&backgroundColor=fef3c7&radius=50` : avatarUrl(step.name)}
+                                  alt=""
+                                  width={28}
+                                  height={28}
+                                  className="rounded-full"
+                                  style={{ filter: "saturate(0.8)", flexShrink: 0 }}
+                                />
+                                {i < row.propagation.length - 1 && (
+                                  <div style={{ width: "1px", height: "18px", backgroundColor: TOKENS.rule, marginTop: "2px", marginBottom: "2px" }} />
+                                )}
+                              </div>
+                              <div style={{ paddingBottom: i < row.propagation.length - 1 ? "0" : "0", paddingTop: "4px" }}>
+                                <span className="text-[13px] font-medium" style={{ color: TOKENS.text }}>
+                                  {step.name}
+                                </span>
+                                <span className="text-[13px]" style={{ color: TOKENS.muted }}>
+                                  {" "}— {step.action}
+                                </span>
+                                <span
+                                  className="text-[11px] ml-2"
+                                  style={{
+                                    color: TOKENS.muted,
+                                    backgroundColor: TOKENS.bg,
+                                    border: `1px solid ${TOKENS.rule}`,
+                                    padding: "1px 6px",
+                                    borderRadius: "2px",
+                                  }}
+                                >
+                                  {step.week}
+                                </span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Recognise button */}
+                      <div>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setRecognised((s) => ({ ...s, [row.contributor]: true }));
+                          }}
+                          className="inline-flex items-center gap-2 text-[13px] font-medium hover:opacity-70 transition-opacity"
+                          style={{
+                            color: isRecognised ? TOKENS.muted : TOKENS.primary,
+                            borderBottom: `1px solid ${isRecognised ? TOKENS.rule : TOKENS.primary}`,
+                            paddingBottom: "2px",
+                            background: "none",
+                            cursor: isRecognised ? "default" : "pointer",
+                          }}
+                          data-testid={`recognise-${row.contributor}`}
+                        >
+                          {isRecognised ? (
+                            <>
+                              <Check className="w-3.5 h-3.5" strokeWidth={1.75} /> Recognised
+                            </>
+                          ) : (
+                            <>
+                              Recognise {row.contributor.split(" ")[0]}
+                              <ArrowUpRight className="w-3.5 h-3.5" strokeWidth={1.75} />
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
@@ -527,19 +926,11 @@ export default function AdminPage() {
                 <div key={r.role}>
                   <div className="flex items-baseline justify-between text-[13px] mb-1.5">
                     <span style={{ color: TOKENS.text }}>{r.role}</span>
-                    <span
-                      style={{
-                        color: r.under ? TOKENS.accent : TOKENS.text,
-                        fontWeight: 500,
-                      }}
-                    >
+                    <span style={{ color: r.under ? TOKENS.accent : TOKENS.text, fontWeight: 500 }}>
                       {r.pct}%
                     </span>
                   </div>
-                  <div
-                    className="h-1.5 w-full"
-                    style={{ backgroundColor: TOKENS.rule }}
-                  >
+                  <div className="h-1.5 w-full" style={{ backgroundColor: TOKENS.rule }}>
                     <div
                       className="h-full"
                       style={{
@@ -580,15 +971,9 @@ export default function AdminPage() {
                 <div
                   key={i}
                   className="p-6 flex flex-col"
-                  style={{
-                    backgroundColor: TOKENS.card,
-                    border: `1px solid ${TOKENS.rule}`,
-                  }}
+                  style={{ backgroundColor: TOKENS.card, border: `1px solid ${TOKENS.rule}` }}
                 >
-                  <div
-                    className="text-[15px] leading-snug mb-3"
-                    style={{ color: TOKENS.text, fontWeight: 500 }}
-                  >
+                  <div className="text-[15px] leading-snug mb-3" style={{ color: TOKENS.text, fontWeight: 500 }}>
                     {a.headline}
                   </div>
                   <div className="text-[13px] leading-relaxed mb-6 flex-1" style={{ color: TOKENS.muted }}>
@@ -637,10 +1022,7 @@ export default function AdminPage() {
           </div>
           <div
             className="p-6 md:p-8"
-            style={{
-              backgroundColor: TOKENS.card,
-              border: `1px solid ${TOKENS.rule}`,
-            }}
+            style={{ backgroundColor: TOKENS.card, border: `1px solid ${TOKENS.rule}` }}
           >
             <Sparkline />
             <p className="mt-6 text-[13.5px] max-w-2xl" style={{ color: TOKENS.muted }}>
@@ -654,13 +1036,9 @@ export default function AdminPage() {
         {/* Footer */}
         <div
           className="mt-24 pt-8 text-[11.5px]"
-          style={{
-            color: TOKENS.muted,
-            borderTop: `1px solid ${TOKENS.rule}`,
-          }}
+          style={{ color: TOKENS.muted, borderTop: `1px solid ${TOKENS.rule}` }}
         >
-          All numbers reconcile with the pitch deck (RoiModel slide). Pilot data is illustrative
-          for this submission.
+          All numbers reconcile with the pitch deck (RoiModel slide). Pilot data is illustrative for this submission.
         </div>
       </main>
     </div>
