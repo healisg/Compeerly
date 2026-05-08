@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { ArrowLeft, ArrowUpRight, Download } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Download, ChevronRight } from "lucide-react";
 
 const TOKENS = {
   primary: "#166534",
@@ -14,85 +14,81 @@ const TOKENS = {
 
 type Phase = {
   key: string;
-  name: string;
+  label: string;
   time: string;
-  narrative: string;
-  decisions: string[];
+  headline: string;
+  points: string[];
   tools: string[];
 };
 
 const PHASES: Phase[] = [
   {
-    key: "brief",
-    name: "Brief & research",
+    key: "research",
+    label: "Research",
     time: "~3 hrs",
-    narrative:
-      "Read the brief twice, then went and used the existing candidate's submission (chicoai.lovable.app) end-to-end. The point was not to copy it — it was to find the seams. The existing build is competent and earnest, but it leans into a usage-dashboard worldview: who's using AI, who isn't, who deserves credit. The research brief I commissioned in parallel — peer influence, surveillance penalties, the Management Science mentorship study — gave me the language for what I already suspected: visibility, not training, is the gap.",
-    decisions: [
-      "Treat the competing submission as the comparison set, not the ceiling.",
-      "Commission a 10-citation research brief in parallel, before any UI work.",
-      "Pick a thesis worth losing the role over rather than a safe synthesis.",
+    headline: "Mapped the adoption gap before touching a design tool.",
+    points: [
+      "Commissioned a dedicated research brief — peer influence studies, surveillance penalties, the Management Science mentorship trial — before writing a single line of code.",
+      "Key finding: 88% of heavy AI users name peers as their strongest influence. Only 50% of light users do. That is a visibility gap, not a training gap.",
+      "31% of knowledge workers actively work around their company's AI initiatives. Surveillance-first products feed that number. Peer-led ones reduce it.",
     ],
-    tools: ["Manus", "Claude Sonnet 4.5", "browser, slowly"],
+    tools: ["Manus", "Claude Sonnet 4.5"],
   },
   {
     key: "thesis",
-    name: "Thesis & differentiation",
+    label: "Thesis",
     time: "~2 hrs",
-    narrative:
-      "Wrote the one-line bet on a single page before anything else: peer-led, opt-in, surveillance-free. Then a list of features I would deliberately NOT build — assignment, nudge-the-consumer, skill credentials, completion tracking. Negative scope is the most underrated PM artefact. Most of the design discipline downstream came from this list, not from a moodboard.",
-    decisions: [
-      "Pick one metric: activation rate of latent users exposed to peer workflows.",
-      "Refuse the surveillance layer outright. The opt-in design is the product.",
-      "Frame the admin role as concierge, not foreman.",
+    headline: "Wrote the one-line bet before anything else.",
+    points: [
+      "Peer-led, opt-in, surveillance-free. That's the whole product bet on a single line.",
+      "Built a 'do not build' list: no assignment, no completion tracking, no skill credentials, no nudge campaigns. Negative scope is the most underrated PM artefact.",
+      "One metric picked and defended: activation rate of latent users exposed to peer workflows. Everything else is noise until that number moves.",
     ],
     tools: ["A text file", "Claude (as sceptical reader)"],
   },
   {
     key: "brand",
-    name: "Brand & deck",
+    label: "Brand & deck",
     time: "~4 hrs",
-    narrative:
-      "Built the brand system before the slides — palette, type pairing, voice rules, do/don't. The cream + forest green + Playfair italic combination is doing a job: it signals editorial seriousness, which is the right register for a pitch about restraint. The 12-slide deck (Title → ROI Model → Pilot → Thank You) was written to be read in 60 seconds standing up, not 30 minutes seated.",
-    decisions: [
-      "British English everywhere. GBP only. Spell out peer-to-peer with the hyphen.",
-      "No images, no illustrations on slides. Typography and colour do all the work.",
-      "RoiModel slide must reconcile to the £ shown in the app's admin view.",
+    headline: "Brand system built before the slides — not after.",
+    points: [
+      "Cream + forest green + Playfair italic signals editorial restraint. The register earns trust in a pitch about trust.",
+      "12 slides written to be read in 60 seconds standing up. Title → problem → bet → ROI → pilot → thank you. No filler.",
+      "ROI numbers in the deck reconcile exactly to the £ figures shown in the admin view. If they diverge, the pitch fails.",
     ],
-    tools: ["Replit Agent (slides artifact)", "Playfair Display", "Inter"],
+    tools: ["Replit Agent", "Playfair Display", "Inter"],
   },
   {
-    key: "app",
-    name: "App build",
+    key: "build",
+    label: "Build",
     time: "~6 hrs",
-    narrative:
-      "Five pages: cover, feed, capture, detail, admin. Built in that order because each one teaches the next. The capture flow is deliberately frictionless (one prompt bar, role-pinned suggestions); the detail page foregrounds the author's name and avatar before the workflow itself, because credit is the currency. The admin view came last so I could check the numbers reconcile with the deck. Mock data is co-located in the page that uses it — not in a shared library — because in a prototype that's an honest signal of what is and isn't real.",
-    decisions: [
-      "Use wouter, not react-router. Lighter, suits the page count.",
-      "Co-locate mock data with the page consuming it.",
-      "Hand-roll the SVG sparkline rather than pull a charting library.",
+    headline: "Five pages, built in order. Each one taught the next.",
+    points: [
+      "Cover → feed → capture → detail → admin. The sequence matters: the admin view had to come last to confirm the numbers hold.",
+      "Capture: one prompt bar, role-pinned suggestions, sub-2-minute share. Friction is the enemy of authentic contribution.",
+      "Detail page: author name and avatar come before the workflow text. Credit is the currency — the design signals that.",
+      "Mock data co-located with the page that uses it. In a prototype, that's an honest signal of what's real and what isn't.",
     ],
-    tools: ["Replit Agent", "Vite + React + Tailwind", "wouter", "Lucide", "dicebear avatars"],
+    tools: ["Replit Agent", "Vite + React + Tailwind", "wouter", "Lucide", "dicebear"],
   },
   {
     key: "polish",
-    name: "Polish",
-    time: "~2 hrs (and counting)",
-    narrative:
-      "Cross-checked numbers across deck and admin, fixed copy that drifted into surveillance-adjacent phrasing, and ran a code review pass on every page. The polish pass is also where I added this page — a meta-pitch that earns its keep by showing the working, not just the result.",
-    decisions: [
-      "Run an architect review after each major page.",
-      "Refuse to invent a 3-hour build claim. Tell the real timeline.",
-      "Ship the about page; do not ship animation for animation's sake.",
+    label: "Polish",
+    time: "~2 hrs",
+    headline: "Cross-checked every number. Shipped the working, not just the result.",
+    points: [
+      "All figures reconciled across deck, admin view, one-pager PDF, and essay. One number in one place; everywhere else is a reference.",
+      "Architect code review run after every major page. Caught copy that drifted into surveillance-adjacent phrasing — cut it.",
+      "This page added last. Showing the process is part of the pitch. If the prototype is about transparency, the about page has to be too.",
     ],
-    tools: ["Replit Agent code review", "manual screenshot QA"],
+    tools: ["Replit code review", "screenshot QA"],
   },
 ];
 
 const TOOLS = [
   { name: "Replit Agent", note: "scaffold, iterate, deploy" },
-  { name: "Claude Sonnet 4.5", note: "thesis pressure-testing, copy edits" },
-  { name: "Anthropic API", note: "wired to power demo workflows" },
+  { name: "Claude Sonnet 4.5", note: "thesis pressure-testing, copy" },
+  { name: "Anthropic API", note: "powers demo workflows" },
   { name: "Manus", note: "research brief synthesis" },
   { name: "Playfair Display + Inter", note: "type system" },
   { name: "Tailwind + Vite", note: "build chain" },
@@ -102,29 +98,27 @@ const TOOLS = [
 
 const NEXT = [
   {
-    title: "Real telemetry on \u2018worked for me\u2019",
-    body:
-      "Today the count is a state increment. Wire it to the API server, deduplicate per user, and use it as the input to a 'most useful this week' rail.",
+    title: "Real telemetry on 'worked for me'",
+    body: "Wire the count to the API server, deduplicate per user, and surface a 'most useful this week' rail from it.",
   },
   {
     title: "Capture-in-flow from Slack and Notion",
-    body:
-      "Most workflow capture should happen at the moment of use, not in a separate app. A Slack slash-command and a Notion page action would push 80% of the friction out of the share step.",
+    body: "A slash-command and a Notion page action would push 80% of the friction out of the share step.",
   },
   {
-    title: "Anti-spam + low-quality moderation",
-    body:
-      "Lightweight community signals (worked-for-me, role-relevance) plus a quiet flagging affordance. No editorial gatekeepers; the goal is for low-quality workflows to sink, not be deleted.",
+    title: "Anti-spam + lightweight moderation",
+    body: "Community signals and a quiet flagging affordance. No gatekeepers — low-quality workflows should sink, not be deleted.",
   },
   {
-    title: "Manager digest \u2014 modelling, not mandating",
-    body:
-      "An opt-in weekly digest for line managers showing which workflows their team has tried (in aggregate, never per-person). A surface for leaders to model from, never to enforce from.",
+    title: "Manager digest — modelling, not mandating",
+    body: "An opt-in weekly digest showing which workflows a team has tried in aggregate. A surface for leaders to model from, never to enforce from.",
   },
 ];
 
 export default function AboutPage() {
-  const [openPhase, setOpenPhase] = useState<string>(PHASES[0].key);
+  const [activePhase, setActivePhase] = useState<string>(PHASES[0].key);
+  const phase = PHASES.find((p) => p.key === activePhase) ?? PHASES[0];
+  const phaseIndex = PHASES.findIndex((p) => p.key === activePhase);
 
   return (
     <div
@@ -165,16 +159,17 @@ export default function AboutPage() {
       </header>
 
       <main className="max-w-5xl mx-auto px-6 md:px-10 pt-16 pb-32">
+
         {/* Eyebrow + title */}
-        <section className="max-w-3xl mb-16">
+        <section className="max-w-3xl mb-10">
           <div
-            className="text-[11px] font-medium uppercase mb-6"
+            className="text-[11px] font-medium uppercase mb-5"
             style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}
           >
             Behind the prototype
           </div>
           <h1
-            className="font-serif italic leading-[1.04] tracking-tight text-[44px] md:text-[72px]"
+            className="font-serif italic leading-[1.04] tracking-tight text-[44px] md:text-[68px]"
             style={{
               fontFamily: "'Playfair Display', Georgia, serif",
               color: TOKENS.text,
@@ -182,20 +177,17 @@ export default function AboutPage() {
           >
             How I built this.
           </h1>
-          <div className="h-px w-[120px] mt-10" style={{ backgroundColor: TOKENS.rule }} />
           <p
-            className="mt-8 text-[16px] md:text-[18px] leading-[1.6]"
-            style={{ color: TOKENS.text }}
+            className="mt-6 text-[16px] md:text-[17px] leading-[1.6] max-w-2xl"
+            style={{ color: TOKENS.muted }}
           >
-            This isn't a deck. It's a working prototype, built with the same kind of tools the
-            product is about — peer-shared AI workflows, captured in the open. The page below is
-            a meta-pitch: what the brief was, what I bet on, and how the build actually went.
+            A working prototype, not a deck. Click through each phase to see the process.
           </p>
         </section>
 
-        {/* Why peer-led callout */}
+        {/* The bet callout */}
         <section
-          className="mb-20 p-8 md:p-10 max-w-4xl relative"
+          className="mb-14 p-7 md:p-9 max-w-4xl relative"
           style={{
             backgroundColor: TOKENS.card,
             border: `1px solid ${TOKENS.rule}`,
@@ -208,184 +200,270 @@ export default function AboutPage() {
             style={{ width: "3px", backgroundColor: TOKENS.accent }}
           />
           <div
-            className="text-[11px] font-medium uppercase mb-4"
+            className="text-[11px] font-medium uppercase mb-3"
             style={{ color: TOKENS.accent, letterSpacing: "0.32em" }}
           >
             The bet
           </div>
           <h2
             id="why-heading"
-            className="font-serif italic text-[26px] md:text-[34px] leading-[1.18] tracking-tight max-w-3xl"
+            className="font-serif italic text-[24px] md:text-[30px] leading-[1.2] tracking-tight"
             style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}
           >
             Why peer-led, not prescribed.
           </h2>
-          <div className="mt-6 space-y-4 text-[15.5px] leading-[1.65] max-w-2xl" style={{ color: TOKENS.text }}>
+          <div className="mt-4 space-y-3 text-[15px] leading-[1.65] max-w-2xl" style={{ color: TOKENS.text }}>
             <p>
-              The competing submission treats AI adoption like a compliance problem: measure who
-              uses it, nudge the rest, hand out credentials. That worldview is what produces
-              shadow AI and performative usage in the first place.
+              Most AI adoption products treat this like a compliance problem: measure who uses it,
+              nudge the rest, hand out credentials. That worldview produces shadow AI and
+              performative usage — not adoption.
             </p>
             <p>
-              Workflow Mirror inverts it. Active users share what works, on their own terms.
-              Non-adopters discover those workflows themselves, in role-relevant clusters, with
-              no manager visibility and no mandate. Microsoft Research's 2026 study put the
-              difference plainly: 88% of heavy AI users name peers as the strongest influence,
-              versus 50% of light users. Visibility, not training, is the gap. This product
-              closes it.
+              Workflow Mirror inverts it. Active users share what works. Non-adopters discover
+              those workflows on their own terms, in role-relevant clusters, with no management
+              visibility and no mandate. Visibility, not training, is the gap. This closes it.
             </p>
           </div>
-          <div className="mt-7" style={{ borderTop: `1px solid ${TOKENS.rule}`, paddingTop: "20px" }}>
+          <div className="mt-6" style={{ borderTop: `1px solid ${TOKENS.rule}`, paddingTop: "16px" }}>
             <Link
               href="/essay"
               data-testid="link-essay-from-about"
-              className="inline-flex items-center gap-2 text-[13.5px] font-medium hover:opacity-70 transition-opacity"
+              className="inline-flex items-center gap-2 text-[13px] font-medium hover:opacity-70 transition-opacity"
               style={{ color: TOKENS.primary }}
             >
               Read the full argument
               <ArrowUpRight className="w-3.5 h-3.5" strokeWidth={1.75} />
             </Link>
-            <span
-              className="ml-3 text-[12px]"
-              style={{ color: TOKENS.muted }}
-            >
+            <span className="ml-3 text-[12px]" style={{ color: TOKENS.muted }}>
               7-minute essay · with sources
             </span>
           </div>
         </section>
 
-        {/* Build timeline */}
+        {/* Phase tab navigator */}
         <section className="mb-20" aria-labelledby="timeline-heading">
-          <div className="flex items-baseline justify-between mb-8 flex-wrap gap-3">
-            <h2
-              id="timeline-heading"
-              className="font-serif italic text-[26px] md:text-[34px] tracking-tight"
-              style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}
-            >
-              The build, honestly.
-            </h2>
-            <div className="text-[12.5px]" style={{ color: TOKENS.muted }}>
-              Approx. 17 hours over 2 days. Click a phase to expand.
-            </div>
-          </div>
+          <h2
+            id="timeline-heading"
+            className="font-serif italic text-[26px] md:text-[32px] tracking-tight mb-6"
+            style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}
+          >
+            The build, phase by phase.
+          </h2>
 
-          <div style={{ borderTop: `1px solid ${TOKENS.rule}` }}>
-            {PHASES.map((phase, i) => {
-              const open = openPhase === phase.key;
+          {/* Tab bar */}
+          <div
+            className="flex gap-0 overflow-x-auto mb-0"
+            style={{ borderBottom: `1px solid ${TOKENS.rule}` }}
+            role="tablist"
+            aria-label="Build phases"
+          >
+            {PHASES.map((p, i) => {
+              const active = p.key === activePhase;
               return (
-                <div
-                  key={phase.key}
-                  style={{ borderBottom: `1px solid ${TOKENS.rule}` }}
-                  data-testid={`phase-${phase.key}`}
+                <button
+                  key={p.key}
+                  role="tab"
+                  aria-selected={active}
+                  aria-controls={`phase-panel-${p.key}`}
+                  id={`phase-tab-${p.key}`}
+                  type="button"
+                  onClick={() => setActivePhase(p.key)}
+                  data-testid={`tab-${p.key}`}
+                  className="flex items-center gap-2 px-4 py-3.5 text-[13px] whitespace-nowrap transition-colors relative shrink-0"
+                  style={{
+                    color: active ? TOKENS.primary : TOKENS.muted,
+                    fontWeight: active ? 600 : 400,
+                    borderBottom: active ? `2px solid ${TOKENS.primary}` : "2px solid transparent",
+                    marginBottom: "-1px",
+                    background: "none",
+                    cursor: "pointer",
+                  }}
                 >
-                  <button
-                    type="button"
-                    onClick={() => setOpenPhase(open ? "" : phase.key)}
-                    className="w-full grid grid-cols-12 gap-4 items-baseline py-6 text-left hover:opacity-80 transition-opacity"
-                    aria-expanded={open}
-                    aria-controls={`phase-body-${phase.key}`}
+                  <span
+                    className="text-[11px]"
+                    style={{
+                      color: active ? TOKENS.primary : TOKENS.muted,
+                      fontFamily: "'Playfair Display', Georgia, serif",
+                      fontStyle: "italic",
+                    }}
                   >
-                    <div
-                      className="col-span-2 md:col-span-1 font-serif italic text-[18px]"
-                      style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.muted }}
-                    >
-                      0{i + 1}
-                    </div>
-                    <div className="col-span-7 md:col-span-7">
-                      <div
-                        className="font-serif italic text-[20px] md:text-[24px] tracking-tight"
-                        style={{
-                          fontFamily: "'Playfair Display', Georgia, serif",
-                          color: open ? TOKENS.primary : TOKENS.text,
-                        }}
-                      >
-                        {phase.name}
-                      </div>
-                    </div>
-                    <div
-                      className="col-span-3 md:col-span-3 text-right text-[13px] font-medium"
-                      style={{ color: TOKENS.muted }}
-                    >
-                      {phase.time}
-                    </div>
-                    <div className="hidden md:block col-span-1 text-right text-[14px]" style={{ color: TOKENS.muted }}>
-                      {open ? "−" : "+"}
-                    </div>
-                  </button>
-
-                  {open && (
-                    <div
-                      id={`phase-body-${phase.key}`}
-                      className="grid grid-cols-12 gap-4 pb-8"
-                    >
-                      <div className="hidden md:block col-span-1" />
-                      <div className="col-span-12 md:col-span-7">
-                        <p className="text-[15px] leading-[1.7]" style={{ color: TOKENS.text }}>
-                          {phase.narrative}
-                        </p>
-                        <div
-                          className="mt-6 text-[10px] font-medium uppercase mb-3"
-                          style={{ color: TOKENS.muted, letterSpacing: "0.28em" }}
-                        >
-                          Key decisions
-                        </div>
-                        <ul className="space-y-2">
-                          {phase.decisions.map((d) => (
-                            <li
-                              key={d}
-                              className="flex gap-3 text-[14px] leading-[1.55]"
-                              style={{ color: TOKENS.text }}
-                            >
-                              <span style={{ color: TOKENS.primary }}>—</span>
-                              <span>{d}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div className="col-span-12 md:col-span-4">
-                        <div
-                          className="text-[10px] font-medium uppercase mb-3"
-                          style={{ color: TOKENS.muted, letterSpacing: "0.28em" }}
-                        >
-                          Tools used
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          {phase.tools.map((t) => (
-                            <span
-                              key={t}
-                              className="text-[12px] px-2.5 py-1"
-                              style={{
-                                color: TOKENS.text,
-                                backgroundColor: TOKENS.card,
-                                border: `1px solid ${TOKENS.rule}`,
-                              }}
-                            >
-                              {t}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
+                    0{i + 1}
+                  </span>
+                  {p.label}
+                </button>
               );
             })}
           </div>
+
+          {/* Phase content panel */}
+          <div
+            id={`phase-panel-${phase.key}`}
+            role="tabpanel"
+            aria-labelledby={`phase-tab-${phase.key}`}
+            className="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-0"
+            style={{
+              backgroundColor: TOKENS.card,
+              border: `1px solid ${TOKENS.rule}`,
+              borderTop: "none",
+            }}
+            data-testid={`panel-${phase.key}`}
+          >
+            {/* Left: headline + bullets */}
+            <div className="lg:col-span-2 p-7 md:p-8">
+              <div className="flex items-baseline gap-3 mb-4">
+                <span
+                  className="font-serif italic text-[14px]"
+                  style={{ color: TOKENS.muted, fontFamily: "'Playfair Display', Georgia, serif" }}
+                >
+                  {phase.time}
+                </span>
+              </div>
+              <h3
+                className="font-serif italic text-[20px] md:text-[24px] leading-[1.25] tracking-tight mb-6"
+                style={{ color: TOKENS.text, fontFamily: "'Playfair Display', Georgia, serif" }}
+              >
+                {phase.headline}
+              </h3>
+              <ul className="space-y-3">
+                {phase.points.map((pt) => (
+                  <li key={pt} className="flex gap-3 text-[14.5px] leading-[1.6]" style={{ color: TOKENS.text }}>
+                    <ChevronRight
+                      className="w-4 h-4 shrink-0 mt-0.5"
+                      strokeWidth={1.75}
+                      style={{ color: TOKENS.primary }}
+                    />
+                    <span>{pt}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Right: tools + timeline sidebar */}
+            <div
+              className="lg:col-span-1 p-7 md:p-8 flex flex-col gap-8"
+              style={{ borderLeft: `1px solid ${TOKENS.rule}` }}
+            >
+              {/* Tools used */}
+              <div>
+                <div
+                  className="text-[10px] font-medium uppercase mb-3"
+                  style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}
+                >
+                  Tools used
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {phase.tools.map((t) => (
+                    <span
+                      key={t}
+                      className="text-[12px] px-2.5 py-1"
+                      style={{
+                        color: TOKENS.text,
+                        backgroundColor: TOKENS.bg,
+                        border: `1px solid ${TOKENS.rule}`,
+                      }}
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Build timeline */}
+              <div>
+                <div
+                  className="text-[10px] font-medium uppercase mb-3"
+                  style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}
+                >
+                  Build timeline
+                </div>
+                <div className="space-y-2">
+                  {PHASES.map((p, i) => {
+                    const isCurrent = p.key === activePhase;
+                    return (
+                      <div
+                        key={p.key}
+                        className="flex items-center justify-between text-[13px] py-1"
+                        style={{
+                          color: isCurrent ? TOKENS.primary : TOKENS.muted,
+                          fontWeight: isCurrent ? 600 : 400,
+                        }}
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <div
+                            className="w-2 h-2 rounded-full shrink-0"
+                            style={{
+                              backgroundColor: isCurrent ? TOKENS.primary : TOKENS.rule,
+                            }}
+                          />
+                          {p.label}
+                        </div>
+                        <span className="text-[12px]">{p.time}</span>
+                      </div>
+                    );
+                  })}
+                  <div
+                    className="flex items-center justify-between text-[13px] pt-2 font-semibold"
+                    style={{ borderTop: `1px solid ${TOKENS.rule}`, color: TOKENS.text }}
+                  >
+                    <span>Total</span>
+                    <span>~17 hrs</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Phase navigation */}
+              <div className="flex items-center gap-3 mt-auto">
+                <button
+                  type="button"
+                  onClick={() => phaseIndex > 0 && setActivePhase(PHASES[phaseIndex - 1].key)}
+                  disabled={phaseIndex === 0}
+                  className="w-8 h-8 flex items-center justify-center transition-opacity disabled:opacity-30"
+                  style={{
+                    border: `1px solid ${TOKENS.rule}`,
+                    borderRadius: "50%",
+                    color: TOKENS.muted,
+                    background: "none",
+                    cursor: phaseIndex === 0 ? "default" : "pointer",
+                  }}
+                  aria-label="Previous phase"
+                >
+                  ←
+                </button>
+                <button
+                  type="button"
+                  onClick={() => phaseIndex < PHASES.length - 1 && setActivePhase(PHASES[phaseIndex + 1].key)}
+                  disabled={phaseIndex === PHASES.length - 1}
+                  className="w-8 h-8 flex items-center justify-center transition-opacity disabled:opacity-30"
+                  style={{
+                    border: `1px solid ${TOKENS.rule}`,
+                    borderRadius: "50%",
+                    color: TOKENS.muted,
+                    background: "none",
+                    cursor: phaseIndex === PHASES.length - 1 ? "default" : "pointer",
+                  }}
+                  aria-label="Next phase"
+                >
+                  →
+                </button>
+                <span className="text-[12px]" style={{ color: TOKENS.muted }}>
+                  {phaseIndex + 1} / {PHASES.length}
+                </span>
+              </div>
+            </div>
+          </div>
         </section>
 
-        {/* Tools used (full strip) + What's next */}
+        {/* Stack + What's next */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-20">
           <div>
             <h2
-              className="font-serif italic text-[26px] md:text-[32px] tracking-tight mb-6"
+              className="font-serif italic text-[24px] md:text-[30px] tracking-tight mb-5"
               style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}
             >
               The whole stack.
             </h2>
-            <p className="text-[14px] leading-[1.6] mb-6 max-w-md" style={{ color: TOKENS.muted }}>
-              Listed honestly. The interesting line is not the framework choice — it's that the
-              same agent-driven workflow that built this prototype is the one being pitched to
-              the customer.
+            <p className="text-[14px] leading-[1.6] mb-5" style={{ color: TOKENS.muted }}>
+              The same agent-driven workflow that built this prototype is the one being pitched to the customer.
             </p>
             <div style={{ borderTop: `1px solid ${TOKENS.rule}` }}>
               {TOOLS.map((t) => (
@@ -407,35 +485,30 @@ export default function AboutPage() {
 
           <div>
             <h2
-              className="font-serif italic text-[26px] md:text-[32px] tracking-tight mb-6"
+              className="font-serif italic text-[24px] md:text-[30px] tracking-tight mb-5"
               style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}
             >
               What I'd do next.
             </h2>
-            <p className="text-[14px] leading-[1.6] mb-6 max-w-md" style={{ color: TOKENS.muted }}>
-              The four moves that follow naturally from the thesis. Each one keeps the
-              peer-led, opt-in posture intact — none of them re-introduce a surveillance
-              layer.
+            <p className="text-[14px] leading-[1.6] mb-5" style={{ color: TOKENS.muted }}>
+              Four natural next moves. None of them re-introduce a surveillance layer.
             </p>
             <div className="space-y-5">
               {NEXT.map((n, i) => (
                 <div key={n.title}>
                   <div className="flex items-baseline gap-3">
                     <span
-                      className="font-serif italic text-[16px]"
-                      style={{
-                        fontFamily: "'Playfair Display', Georgia, serif",
-                        color: TOKENS.muted,
-                      }}
+                      className="font-serif italic text-[15px] shrink-0"
+                      style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.muted }}
                     >
                       0{i + 1}
                     </span>
-                    <div className="text-[15px] font-medium" style={{ color: TOKENS.text }}>
+                    <div className="text-[14.5px] font-medium" style={{ color: TOKENS.text }}>
                       {n.title}
                     </div>
                   </div>
                   <p
-                    className="mt-1.5 ml-6 text-[13.5px] leading-[1.6]"
+                    className="mt-1.5 ml-6 text-[13px] leading-[1.6]"
                     style={{ color: TOKENS.muted }}
                   >
                     {n.body}
@@ -463,7 +536,7 @@ export default function AboutPage() {
                 Take it with you
               </div>
               <div
-                className="font-serif italic text-[22px] md:text-[28px] leading-[1.2] tracking-tight"
+                className="font-serif italic text-[22px] md:text-[26px] leading-[1.2] tracking-tight"
                 style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}
               >
                 The one-pager — bet, metric, ROI, pilot, on a single page.
@@ -486,7 +559,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Footer credit */}
+        {/* Footer */}
         <div
           className="pt-8 flex items-baseline justify-between flex-wrap gap-4 text-[12px]"
           style={{ color: TOKENS.muted, borderTop: `1px solid ${TOKENS.rule}` }}
