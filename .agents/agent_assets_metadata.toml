@@ -1,0 +1,14 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "N0QpS3fwhIIgw2CtWzTt0"
+uri = "file://.local/outputs/Attachment-Mirror.pptx"
+type = "slides"
+title = "Attachment Mirror.pptx"
+
+[[outputs]]
+id = "BD60qKXBB39vSe5o5k1W8"
+uri = "file://.local/outputs/Attachment-Mirror.pdf"
+type = "pdf"
+title = "Attachment Mirror.pdf"
