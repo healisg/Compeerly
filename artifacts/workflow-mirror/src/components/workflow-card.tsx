@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { Workflow } from "@/lib/workflows";
-import { Check, ArrowRight } from "lucide-react";
+import { ArrowRight, Users } from "lucide-react";
 
 const TOOL_DOTS: Record<string, string> = {
   claude: "#D97757",
@@ -35,6 +35,10 @@ function monogram(name: string) {
   if (parts.length === 0) return "?";
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function pluralRole(role: string) {
+  return role.endsWith("s") ? role : role + "s";
 }
 
 export function WorkflowCard({ workflow }: { workflow: Workflow }) {
@@ -87,14 +91,30 @@ export function WorkflowCard({ workflow }: { workflow: Workflow }) {
           {workflow.title}
         </h3>
 
+        {/* Time comparison strip */}
+        <div
+          className="flex items-center gap-2 mb-4 px-3 py-2 rounded-lg text-sm w-fit"
+          style={{ backgroundColor: "rgba(229,219,200,0.35)" }}
+          data-testid="time-comparison"
+        >
+          <span
+            className="text-muted-foreground font-medium"
+            style={{ textDecoration: "line-through", textDecorationColor: "currentColor" }}
+          >
+            {workflow.timeManual} manually
+          </span>
+          <span className="text-muted-foreground/60">→</span>
+          <span className="font-semibold text-primary">
+            {workflow.timeWithAI} with AI
+          </span>
+        </div>
+
         {/* Meta line */}
         <div
           className="flex flex-wrap items-center gap-2 text-[11px] text-muted-foreground mb-4 font-medium uppercase tracking-wide"
           data-testid="text-meta"
         >
           <span data-testid="badge-category">{workflow.category}</span>
-          <span className="text-border">•</span>
-          <span data-testid="text-time-saved">{workflow.timeSaved}</span>
           <span className="text-border">•</span>
           <span>{workflow.frequency}</span>
         </div>
@@ -110,13 +130,19 @@ export function WorkflowCard({ workflow }: { workflow: Workflow }) {
         {/* Footer */}
         <div className="mt-auto flex items-center justify-between pt-5 border-t border-border/60">
           <div
-            className="flex items-center gap-1.5 text-xs font-semibold text-accent"
-            data-testid="text-worked-count"
+            className="flex items-center gap-1.5 text-xs text-muted-foreground"
+            data-testid="text-peer-stat"
           >
-            <Check className="w-3.5 h-3.5" />
-            {workflow.workedForMeCount} worked for me
+            <Users className="w-3.5 h-3.5 shrink-0" />
+            <span>
+              <span className="font-semibold text-foreground">{workflow.peerCount}</span>
+              {" "}{pluralRole(workflow.role).toLowerCase()}
+              {" · "}avg{" "}
+              <span className="font-semibold text-foreground">{workflow.timeSaved}</span>
+              {" "}saved
+            </span>
           </div>
-          <div className="text-xs font-medium text-muted-foreground group-hover:text-primary flex items-center gap-1 transition-colors">
+          <div className="text-xs font-medium text-muted-foreground group-hover:text-primary flex items-center gap-1 transition-colors shrink-0 ml-3">
             Read full workflow
             <ArrowRight className="w-3.5 h-3.5" />
           </div>
