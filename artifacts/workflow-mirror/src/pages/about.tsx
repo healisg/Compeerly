@@ -35,7 +35,7 @@ const PHASES: Phase[] = [
       "Key finding: 88% of heavy AI users name peers as their strongest influence. Only 50% of light users do. That is a visibility gap, not a training gap.",
       "31% of knowledge workers actively work around their company's AI initiatives. Surveillance-first products feed that number. Peer-led ones reduce it.",
     ],
-    tools: ["Manus", "Claude Sonnet 4.5"],
+    tools: ["Manus AI", "Claude Sonnet 4.5"],
     skills: ["web-search", "ai-integrations-anthropic"],
   },
   {
