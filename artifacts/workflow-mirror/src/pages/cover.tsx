@@ -231,7 +231,7 @@ export default function CoverPage() {
             </Link>
           </div>
 
-          <div className="mt-16 md:mt-20">
+          <div className="mt-16 md:mt-20 flex flex-wrap items-center gap-x-6 gap-y-3">
             <Link
               href="/about"
               data-testid="link-about-build"
@@ -244,6 +244,20 @@ export default function CoverPage() {
               About this build
               <ArrowRight className="w-3 h-3" strokeWidth={1.75} />
             </Link>
+            <span aria-hidden style={{ color: TOKENS.rule }}>·</span>
+            <a
+              href={`${import.meta.env.BASE_URL}workflow-mirror-one-pager.pdf`}
+              download
+              data-testid="link-one-pager-pdf"
+              className="inline-flex items-center gap-2 text-[12px] font-medium uppercase hover:opacity-70 transition-opacity no-underline"
+              style={{
+                color: TOKENS.muted,
+                letterSpacing: "0.28em",
+              }}
+            >
+              One-pager (PDF)
+              <ArrowRight className="w-3 h-3" strokeWidth={1.75} />
+            </a>
           </div>
         </div>
       </div>
