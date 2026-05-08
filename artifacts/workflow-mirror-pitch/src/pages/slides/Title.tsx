@@ -3,7 +3,7 @@ import SlideChrome from "@/components/SlideChrome";
 export default function TitleSlide() {
   return (
     <div className="w-screen h-screen overflow-hidden relative bg-bg">
-      <SlideChrome slideNumber={1} totalSlides={10} />
+      <SlideChrome slideNumber={1} totalSlides={12} />
 
       <div className="absolute inset-0 flex flex-col justify-center pl-[8vw] pr-[8vw]">
         <div className="text-[1.5vw] uppercase tracking-[0.35em] text-accent font-semibold mb-[3vh]">

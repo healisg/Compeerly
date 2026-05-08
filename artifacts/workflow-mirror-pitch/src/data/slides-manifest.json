@@ -86,5 +86,13 @@
                 "title": "The Pilot",
                 "description": "Five-step concierge pilot plan",
                 "speakerNotes": ""
+        },
+        {
+                "id": "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+                "position": 12,
+                "filepath": "src/pages/slides/ThankYou.tsx",
+                "title": "Thank You",
+                "description": "Closing slide — thank you and Q&A",
+                "speakerNotes": ""
         }
 ]

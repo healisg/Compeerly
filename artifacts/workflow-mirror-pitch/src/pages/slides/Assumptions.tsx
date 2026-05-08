@@ -3,7 +3,7 @@ import SlideChrome from "@/components/SlideChrome";
 export default function AssumptionsSlide() {
   return (
     <div className="w-screen h-screen overflow-hidden relative bg-bg">
-      <SlideChrome slideNumber={7} totalSlides={10} />
+      <SlideChrome slideNumber={7} totalSlides={12} />
 
       <div className="absolute top-[14vh] left-[5.5vw] flex items-baseline gap-[1.2vw]">
         <span className="font-display italic text-[2vw] text-accent">07</span>
