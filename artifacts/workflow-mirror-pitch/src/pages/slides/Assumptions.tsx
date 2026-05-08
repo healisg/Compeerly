@@ -54,7 +54,7 @@ export default function AssumptionsSlide() {
             That the active 40 will share at all.
           </p>
           <p className="font-body text-[1.5vw] leading-[1.5] text-text/70 mt-[2.5vh]">
-            First test is concierge-style: interview 5 active users, structure their workflows by hand, publish them, and measure whether non-adopters engage — before investing in the self-serve capture tool.
+            Before building anything, do it by hand. Five conversations. Five published workflows. Watch whether non-adopters engage. That result determines whether the capture tool gets built at all.
           </p>
         </div>
       </div>

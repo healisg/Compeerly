@@ -5,7 +5,7 @@
 		"filepath": "src/pages/slides/Title.tsx",
 		"title": "Workflow Mirror",
 		"description": "Title slide — peer-led AI adoption for the enterprise",
-		"speakerNotes": ""
+		"speakerNotes": "How many of you have been in a company that bought AI licences, ran a few workshops, and then six months later nobody was using them? [Pause let it land]\n\nThat's the problem Chico.ai exists to solve. And right now, their product tells you who isn't using AI. It does nothing to fix it."
 	},
 	{
 		"id": "22222222-2222-4222-8222-222222222222",
@@ -29,7 +29,7 @@
 		"filepath": "src/pages/slides/RootCause.tsx",
 		"title": "Root Cause",
 		"description": "Microsoft Work Trend Index — 78% BYOAI",
-		"speakerNotes": ""
+		"speakerNotes": "\"The gap isn't training. It's visibility. When AI use stays private, non-adopters have no social proof it works for their role.\""
 	},
 	{
 		"id": "55555555-5555-4555-8555-555555555555",
@@ -37,7 +37,7 @@
 		"filepath": "src/pages/slides/TheBet.tsx",
 		"title": "The Bet",
 		"description": "Peer-to-peer, not top-down",
-		"speakerNotes": ""
+		"speakerNotes": "\"Peer-led workflow sharing will activate non-adopters faster than any top-down training programme.\n\n\"If we make private AI use visible and shareable — peer to peer, role to role, opt-in and surveillance-free — non-adopters will activate at a significantly higher rate than through any training or mandate.\""
 	},
 	{
 		"id": "66666666-6666-4666-8666-666666666666",
