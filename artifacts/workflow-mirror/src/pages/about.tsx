@@ -12,6 +12,8 @@ const TOKENS = {
   card: "#FFFFFF",
 };
 
+const SERIF = "'Playfair Display', Georgia, serif";
+
 type Phase = {
   key: string;
   label: string;
@@ -123,40 +125,81 @@ export default function AboutPage() {
   return (
     <div
       className="min-h-screen w-full"
-      style={{ backgroundColor: TOKENS.bg, color: TOKENS.text, fontFamily: "'Inter', system-ui, sans-serif", overflowX: "hidden" }}
+      style={{
+        backgroundColor: TOKENS.bg,
+        color: TOKENS.text,
+        fontFamily: "'Inter', system-ui, sans-serif",
+        overflowX: "hidden",
+      }}
       data-testid="about-page"
     >
-      <header className="sticky top-0 z-20 border-b" style={{ borderColor: TOKENS.rule, backgroundColor: "rgba(251,248,244,0.92)" }}>
+      <header
+        className="sticky top-0 z-20 border-b"
+        style={{ borderColor: TOKENS.rule, backgroundColor: "rgba(251,248,244,0.92)" }}
+      >
         <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-          <Link href="/" className="inline-flex items-center gap-2 text-[13px] font-medium hover:opacity-70 transition-opacity" style={{ color: TOKENS.muted }}>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-[13px] font-medium hover:opacity-70 transition-opacity"
+            style={{ color: TOKENS.muted }}
+          >
             <ArrowLeft className="w-4 h-4" strokeWidth={1.75} />
             Back to cover
           </Link>
-          <div className="text-[11px] font-medium uppercase" style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}>
+          <div
+            className="text-[11px] font-medium uppercase"
+            style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}
+          >
             Workflow Mirror · About
           </div>
         </div>
       </header>
 
       <main className="max-w-5xl mx-auto px-6 md:px-10 pt-16 pb-32">
-        <section className="mb-14 p-7 md:p-9 max-w-4xl relative" style={{ backgroundColor: TOKENS.card, border: `1px solid ${TOKENS.rule}` }} aria-labelledby="why-heading">
-          <div aria-hidden className="absolute left-0 top-0 bottom-0" style={{ width: "3px", backgroundColor: TOKENS.accent }} />
-          <div className="text-[11px] font-medium uppercase mb-3" style={{ color: TOKENS.accent, letterSpacing: "0.32em" }}>
+
+        {/* The bet callout */}
+        <section
+          className="mb-14 p-7 md:p-9 max-w-4xl relative"
+          style={{ backgroundColor: TOKENS.card, border: `1px solid ${TOKENS.rule}` }}
+          aria-labelledby="why-heading"
+        >
+          <div
+            aria-hidden
+            className="absolute left-0 top-0 bottom-0"
+            style={{ width: "3px", backgroundColor: TOKENS.accent }}
+          />
+          <div
+            className="text-[11px] font-medium uppercase mb-3"
+            style={{ color: TOKENS.accent, letterSpacing: "0.32em" }}
+          >
             The bet
           </div>
-          <h2 id="why-heading" className="font-serif italic text-[24px] md:text-[30px] leading-[1.2] tracking-tight" style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}>
+          <h2
+            id="why-heading"
+            className="font-serif italic text-[24px] md:text-[30px] leading-[1.2] tracking-tight"
+            style={{ fontFamily: SERIF, color: TOKENS.text }}
+          >
             Why peer-led, not prescribed.
           </h2>
           <div className="mt-4 space-y-3 text-[15px] leading-[1.65] max-w-2xl" style={{ color: TOKENS.text }}>
             <p>
-              Most AI adoption products treat this like a compliance problem: measure who uses it, nudge the rest, hand out credentials. That worldview produces shadow AI and performative usage — not adoption.
+              Most AI adoption products treat this like a compliance problem: measure who uses it,
+              nudge the rest, hand out credentials. That worldview produces shadow AI and
+              performative usage — not adoption.
             </p>
             <p>
-              Workflow Mirror inverts it. Active users share what works. Non-adopters discover those workflows on their own terms, in role-relevant clusters, with no management visibility and no mandate. Visibility, not training, is the gap. This closes it.
+              Workflow Mirror inverts it. Active users share what works. Non-adopters discover
+              those workflows on their own terms, in role-relevant clusters, with no management
+              visibility and no mandate. Visibility, not training, is the gap. This closes it.
             </p>
           </div>
           <div className="mt-6" style={{ borderTop: `1px solid ${TOKENS.rule}`, paddingTop: "16px" }}>
-            <Link href="/essay" data-testid="link-essay-from-about" className="inline-flex items-center gap-2 text-[13px] font-medium hover:opacity-70 transition-opacity" style={{ color: TOKENS.primary }}>
+            <Link
+              href="/essay"
+              data-testid="link-essay-from-about"
+              className="inline-flex items-center gap-2 text-[13px] font-medium hover:opacity-70 transition-opacity"
+              style={{ color: TOKENS.primary }}
+            >
               Read the full argument
               <ArrowUpRight className="w-3.5 h-3.5" strokeWidth={1.75} />
             </Link>
@@ -166,92 +209,219 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* Phase stepper — vertical left rail */}
         <section className="mb-20" aria-labelledby="timeline-heading">
-          <h2 id="timeline-heading" className="font-serif italic text-[26px] md:text-[32px] tracking-tight mb-6" style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}>
+          <h2
+            id="timeline-heading"
+            className="font-serif italic text-[26px] md:text-[32px] tracking-tight mb-6"
+            style={{ fontFamily: SERIF, color: TOKENS.text }}
+          >
             The build, phase by phase.
           </h2>
 
-          <div className="flex flex-wrap gap-0 mb-0" style={{ borderBottom: `1px solid ${TOKENS.rule}` }} role="tablist" aria-label="Build phases">
-            {PHASES.map((p, i) => {
-              const active = p.key === activePhase;
-              return (
-                <button
-                  key={p.key}
-                  role="tab"
-                  aria-selected={active}
-                  aria-controls={`phase-panel-${p.key}`}
-                  id={`phase-tab-${p.key}`}
-                  type="button"
-                  onClick={() => setActivePhase(p.key)}
-                  data-testid={`tab-${p.key}`}
-                  className="flex items-center gap-2 px-4 py-3.5 text-[13px] whitespace-nowrap transition-colors relative shrink-0"
-                  style={{
-                    color: active ? TOKENS.primary : TOKENS.muted,
-                    fontWeight: active ? 600 : 400,
-                    borderBottom: active ? `2px solid ${TOKENS.primary}` : "2px solid transparent",
-                    marginBottom: "-1px",
-                    background: "none",
-                    cursor: "pointer",
-                  }}
-                >
-                  <span
-                    className="text-[11px]"
+          <div
+            style={{
+              border: `1px solid ${TOKENS.rule}`,
+              backgroundColor: TOKENS.card,
+              display: "flex",
+              flexDirection: "row",
+              minHeight: "320px",
+            }}
+            data-testid="phase-stepper"
+          >
+            {/* LEFT RAIL — clickable phase list */}
+            <div
+              role="tablist"
+              aria-label="Build phases"
+              style={{
+                width: "220px",
+                flexShrink: 0,
+                borderRight: `1px solid ${TOKENS.rule}`,
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              {PHASES.map((p, i) => {
+                const active = p.key === activePhase;
+                return (
+                  <button
+                    key={p.key}
+                    role="tab"
+                    aria-selected={active}
+                    aria-controls={`phase-panel-${p.key}`}
+                    id={`phase-tab-${p.key}`}
+                    type="button"
+                    onClick={() => setActivePhase(p.key)}
+                    data-testid={`tab-${p.key}`}
                     style={{
-                      color: active ? TOKENS.primary : TOKENS.muted,
-                      fontFamily: "'Playfair Display', Georgia, serif",
-                      fontStyle: "italic",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      width: "100%",
+                      padding: "14px 16px 14px 18px",
+                      borderLeft: active ? `3px solid ${TOKENS.primary}` : "3px solid transparent",
+                      borderBottom: i < PHASES.length - 1 ? `1px solid ${TOKENS.rule}` : "none",
+                      backgroundColor: active ? TOKENS.bg : "transparent",
+                      cursor: "pointer",
+                      textAlign: "left",
                     }}
                   >
-                    0{i + 1}
-                  </span>
-                  {p.label}
-                </button>
-              );
-            })}
-          </div>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: "7px" }}>
+                      <span
+                        style={{
+                          fontFamily: SERIF,
+                          fontStyle: "italic",
+                          fontSize: "11px",
+                          color: active ? TOKENS.primary : TOKENS.muted,
+                          flexShrink: 0,
+                        }}
+                      >
+                        0{i + 1}
+                      </span>
+                      <span
+                        style={{
+                          fontSize: "13px",
+                          color: active ? TOKENS.text : TOKENS.muted,
+                          fontWeight: active ? 600 : 400,
+                        }}
+                      >
+                        {p.label}
+                      </span>
+                    </div>
+                    <span
+                      style={{
+                        fontSize: "11px",
+                        color: TOKENS.muted,
+                        flexShrink: 0,
+                        marginLeft: "6px",
+                      }}
+                    >
+                      {p.time}
+                    </span>
+                  </button>
+                );
+              })}
 
-          <div
-            id={`phase-panel-${phase.key}`}
-            role="tabpanel"
-            aria-labelledby={`phase-tab-${phase.key}`}
-            className="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-0"
-            style={{
-              backgroundColor: TOKENS.card,
-              border: `1px solid ${TOKENS.rule}`,
-              borderTop: "none",
-            }}
-            data-testid={`panel-${phase.key}`}
-          >
-            <div className="lg:col-span-2 p-7 md:p-8">
-              <div className="flex items-baseline gap-3 mb-4">
-                <span className="font-serif italic text-[14px]" style={{ color: TOKENS.muted, fontFamily: "'Playfair Display', Georgia, serif" }}>
-                  {phase.time}
+              {/* Total row — pinned to bottom */}
+              <div
+                style={{
+                  marginTop: "auto",
+                  padding: "11px 18px",
+                  borderTop: `1px solid ${TOKENS.rule}`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <span style={{ fontSize: "12px", fontWeight: 600, color: TOKENS.text }}>
+                  Total
                 </span>
+                <span style={{ fontSize: "12px", color: TOKENS.muted }}>~17 hrs</span>
               </div>
-              <h3 className="font-serif italic text-[20px] md:text-[24px] leading-[1.25] tracking-tight mb-6" style={{ color: TOKENS.text, fontFamily: "'Playfair Display', Georgia, serif" }}>
+            </div>
+
+            {/* RIGHT PANEL — active phase content */}
+            <div
+              id={`phase-panel-${phase.key}`}
+              role="tabpanel"
+              aria-labelledby={`phase-tab-${phase.key}`}
+              data-testid={`panel-${phase.key}`}
+              style={{
+                flex: 1,
+                padding: "32px 36px",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "10px",
+                  color: TOKENS.muted,
+                  letterSpacing: "0.32em",
+                  textTransform: "uppercase",
+                  marginBottom: "10px",
+                }}
+              >
+                {phase.time} · phase {phaseIndex + 1} of {PHASES.length}
+              </div>
+
+              <h3
+                style={{
+                  fontFamily: SERIF,
+                  fontStyle: "italic",
+                  fontSize: "22px",
+                  lineHeight: "1.25",
+                  color: TOKENS.text,
+                  marginBottom: "20px",
+                  letterSpacing: "-0.01em",
+                }}
+              >
                 {phase.headline}
               </h3>
-              <ul className="space-y-3">
+
+              <ul
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "12px",
+                  flex: 1,
+                  listStyle: "none",
+                  margin: 0,
+                  padding: 0,
+                }}
+              >
                 {phase.points.map((pt) => (
-                  <li key={pt} className="flex gap-3 text-[14.5px] leading-[1.6]" style={{ color: TOKENS.text }}>
-                    <ChevronRight className="w-4 h-4 shrink-0 mt-0.5" strokeWidth={1.75} style={{ color: TOKENS.primary }} />
+                  <li
+                    key={pt}
+                    style={{
+                      display: "flex",
+                      gap: "10px",
+                      fontSize: "14px",
+                      lineHeight: "1.65",
+                      color: TOKENS.text,
+                    }}
+                  >
+                    <ChevronRight
+                      style={{
+                        width: "16px",
+                        height: "16px",
+                        flexShrink: 0,
+                        marginTop: "2px",
+                        color: TOKENS.primary,
+                      }}
+                      strokeWidth={1.75}
+                    />
                     <span>{pt}</span>
                   </li>
                 ))}
               </ul>
-            </div>
 
-            <div className="lg:col-span-1 p-7 md:p-8 flex flex-col gap-8" style={{ borderLeft: `1px solid ${TOKENS.rule}` }}>
-              <div>
-                <div className="text-[10px] font-medium uppercase mb-3" style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}>
+              {/* Tools chips */}
+              <div
+                style={{
+                  marginTop: "28px",
+                  paddingTop: "20px",
+                  borderTop: `1px solid ${TOKENS.rule}`,
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "10px",
+                    color: TOKENS.muted,
+                    letterSpacing: "0.32em",
+                    textTransform: "uppercase",
+                    marginBottom: "10px",
+                  }}
+                >
                   Tools used
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
                   {phase.tools.map((t) => (
                     <span
                       key={t}
-                      className="text-[12px] px-2.5 py-1"
                       style={{
+                        fontSize: "12px",
+                        padding: "4px 10px",
                         color: TOKENS.text,
                         backgroundColor: TOKENS.bg,
                         border: `1px solid ${TOKENS.rule}`,
@@ -262,91 +432,22 @@ export default function AboutPage() {
                   ))}
                 </div>
               </div>
-
-              <div>
-                <div className="text-[10px] font-medium uppercase mb-3" style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}>
-                  Build timeline
-                </div>
-                <div className="space-y-2">
-                  {PHASES.map((p) => {
-                    const isCurrent = p.key === activePhase;
-                    return (
-                      <div
-                        key={p.key}
-                        className="flex items-center justify-between text-[13px] py-1"
-                        style={{
-                          color: isCurrent ? TOKENS.primary : TOKENS.muted,
-                          fontWeight: isCurrent ? 600 : 400,
-                        }}
-                      >
-                        <div className="flex items-center gap-2.5">
-                          <div
-                            className="w-2 h-2 rounded-full shrink-0"
-                            style={{
-                              backgroundColor: isCurrent ? TOKENS.primary : TOKENS.rule,
-                            }}
-                          />
-                          {p.label}
-                        </div>
-                        <span className="text-[12px]">{p.time}</span>
-                      </div>
-                    );
-                  })}
-                  <div className="flex items-center justify-between text-[13px] pt-2 font-semibold" style={{ borderTop: `1px solid ${TOKENS.rule}`, color: TOKENS.text }}>
-                    <span>Total</span>
-                    <span>~17 hrs</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 mt-auto">
-                <button
-                  type="button"
-                  onClick={() => phaseIndex > 0 && setActivePhase(PHASES[phaseIndex - 1].key)}
-                  disabled={phaseIndex === 0}
-                  className="w-8 h-8 flex items-center justify-center transition-opacity disabled:opacity-30"
-                  style={{
-                    border: `1px solid ${TOKENS.rule}`,
-                    borderRadius: "50%",
-                    color: TOKENS.muted,
-                    background: "none",
-                    cursor: phaseIndex === 0 ? "default" : "pointer",
-                  }}
-                  aria-label="Previous phase"
-                >
-                  ←
-                </button>
-                <button
-                  type="button"
-                  onClick={() => phaseIndex < PHASES.length - 1 && setActivePhase(PHASES[phaseIndex + 1].key)}
-                  disabled={phaseIndex === PHASES.length - 1}
-                  className="w-8 h-8 flex items-center justify-center transition-opacity disabled:opacity-30"
-                  style={{
-                    border: `1px solid ${TOKENS.rule}`,
-                    borderRadius: "50%",
-                    color: TOKENS.muted,
-                    background: "none",
-                    cursor: phaseIndex === PHASES.length - 1 ? "default" : "pointer",
-                  }}
-                  aria-label="Next phase"
-                >
-                  →
-                </button>
-                <span className="text-[12px]" style={{ color: TOKENS.muted }}>
-                  {phaseIndex + 1} / {PHASES.length}
-                </span>
-              </div>
             </div>
           </div>
         </section>
 
+        {/* The whole stack + What I'd do next */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-20">
           <div>
-            <h2 className="font-serif italic text-[24px] md:text-[30px] tracking-tight mb-5" style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}>
+            <h2
+              className="font-serif italic text-[24px] md:text-[30px] tracking-tight mb-5"
+              style={{ fontFamily: SERIF, color: TOKENS.text }}
+            >
               The whole stack.
             </h2>
             <p className="text-[14px] leading-[1.6] mb-5" style={{ color: TOKENS.muted }}>
-              The same agent-driven workflow that built this prototype is the one being pitched to the customer.
+              The same agent-driven workflow that built this prototype is the one being pitched to
+              the customer.
             </p>
             <div style={{ borderTop: `1px solid ${TOKENS.rule}` }}>
               {TOOLS.map((t) => (
@@ -367,7 +468,10 @@ export default function AboutPage() {
           </div>
 
           <div>
-            <h2 className="font-serif italic text-[24px] md:text-[30px] tracking-tight mb-5" style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}>
+            <h2
+              className="font-serif italic text-[24px] md:text-[30px] tracking-tight mb-5"
+              style={{ fontFamily: SERIF, color: TOKENS.text }}
+            >
               What I'd do next.
             </h2>
             <p className="text-[14px] leading-[1.6] mb-5" style={{ color: TOKENS.muted }}>
@@ -379,7 +483,7 @@ export default function AboutPage() {
                   <div className="flex items-baseline gap-3">
                     <span
                       className="font-serif italic text-[15px] shrink-0"
-                      style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.muted }}
+                      style={{ fontFamily: SERIF, color: TOKENS.muted }}
                     >
                       0{i + 1}
                     </span>
@@ -387,10 +491,7 @@ export default function AboutPage() {
                       {n.title}
                     </div>
                   </div>
-                  <p
-                    className="mt-1.5 ml-6 text-[13px] leading-[1.6]"
-                    style={{ color: TOKENS.muted }}
-                  >
+                  <p className="mt-1.5 ml-6 text-[13px] leading-[1.6]" style={{ color: TOKENS.muted }}>
                     {n.body}
                   </p>
                 </div>
@@ -399,13 +500,11 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* One-pager CTA */}
         <section className="mb-20">
           <div
             className="p-8 md:p-10 flex flex-col md:flex-row md:items-center justify-between gap-6"
-            style={{
-              backgroundColor: TOKENS.card,
-              border: `1px solid ${TOKENS.rule}`,
-            }}
+            style={{ backgroundColor: TOKENS.card, border: `1px solid ${TOKENS.rule}` }}
           >
             <div className="max-w-xl">
               <div
@@ -416,7 +515,7 @@ export default function AboutPage() {
               </div>
               <div
                 className="font-serif italic text-[22px] md:text-[26px] leading-[1.2] tracking-tight"
-                style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}
+                style={{ fontFamily: SERIF, color: TOKENS.text }}
               >
                 The one-pager — bet, metric, ROI, pilot, on a single page.
               </div>
@@ -438,13 +537,14 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* Footer */}
         <div
           className="pt-8 flex items-baseline justify-between flex-wrap gap-4 text-[12px]"
           style={{ color: TOKENS.muted, borderTop: `1px solid ${TOKENS.rule}` }}
         >
           <div>
-            Built solo, using Replit Agent + Claude Opus 4.6 · May 2026 · for Chico.ai's
-            AI Adoption PM submission.
+            Built solo, using Replit Agent + Claude Opus 4.6 · May 2026 · for Chico.ai's AI
+            Adoption PM submission.
           </div>
           <Link
             href="/admin"
