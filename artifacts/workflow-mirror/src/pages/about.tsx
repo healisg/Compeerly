@@ -57,11 +57,13 @@ const PHASES: Phase[] = [
     time: "~4 hrs",
     headline: "Brand system built before the slides — not after.",
     points: [
-      "Cream + forest green + Playfair italic signals editorial restraint. The register earns trust in a pitch about trust — the visual language had to model the same opt-in, low-pressure quality the product promises.",
-      "Deck narrative follows the JTBD switch sequence: push (the adoption gap) → pull (peer-led alternative) → anxiety reduction (no manager view, no mandate) → habit disruption (sub-2-minute capture). 12 slides, readable in 60 seconds standing up.",
-      "ROI numbers in the deck reconcile exactly to the £ figures shown in the admin view. If they diverge, the pitch fails.",
+      "Replit Canvas was the design arena: three distinct concepts — bold typographic, minimal utility, editorial warm — were generated and placed side by side. Each was eliminated on a single criterion until one remained. Cream, forest green, Playfair italic won because it was the only direction where the aesthetic and the product promise said the same thing.",
+      "Cream, forest green, Playfair italic — editorial restraint as a trust signal. The visual language models the same opt-in, low-pressure quality the product promises.",
+      "JTBD four-forces — push, pull, anxiety, habit — set the product constraints before any component was written. The framework shaped build decisions, not a presentation.",
+      "Built on Replit's multi-agent system: a planning agent owned the arc; parallel design subagents stress-tested UI variants using the design and mockup-sandbox skills; an optimisation agent tightened component structure and bundle size — all running in parallel.",
+      "A code-review agent ran after every major page — catching surveillance-adjacent phrasing, flagging structural drift, and holding coherence across five pages without a single manual pass.",
     ],
-    tools: ["Replit Agent", "Playfair Display", "Inter", "Wispr Flow"],
+    tools: ["Replit Agent", "Replit Canvas", "Playfair Display", "Inter", "Wispr Flow"],
     skills: ["slides", "design", "mockup-sandbox", "branding-generator", "design-thinker"],
   },
   {
