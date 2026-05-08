@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { ArrowRight } from "lucide-react";
+import compassMarkUrl from "@assets/image_1778283978011.png";
 
 const TOKENS = {
   primary: "#166534",
@@ -32,26 +33,6 @@ const ACTIVE_ORDER: Record<number, number> = ACTIVE_INDICES_ARR
 const TOTAL_DOTS = 500;
 const GRID_COLS = 20;
 
-function CompassMark({ size = 48 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 64 64"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      style={{ color: TOKENS.primary }}
-      aria-hidden="true"
-    >
-      <circle cx="32" cy="32" r="29" stroke="currentColor" strokeWidth={2.2} fill="none" />
-      <g transform="rotate(-22 32 32)">
-        <path d="M32 10 L36 32 L32 54 L28 32 Z" fill="currentColor" />
-        <circle cx="32" cy="32" r="2.2" fill={TOKENS.bg} />
-      </g>
-    </svg>
-  );
-}
-
 export default function CoverPage() {
   const [, navigate] = useLocation();
   const [transitioning, setTransitioning] = useState(false);
@@ -78,13 +59,12 @@ export default function CoverPage() {
           animation: "wm-cover-fade 900ms ease-out both",
         }}
       >
-        {/* Left column — content */}
-        <div className="flex w-full flex-col justify-center px-[8vw] py-16 lg:w-[55%] lg:px-[6vw] lg:py-24">
-          <div className="mb-12 lg:mb-16">
-            <CompassMark size={48} />
+        <div className="flex w-full flex-col justify-center px-[8vw] pt-12 pb-10 lg:w-[55%] lg:px-[6vw] lg:pt-12 lg:pb-14">
+          <div className="mb-10 lg:mb-12">
+            <img src={compassMarkUrl} alt="Compass" className="block h-12 w-12" />
           </div>
 
-          <div className="max-w-[640px] space-y-6">
+          <div className="max-w-[640px] space-y-5 lg:space-y-6">
             <div
               className="text-[12px] md:text-[13px] font-medium"
               style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}
@@ -115,7 +95,7 @@ export default function CoverPage() {
             </p>
           </div>
 
-          <div className="mt-10 md:mt-12 flex flex-wrap items-center gap-x-8 gap-y-4">
+          <div className="mt-9 md:mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
             <button
               type="button"
               onClick={handleEnter}
@@ -147,7 +127,7 @@ export default function CoverPage() {
             </Link>
           </div>
 
-          <div className="mt-12 md:mt-16 flex flex-wrap items-center gap-x-6 gap-y-3">
+          <div className="mt-11 md:mt-12 flex flex-wrap items-center gap-x-6 gap-y-3">
             <Link
               href="/about"
               data-testid="link-about-build"
@@ -181,7 +161,6 @@ export default function CoverPage() {
           </div>
         </div>
 
-        {/* Right column — 500 dot grid (the 40 vs 460 made visible) */}
         <div
           className="relative flex w-full items-center justify-center px-[8vw] pb-24 pt-4 lg:w-[45%] lg:border-l lg:px-12 lg:pb-12 lg:pt-12"
           style={{ borderColor: "rgba(58,58,58,0.06)" }}
@@ -219,7 +198,6 @@ export default function CoverPage() {
         </div>
       </main>
 
-      {/* Inverted transition flash */}
       <div
         aria-hidden
         className="absolute inset-0 pointer-events-none flex items-center px-[8vw] md:px-[10vw] z-20"
