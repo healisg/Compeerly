@@ -235,6 +235,23 @@ export default function AboutPage() {
               closes it.
             </p>
           </div>
+          <div className="mt-7" style={{ borderTop: `1px solid ${TOKENS.rule}`, paddingTop: "20px" }}>
+            <Link
+              href="/essay"
+              data-testid="link-essay-from-about"
+              className="inline-flex items-center gap-2 text-[13.5px] font-medium hover:opacity-70 transition-opacity"
+              style={{ color: TOKENS.primary }}
+            >
+              Read the full argument
+              <ArrowUpRight className="w-3.5 h-3.5" strokeWidth={1.75} />
+            </Link>
+            <span
+              className="ml-3 text-[12px]"
+              style={{ color: TOKENS.muted }}
+            >
+              7-minute essay · with sources
+            </span>
+          </div>
         </section>
 
         {/* Build timeline */}

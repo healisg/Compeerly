@@ -9,6 +9,7 @@ import CapturePage from "@/pages/capture";
 import DetailPage from "@/pages/detail";
 import AdminPage from "@/pages/admin";
 import AboutPage from "@/pages/about";
+import EssayPage from "@/pages/essay";
 import { WorkflowProvider } from "@/lib/workflows";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ function Router() {
       <Route path="/workflow/:id" component={DetailPage} />
       <Route path="/admin" component={AdminPage} />
       <Route path="/about" component={AboutPage} />
+      <Route path="/essay" component={EssayPage} />
       <Route component={NotFound} />
     </Switch>
   );

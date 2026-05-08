@@ -245,6 +245,19 @@ export default function CoverPage() {
               <ArrowRight className="w-3 h-3" strokeWidth={1.75} />
             </Link>
             <span aria-hidden style={{ color: TOKENS.rule }}>·</span>
+            <Link
+              href="/essay"
+              data-testid="link-essay"
+              className="inline-flex items-center gap-2 text-[12px] font-medium uppercase hover:opacity-70 transition-opacity no-underline"
+              style={{
+                color: TOKENS.muted,
+                letterSpacing: "0.28em",
+              }}
+            >
+              The argument
+              <ArrowRight className="w-3 h-3" strokeWidth={1.75} />
+            </Link>
+            <span aria-hidden style={{ color: TOKENS.rule }}>·</span>
             <a
               href={`${import.meta.env.BASE_URL}workflow-mirror-one-pager.pdf`}
               download
