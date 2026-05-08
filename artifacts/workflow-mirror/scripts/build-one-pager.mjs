@@ -65,27 +65,27 @@ doc.rect(0, 0, PAGE_W, 4).fill(C.primary);
 let y = 24;
 
 // Eyebrow
-doc.font("sans").fontSize(7.5).fillColor(C.muted).text("WORKFLOW MIRROR  ·  ONE-PAGER", MARGIN_X, y, {
+doc.font("sans").fontSize(7.5).fillColor(C.muted).text("ONE-PAGER  ·  AI ADOPTION PM SUBMISSION", MARGIN_X, y, {
   characterSpacing: 2.4,
   width: CONTENT_W,
 });
 y += 18;
 
-// Title
-doc.font("serif-italic").fontSize(34).fillColor(C.text).text("Making private AI use visible.", MARGIN_X, y, {
+// Title — the product name, prominent
+doc.font("serif-italic").fontSize(40).fillColor(C.text).text("Workflow Mirror", MARGIN_X, y, {
   width: CONTENT_W,
   lineGap: -2,
 });
-y += 36;
+y += 44;
 
-// Sub-tagline
-doc.font("serif-italic").fontSize(16).fillColor(C.primary).text(
-  "Peer-led AI workflow sharing — so the 460 can learn from the 40.",
+// Tagline (per spec)
+doc.font("serif-italic").fontSize(15).fillColor(C.primary).text(
+  "Peer-led AI workflow sharing, so the 460 can learn from the 40.",
   MARGIN_X,
   y,
   { width: CONTENT_W },
 );
-y += 28;
+y += 26;
 
 // Section divider
 function rule(yPos, color = C.rule) {
@@ -326,10 +326,10 @@ y = Math.max(riskY, nextY) + 8;
 const footerY = PAGE_H - MARGIN_BOTTOM - 8;
 rule(footerY - 10);
 doc.font("sans").fontSize(7).fillColor(C.muted).text(
-  "Built for Chico.ai  ·  AI Adoption PM submission  ·  May 2026",
+  "Built for Chico.ai  ·  AI Adoption PM submission  ·  Solo build  ·  May 2026",
   MARGIN_X,
   footerY,
-  { characterSpacing: 1.4, width: CONTENT_W * 0.7, lineBreak: false },
+  { characterSpacing: 1.4, width: CONTENT_W * 0.75, lineBreak: false },
 );
 doc.font("sans").fontSize(7).fillColor(C.muted).text(
   "WORKFLOW MIRROR",
