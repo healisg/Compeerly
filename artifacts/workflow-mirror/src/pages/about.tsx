@@ -62,7 +62,7 @@ const PHASES: Phase[] = [
       "ROI numbers in the deck reconcile exactly to the £ figures shown in the admin view. If they diverge, the pitch fails.",
     ],
     tools: ["Replit Agent", "Playfair Display", "Inter", "Wispr Flow"],
-    skills: ["slides", "design", "mockup-sandbox"],
+    skills: ["slides", "design", "mockup-sandbox", "branding-generator", "design-thinker"],
   },
   {
     key: "build",
