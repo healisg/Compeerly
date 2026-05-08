@@ -59,6 +59,18 @@ const SOURCES: Source[] = [
       "Irrational Labs (2025). \"The AI Workplace: New Research on Employee AI Adoption.\"",
     url: "https://irrationallabs.com/blog/ai-workplace-research-employee-ai-adoption/",
   },
+  {
+    n: 8,
+    cite:
+      "BCG (2025). \"AI at Work 2025: Momentum Builds, but Gaps Remain.\" Boston Consulting Group — leadership-vs-frontline AI usage gap.",
+    url: "https://www.bcg.com/publications/2025/ai-at-work-momentum-builds-but-gaps-remain",
+  },
+  {
+    n: 9,
+    cite:
+      "Microsoft & LinkedIn (2024). \"AI at Work Is Here. Now Comes the Hard Part.\" Work Trend Index Annual Report — Copilot/AI penetration among knowledge workers.",
+    url: "https://www.microsoft.com/en-us/worklab/work-trend-index/ai-at-work-is-here-now-comes-the-hard-part",
+  },
 ];
 
 function Cite({ n }: { n: number }) {
@@ -292,14 +304,26 @@ export default function EssayPage() {
           </h2>
 
           <p className="mb-5">
-            The strongest single piece of evidence here is from a 2026
-            Microsoft Research study published in the Harvard Business Review.
-            Among heavy AI users, 88% named peers as the most influential
-            factor in shaping their AI behaviour. Among light users, only 50%
-            did<Cite n={1} />. The same study reported that 12% of light
-            users said AI had literally never come up in informal
-            conversation with their colleagues, against 1% of heavy users.
-            That is not a training gap. It is a visibility gap.
+            Set the macro picture first. BCG's 2025 AI at Work survey
+            reported that 88% of executives use AI regularly, against 51%
+            of frontline employees<Cite n={8} />. Microsoft and LinkedIn's
+            Work Trend Index put generative AI use at 75% of global
+            knowledge workers, with usage nearly doubling in six
+            months<Cite n={9} />. AI at work is no longer a leadership
+            curiosity; it is a daily-use technology with a stubborn
+            distribution problem. The dashboard sees the gap. It cannot
+            close it.
+          </p>
+          <p className="mb-5">
+            The strongest single piece of evidence on <em>why</em> the gap
+            persists is from a 2026 Microsoft Research study published in
+            the Harvard Business Review. Among heavy AI users, 88% named
+            peers as the most influential factor in shaping their AI
+            behaviour. Among light users, only 50% did<Cite n={1} />. The
+            same study reported that 12% of light users said AI had
+            literally never come up in informal conversation with their
+            colleagues, against 1% of heavy users. That is not a training
+            gap. It is a visibility gap.
           </p>
           <p className="mb-5">
             The same body of research is also realistic about leadership.
