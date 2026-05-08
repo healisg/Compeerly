@@ -87,7 +87,7 @@ const PHASES: Phase[] = [
 
 const TOOLS = [
   { name: "Replit Agent", note: "scaffold, iterate, deploy" },
-  { name: "Claude Sonnet 4.5", note: "thesis pressure-testing, copy" },
+  { name: "Claude Opus 4.6", note: "thesis pressure-testing, copy" },
   { name: "Anthropic API", note: "powers demo workflows" },
   { name: "Manus", note: "research brief synthesis" },
   { name: "Playfair Display + Inter", note: "type system" },
@@ -123,111 +123,40 @@ export default function AboutPage() {
   return (
     <div
       className="min-h-screen w-full"
-      style={{
-        backgroundColor: TOKENS.bg,
-        color: TOKENS.text,
-        fontFamily: "'Inter', system-ui, sans-serif",
-        overflowX: "hidden",
-      }}
+      style={{ backgroundColor: TOKENS.bg, color: TOKENS.text, fontFamily: "'Inter', system-ui, sans-serif", overflowX: "hidden" }}
       data-testid="about-page"
     >
-      <header
-        className="sticky top-0 z-10"
-        style={{
-          backgroundColor: `${TOKENS.bg}E6`,
-          backdropFilter: "blur(8px)",
-          borderBottom: `1px solid ${TOKENS.rule}`,
-        }}
-      >
-        <div className="max-w-5xl mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-sm font-medium hover:opacity-70 transition-opacity"
-            style={{ color: TOKENS.muted }}
-            data-testid="link-back-cover"
-          >
-            <ArrowLeft className="w-4 h-4" />
+      <header className="sticky top-0 z-20 border-b" style={{ borderColor: TOKENS.rule, backgroundColor: "rgba(251,248,244,0.92)" }}>
+        <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+          <Link href="/" className="inline-flex items-center gap-2 text-[13px] font-medium hover:opacity-70 transition-opacity" style={{ color: TOKENS.muted }}>
+            <ArrowLeft className="w-4 h-4" strokeWidth={1.75} />
             Back to cover
           </Link>
-          <div
-            className="text-[11px] font-medium uppercase"
-            style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}
-          >
+          <div className="text-[11px] font-medium uppercase" style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}>
             Workflow Mirror · About
           </div>
         </div>
       </header>
 
       <main className="max-w-5xl mx-auto px-6 md:px-10 pt-16 pb-32">
-        <section className="max-w-3xl mb-10">
-          <div
-            className="text-[11px] font-medium uppercase mb-5"
-            style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}
-          >
-            Behind the prototype
-          </div>
-          <h1
-            className="font-serif italic leading-[1.04] tracking-tight text-[44px] md:text-[68px]"
-            style={{
-              fontFamily: "'Playfair Display', Georgia, serif",
-              color: TOKENS.text,
-            }}
-          >
-            How I built this.
-          </h1>
-          <p
-            className="mt-6 text-[16px] md:text-[17px] leading-[1.6] max-w-2xl"
-            style={{ color: TOKENS.muted }}
-          >
-            A working prototype, not a deck. Click through each phase to see the process.
-          </p>
-        </section>
-
-        <section
-          className="mb-14 p-7 md:p-9 max-w-4xl relative"
-          style={{
-            backgroundColor: TOKENS.card,
-            border: `1px solid ${TOKENS.rule}`,
-          }}
-          aria-labelledby="why-heading"
-        >
-          <div
-            aria-hidden
-            className="absolute left-0 top-0 bottom-0"
-            style={{ width: "3px", backgroundColor: TOKENS.accent }}
-          />
-          <div
-            className="text-[11px] font-medium uppercase mb-3"
-            style={{ color: TOKENS.accent, letterSpacing: "0.32em" }}
-          >
+        <section className="mb-14 p-7 md:p-9 max-w-4xl relative" style={{ backgroundColor: TOKENS.card, border: `1px solid ${TOKENS.rule}` }} aria-labelledby="why-heading">
+          <div aria-hidden className="absolute left-0 top-0 bottom-0" style={{ width: "3px", backgroundColor: TOKENS.accent }} />
+          <div className="text-[11px] font-medium uppercase mb-3" style={{ color: TOKENS.accent, letterSpacing: "0.32em" }}>
             The bet
           </div>
-          <h2
-            id="why-heading"
-            className="font-serif italic text-[24px] md:text-[30px] leading-[1.2] tracking-tight"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}
-          >
+          <h2 id="why-heading" className="font-serif italic text-[24px] md:text-[30px] leading-[1.2] tracking-tight" style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}>
             Why peer-led, not prescribed.
           </h2>
           <div className="mt-4 space-y-3 text-[15px] leading-[1.65] max-w-2xl" style={{ color: TOKENS.text }}>
             <p>
-              Most AI adoption products treat this like a compliance problem: measure who uses it,
-              nudge the rest, hand out credentials. That worldview produces shadow AI and
-              performative usage — not adoption.
+              Most AI adoption products treat this like a compliance problem: measure who uses it, nudge the rest, hand out credentials. That worldview produces shadow AI and performative usage — not adoption.
             </p>
             <p>
-              Workflow Mirror inverts it. Active users share what works. Non-adopters discover
-              those workflows on their own terms, in role-relevant clusters, with no management
-              visibility and no mandate. Visibility, not training, is the gap. This closes it.
+              Workflow Mirror inverts it. Active users share what works. Non-adopters discover those workflows on their own terms, in role-relevant clusters, with no management visibility and no mandate. Visibility, not training, is the gap. This closes it.
             </p>
           </div>
           <div className="mt-6" style={{ borderTop: `1px solid ${TOKENS.rule}`, paddingTop: "16px" }}>
-            <Link
-              href="/essay"
-              data-testid="link-essay-from-about"
-              className="inline-flex items-center gap-2 text-[13px] font-medium hover:opacity-70 transition-opacity"
-              style={{ color: TOKENS.primary }}
-            >
+            <Link href="/essay" data-testid="link-essay-from-about" className="inline-flex items-center gap-2 text-[13px] font-medium hover:opacity-70 transition-opacity" style={{ color: TOKENS.primary }}>
               Read the full argument
               <ArrowUpRight className="w-3.5 h-3.5" strokeWidth={1.75} />
             </Link>
@@ -238,20 +167,11 @@ export default function AboutPage() {
         </section>
 
         <section className="mb-20" aria-labelledby="timeline-heading">
-          <h2
-            id="timeline-heading"
-            className="font-serif italic text-[26px] md:text-[32px] tracking-tight mb-6"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}
-          >
+          <h2 id="timeline-heading" className="font-serif italic text-[26px] md:text-[32px] tracking-tight mb-6" style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}>
             The build, phase by phase.
           </h2>
 
-          <div
-            className="flex flex-wrap gap-0 mb-0"
-            style={{ borderBottom: `1px solid ${TOKENS.rule}` }}
-            role="tablist"
-            aria-label="Build phases"
-          >
+          <div className="flex flex-wrap gap-0 mb-0" style={{ borderBottom: `1px solid ${TOKENS.rule}` }} role="tablist" aria-label="Build phases">
             {PHASES.map((p, i) => {
               const active = p.key === activePhase;
               return (
@@ -304,42 +224,26 @@ export default function AboutPage() {
           >
             <div className="lg:col-span-2 p-7 md:p-8">
               <div className="flex items-baseline gap-3 mb-4">
-                <span
-                  className="font-serif italic text-[14px]"
-                  style={{ color: TOKENS.muted, fontFamily: "'Playfair Display', Georgia, serif" }}
-                >
+                <span className="font-serif italic text-[14px]" style={{ color: TOKENS.muted, fontFamily: "'Playfair Display', Georgia, serif" }}>
                   {phase.time}
                 </span>
               </div>
-              <h3
-                className="font-serif italic text-[20px] md:text-[24px] leading-[1.25] tracking-tight mb-6"
-                style={{ color: TOKENS.text, fontFamily: "'Playfair Display', Georgia, serif" }}
-              >
+              <h3 className="font-serif italic text-[20px] md:text-[24px] leading-[1.25] tracking-tight mb-6" style={{ color: TOKENS.text, fontFamily: "'Playfair Display', Georgia, serif" }}>
                 {phase.headline}
               </h3>
               <ul className="space-y-3">
                 {phase.points.map((pt) => (
                   <li key={pt} className="flex gap-3 text-[14.5px] leading-[1.6]" style={{ color: TOKENS.text }}>
-                    <ChevronRight
-                      className="w-4 h-4 shrink-0 mt-0.5"
-                      strokeWidth={1.75}
-                      style={{ color: TOKENS.primary }}
-                    />
+                    <ChevronRight className="w-4 h-4 shrink-0 mt-0.5" strokeWidth={1.75} style={{ color: TOKENS.primary }} />
                     <span>{pt}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div
-              className="lg:col-span-1 p-7 md:p-8 flex flex-col gap-8"
-              style={{ borderLeft: `1px solid ${TOKENS.rule}` }}
-            >
+            <div className="lg:col-span-1 p-7 md:p-8 flex flex-col gap-8" style={{ borderLeft: `1px solid ${TOKENS.rule}` }}>
               <div>
-                <div
-                  className="text-[10px] font-medium uppercase mb-3"
-                  style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}
-                >
+                <div className="text-[10px] font-medium uppercase mb-3" style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}>
                   Tools used
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -360,10 +264,7 @@ export default function AboutPage() {
               </div>
 
               <div>
-                <div
-                  className="text-[10px] font-medium uppercase mb-3"
-                  style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}
-                >
+                <div className="text-[10px] font-medium uppercase mb-3" style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}>
                   Build timeline
                 </div>
                 <div className="space-y-2">
@@ -391,10 +292,7 @@ export default function AboutPage() {
                       </div>
                     );
                   })}
-                  <div
-                    className="flex items-center justify-between text-[13px] pt-2 font-semibold"
-                    style={{ borderTop: `1px solid ${TOKENS.rule}`, color: TOKENS.text }}
-                  >
+                  <div className="flex items-center justify-between text-[13px] pt-2 font-semibold" style={{ borderTop: `1px solid ${TOKENS.rule}`, color: TOKENS.text }}>
                     <span>Total</span>
                     <span>~17 hrs</span>
                   </div>
@@ -444,10 +342,7 @@ export default function AboutPage() {
 
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-20">
           <div>
-            <h2
-              className="font-serif italic text-[24px] md:text-[30px] tracking-tight mb-5"
-              style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}
-            >
+            <h2 className="font-serif italic text-[24px] md:text-[30px] tracking-tight mb-5" style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}>
               The whole stack.
             </h2>
             <p className="text-[14px] leading-[1.6] mb-5" style={{ color: TOKENS.muted }}>
@@ -472,10 +367,7 @@ export default function AboutPage() {
           </div>
 
           <div>
-            <h2
-              className="font-serif italic text-[24px] md:text-[30px] tracking-tight mb-5"
-              style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}
-            >
+            <h2 className="font-serif italic text-[24px] md:text-[30px] tracking-tight mb-5" style={{ fontFamily: "'Playfair Display', Georgia, serif", color: TOKENS.text }}>
               What I'd do next.
             </h2>
             <p className="text-[14px] leading-[1.6] mb-5" style={{ color: TOKENS.muted }}>
@@ -551,7 +443,7 @@ export default function AboutPage() {
           style={{ color: TOKENS.muted, borderTop: `1px solid ${TOKENS.rule}` }}
         >
           <div>
-            Built solo, using Replit Agent + Claude Sonnet 4.5 · May 2026 · for Chico.ai's
+            Built solo, using Replit Agent + Claude Opus 4.6 · May 2026 · for Chico.ai's
             AI Adoption PM submission.
           </div>
           <Link
