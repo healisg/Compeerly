@@ -187,8 +187,15 @@ export default function FeedPage() {
 
         {filteredWorkflows.length > 0 ? (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {filteredWorkflows.map((workflow) => (
-              <WorkflowCard key={workflow.id} workflow={workflow} />
+            {filteredWorkflows.map((workflow, index) => (
+              <motion.div
+                key={workflow.id}
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, ease: "easeOut", delay: Math.min(index * 0.06, 0.4) }}
+              >
+                <WorkflowCard workflow={workflow} />
+              </motion.div>
             ))}
           </div>
         ) : (
