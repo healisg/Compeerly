@@ -56,17 +56,11 @@ const SOURCES: Source[] = [
   {
     n: 7,
     cite:
-      "Irrational Labs (2025). \"The AI Workplace: New Research on Employee AI Adoption.\"",
-    url: "https://irrationallabs.com/blog/ai-workplace-research-employee-ai-adoption/",
-  },
-  {
-    n: 8,
-    cite:
       "BCG (2025). \"AI at Work 2025: Momentum Builds, but Gaps Remain.\" Boston Consulting Group — leadership-vs-frontline AI usage gap.",
     url: "https://www.bcg.com/publications/2025/ai-at-work-momentum-builds-but-gaps-remain",
   },
   {
-    n: 9,
+    n: 8,
     cite:
       "Microsoft & LinkedIn (2024). \"AI at Work Is Here. Now Comes the Hard Part.\" Work Trend Index Annual Report — Copilot/AI penetration among knowledge workers.",
     url: "https://www.microsoft.com/en-us/worklab/work-trend-index/ai-at-work-is-here-now-comes-the-hard-part",
@@ -306,10 +300,10 @@ export default function EssayPage() {
           <p className="mb-5">
             Set the macro picture first. BCG's 2025 AI at Work survey
             reported that 88% of executives use AI regularly, against 51%
-            of frontline employees<Cite n={8} />. Microsoft and LinkedIn's
+            of frontline employees<Cite n={7} />. Microsoft and LinkedIn's
             Work Trend Index put generative AI use at 75% of global
             knowledge workers, with usage nearly doubling in six
-            months<Cite n={9} />. AI at work is no longer a leadership
+            months<Cite n={8} />. AI at work is no longer a leadership
             curiosity; it is a daily-use technology with a stubborn
             distribution problem. The dashboard sees the gap. It cannot
             close it.
@@ -366,8 +360,8 @@ export default function EssayPage() {
             workflows that are flawed are tried, found unhelpful, and
             quietly abandoned, while workflows that work spread<Cite n={6} />.
             Structured templates and role-based filtering close most of the
-            remaining gap<Cite n={7} />. None of these mitigations require
-            an editorial layer; they require sensible defaults.
+            remaining gap. None of these mitigations require an editorial
+            layer; they require sensible defaults.
           </p>
 
           {/* Section 5 — What this means for the role */}
