@@ -143,7 +143,7 @@ const SECTIONS: Section[] = [
           hands of people they actually trust.
         </P>
         <P>
-          Workflow Mirror is a direct response to that structural problem. It makes private AI
+          Compass is a direct response to that structural problem. It makes private AI
           use visible and shareable — converting what is currently an invisible individual
           practice into a social, observable norm. The mechanism is not training. It is
           exposure.
@@ -210,7 +210,7 @@ const SECTIONS: Section[] = [
       <>
         <P>
           The deliberate exclusion of a management surveillance layer is the most consequential
-          design decision in Workflow Mirror. The American Psychological Association reports
+          design decision in Compass. The American Psychological Association reports
           that among electronically monitored employees, 56% feel tense or stressed at work —
           compared to 40% of non-monitored employees.<Cite n={3} /> Monitored employees are
           more likely to do the bare minimum required. For a knowledge-sharing platform,
@@ -286,7 +286,7 @@ export default function EssayPage() {
           className="text-[11px] font-medium uppercase"
           style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}
         >
-          Workflow Mirror · The argument
+          Compass · The argument
         </div>
       </header>
 
@@ -478,7 +478,7 @@ export default function EssayPage() {
           className="mt-12 pt-8 flex items-baseline justify-between flex-wrap gap-4 text-[12px]"
           style={{ color: TOKENS.muted, borderTop: `1px solid ${TOKENS.rule}` }}
         >
-          <div>Workflow Mirror · May 2026 · Evidence-based</div>
+          <div>Compass · May 2026 · Evidence-based</div>
           <Link
             href="/about"
             className="inline-flex items-center gap-1.5 hover:opacity-70 transition-opacity"

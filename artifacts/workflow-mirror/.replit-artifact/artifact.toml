@@ -1,6 +1,6 @@
 kind = "web"
 previewPath = "/"
-title = "Workflow Mirror"
+title = "Compass"
 version = "1.0.0"
 id = "artifacts/workflow-mirror"
 router = "path"

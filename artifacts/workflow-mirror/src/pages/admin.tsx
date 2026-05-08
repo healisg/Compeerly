@@ -712,7 +712,7 @@ export default function AdminPage() {
             Back to cover
           </Link>
           <div className="text-[11px] font-medium uppercase" style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}>
-            Workflow Mirror · Admin
+            Compass · Admin
           </div>
         </div>
       </header>
@@ -1103,7 +1103,7 @@ export default function AdminPage() {
             </div>
           </div>
           <p className="text-[13.5px] mb-8 max-w-2xl" style={{ color: TOKENS.muted }}>
-            Workflow Mirror does not assign workflows or nudge consumers. It surfaces the few
+            Compass does not assign workflows or nudge consumers. It surfaces the few
             high-leverage moves that grow the network — the kind of moves a thoughtful PM would
             make by hand in a pilot.
           </p>

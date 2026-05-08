@@ -1,4 +1,4 @@
-# Workflow Mirror
+# Compass
 
 A peer-led AI workflow sharing prototype for Chico.ai — lets employees browse, capture, and share AI workflows so non-adopters can learn from peers doing the same job.
 

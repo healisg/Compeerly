@@ -1,6 +1,6 @@
-# Workflow Mirror — Brand Guide
+# Compass — Brand Guide
 
-Workflow Mirror is a peer-led AI workflow sharing product built on top of Chico.ai. The brand is editorial, confident, and human — designed to sit comfortably inside enterprise contexts without feeling corporate.
+Compass is a peer-led AI workflow sharing product built on top of Chico.ai. The brand is editorial, confident, and human — designed to sit comfortably inside enterprise contexts without feeling corporate.
 
 ---
 
@@ -77,7 +77,7 @@ Icons appear in circular containers filled with `primary/10` (10% opacity forest
 
 Every slide carries a shared chrome layer:
 - **Top progress bar** — 0.55vh tall, fills left-to-right proportional to slide position. Colour: Forest Green (cream slides) or White/70 (inverted slides).
-- **Header row** — "WORKFLOW MIRROR" wordmark (left) + zero-padded counter "08 / 12" (right). Both in Warm Grey, 1.5vw, uppercase, tracking wide.
+- **Header row** — "COMPASS" wordmark (left) + zero-padded counter "08 / 12" (right). Both in Warm Grey, 1.5vw, uppercase, tracking wide.
 - The chrome is the only element that appears on every slide. Nothing else is shared.
 
 ---

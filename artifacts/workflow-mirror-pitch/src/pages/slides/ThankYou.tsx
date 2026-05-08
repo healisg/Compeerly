@@ -16,7 +16,7 @@ export default function ThankYouSlide() {
       </div>
 
       <div className="absolute bottom-[5vh] left-[5.5vw] right-[5.5vw] flex items-center justify-center gap-[1.5vw] text-[1.4vw] text-muted/60">
-        <span className="font-display italic">Workflow Mirror</span>
+        <span className="font-display italic">Compass</span>
         <span>·</span>
         <span className="uppercase tracking-[0.2em]">Chico.ai</span>
       </div>

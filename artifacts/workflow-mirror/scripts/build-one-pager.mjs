@@ -39,8 +39,8 @@ const doc = new PDFDocument({
   size: "A4",
   margin: 0,
   info: {
-    Title: "Workflow Mirror — One-pager",
-    Author: "Workflow Mirror",
+    Title: "Compass — One-pager",
+    Author: "Compass",
     Subject: "Peer-led AI workflow sharing for Chico.ai",
     Keywords: "Chico.ai, AI adoption, peer learning, workflow",
   },
@@ -72,7 +72,7 @@ doc.font("sans").fontSize(7.5).fillColor(C.muted).text("ONE-PAGER  ·  AI ADOPTI
 y += 18;
 
 // Title — the product name, prominent
-doc.font("serif-italic").fontSize(40).fillColor(C.text).text("Workflow Mirror", MARGIN_X, y, {
+doc.font("serif-italic").fontSize(40).fillColor(C.text).text("Compass", MARGIN_X, y, {
   width: CONTENT_W,
   lineGap: -2,
 });
@@ -332,7 +332,7 @@ doc.font("sans").fontSize(7).fillColor(C.muted).text(
   { characterSpacing: 1.4, width: CONTENT_W * 0.75, lineBreak: false },
 );
 doc.font("sans").fontSize(7).fillColor(C.muted).text(
-  "WORKFLOW MIRROR",
+  "COMPASS",
   MARGIN_X,
   footerY,
   { characterSpacing: 2.2, width: CONTENT_W, align: "right", lineBreak: false },

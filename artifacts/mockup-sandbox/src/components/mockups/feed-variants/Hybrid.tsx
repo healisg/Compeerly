@@ -19,7 +19,7 @@ export function Hybrid() {
           <div className="flex items-center gap-3">
             <Sparkles className="w-5 h-5 text-[#166534]" />
             <h1 className="text-2xl font-['Playfair_Display'] font-semibold text-stone-900 tracking-tight flex items-baseline gap-3">
-              Workflow Mirror
+              Compass
               <span className="text-xs font-sans font-bold text-stone-500 uppercase tracking-widest">
                 Chico.ai Internal
               </span>

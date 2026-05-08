@@ -28,7 +28,7 @@ export function Colleague() {
         <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
           <div className="flex items-baseline gap-3">
             <h1 className="text-2xl font-['Playfair_Display'] font-semibold italic tracking-tight text-[#1D3557]">
-              Workflow Mirror
+              Compass
             </h1>
             <span className="text-sm font-medium text-[#1D3557]/60 tracking-wide uppercase">
               Chico.ai Internal

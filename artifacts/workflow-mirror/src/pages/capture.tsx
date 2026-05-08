@@ -261,7 +261,7 @@ export default function CapturePage() {
                 Edit Raw Text
               </Button>
               <Button className="flex-1" onClick={handlePublish} data-testid="button-publish">
-                Publish to Mirror
+                Publish to Compass
               </Button>
             </div>
           </div>

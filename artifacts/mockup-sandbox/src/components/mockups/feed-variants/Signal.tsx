@@ -32,7 +32,7 @@ export function Signal() {
             </div>
             <div className="flex items-center gap-2">
               <span className="font-['Space_Grotesk'] font-medium tracking-tight text-[15px] text-white/90">
-                Workflow Mirror
+                Compass
               </span>
               <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-white/[0.06] text-white/40 tracking-wide uppercase">
                 Chico.ai

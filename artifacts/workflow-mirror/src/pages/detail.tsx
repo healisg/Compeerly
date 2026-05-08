@@ -321,7 +321,7 @@ export default function DetailPage() {
         <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/feed" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors font-medium text-sm" data-testid="link-back">
             <ArrowLeft className="w-4 h-4" />
-            Back to Mirror
+            Back to Compass
           </Link>
           <div className="flex items-center gap-3">
             <Button

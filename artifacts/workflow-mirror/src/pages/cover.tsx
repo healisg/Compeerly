@@ -172,7 +172,7 @@ export default function CoverPage() {
             className="text-[12px] md:text-[13px] font-medium mb-12 md:mb-16"
             style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}
           >
-            WORKFLOW MIRROR
+            COMPASS
           </div>
 
           <h1
@@ -212,7 +212,7 @@ export default function CoverPage() {
                 letterSpacing: "0.01em",
               }}
             >
-              Explore Workflow Mirror
+              Explore Compass
               <ArrowRight className="w-4 h-4" strokeWidth={1.75} />
             </button>
             <Link

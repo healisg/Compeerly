@@ -1,6 +1,6 @@
 kind = "slides"
 previewPath = "/pitch/"
-title = "Workflow Mirror — Pitch"
+title = "Compass — Pitch"
 version = "1.0.0"
 id = "artifacts/workflow-mirror-pitch"
 router = "path"

@@ -22,7 +22,7 @@ export function CommonGround() {
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-xl font-bold tracking-tight text-stone-900 leading-tight">Workflow Mirror</h1>
+              <h1 className="text-xl font-bold tracking-tight text-stone-900 leading-tight">Compass</h1>
               <p className="text-xs font-medium text-stone-500 uppercase tracking-widest">Chico.ai Internal</p>
             </div>
           </div>

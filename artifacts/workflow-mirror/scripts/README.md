@@ -1,8 +1,8 @@
-# Workflow Mirror — build scripts
+# Compass — build scripts
 
 ## One-pager PDF
 
-`build-one-pager.mjs` regenerates `public/workflow-mirror-one-pager.pdf` — the single-page A4 takeaway that summarises the pitch.
+`build-one-pager.mjs` regenerates `public/workflow-mirror-one-pager.pdf` — the single-page A4 takeaway that summarises the Compass pitch.
 
 ```bash
 pnpm --filter @workspace/workflow-mirror exec node scripts/build-one-pager.mjs
