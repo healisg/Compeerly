@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { Workflow } from "@/lib/workflows";
-import { ArrowRight, Users } from "lucide-react";
+import { Check, Users } from "lucide-react";
 
 const TOOL_DOTS: Record<string, string> = {
   claude: "#D97757",
@@ -137,14 +137,17 @@ export function WorkflowCard({ workflow }: { workflow: Workflow }) {
             <span>
               <span className="font-semibold text-foreground">{workflow.peerCount}</span>
               {" "}{pluralRole(workflow.role).toLowerCase()}
-              {" · "}avg{" "}
-              <span className="font-semibold text-foreground">{workflow.timeSaved}</span>
-              {" "}saved
             </span>
           </div>
-          <div className="text-xs font-medium text-muted-foreground group-hover:text-primary flex items-center gap-1 transition-colors shrink-0 ml-3">
-            Read full workflow
-            <ArrowRight className="w-3.5 h-3.5" />
+          <div
+            className="flex items-center gap-1.5 text-xs text-muted-foreground"
+            data-testid="text-worked-for-me"
+          >
+            <Check className="w-3.5 h-3.5 shrink-0 text-primary" />
+            <span>
+              <span className="font-semibold text-foreground">{workflow.workedForMeCount}</span>
+              {" "}worked for me
+            </span>
           </div>
         </div>
       </article>
