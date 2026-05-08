@@ -6,7 +6,8 @@ import { WorkflowCard } from "@/components/workflow-card";
 import { PromptBar } from "@/components/prompt-bar";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Sparkles, SlidersHorizontal, X } from "lucide-react";
+import { Plus, SlidersHorizontal, X } from "lucide-react";
+import { CompassMark } from "@/components/compass-mark";
 
 export default function FeedPage() {
   const { workflows } = useWorkflows();
@@ -45,7 +46,7 @@ export default function FeedPage() {
         <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
           <Link href="/" className="no-underline">
             <div className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <Sparkles className="w-5 h-5 text-primary" />
+              <CompassMark size={22} className="text-primary" />
               <h1 className="font-serif text-2xl font-semibold tracking-tight text-foreground flex items-baseline gap-3">
                 Compass
                 <span className="text-[10px] font-sans font-bold text-muted-foreground uppercase tracking-widest">
