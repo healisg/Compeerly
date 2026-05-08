@@ -159,7 +159,7 @@ export default function CoverPage() {
 
       {/* Foreground content */}
       <div
-        className="relative z-10 absolute inset-0 flex items-center px-[8vw] md:px-[10vw]"
+        className="absolute inset-0 z-10 flex items-center px-[8vw] md:px-[10vw]"
         style={{
           opacity: transitioning ? 0 : 1,
           transform: transitioning ? "translateY(-12px)" : "translateY(0)",
