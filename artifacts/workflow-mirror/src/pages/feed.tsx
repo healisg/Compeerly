@@ -36,15 +36,17 @@ export default function FeedPage() {
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-20 border-b border-border/60 bg-background/85 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Sparkles className="w-5 h-5 text-primary" />
-            <h1 className="font-serif text-2xl font-semibold tracking-tight text-foreground flex items-baseline gap-3">
-              Workflow Mirror
-              <span className="text-[10px] font-sans font-bold text-muted-foreground uppercase tracking-widest">
-                Chico.ai Internal
-              </span>
-            </h1>
-          </div>
+          <Link href="/" className="no-underline">
+            <div className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+              <Sparkles className="w-5 h-5 text-primary" />
+              <h1 className="font-serif text-2xl font-semibold tracking-tight text-foreground flex items-baseline gap-3">
+                Workflow Mirror
+                <span className="text-[10px] font-sans font-bold text-muted-foreground uppercase tracking-widest">
+                  Chico.ai Internal
+                </span>
+              </h1>
+            </div>
+          </Link>
           <Link href="/capture" className="no-underline">
             <Button data-testid="button-share-workflow" className="gap-2 rounded-xl px-5 h-10 shadow-sm">
               <Plus className="w-4 h-4" />
