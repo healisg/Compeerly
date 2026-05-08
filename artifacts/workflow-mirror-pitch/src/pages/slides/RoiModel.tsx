@@ -3,10 +3,10 @@ import SlideChrome from "@/components/SlideChrome";
 export default function RoiModelSlide() {
   return (
     <div className="w-screen h-screen overflow-hidden relative bg-bg">
-      <SlideChrome slideNumber={9} totalSlides={10} />
+      <SlideChrome slideNumber={10} totalSlides={11} />
 
       <div className="absolute top-[14vh] left-[5.5vw] flex items-baseline gap-[1.2vw]">
-        <span className="font-display italic text-[2vw] text-accent">09</span>
+        <span className="font-display italic text-[2vw] text-accent">10</span>
         <span className="text-[1.6vw] uppercase tracking-[0.3em] text-muted font-semibold">
           ROI Model
         </span>
