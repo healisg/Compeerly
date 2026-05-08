@@ -11,55 +11,46 @@ const TOKENS = {
   rule: "#E5DBC8",
 };
 
-const AVATAR_SEEDS = [
-  "Priya N.",
-  "Marcus T.",
-  "Jordan K.",
-  "Sana A.",
-  "Devon R.",
-  "Lena M.",
-  "Aiko F.",
-  "Theo P.",
-  "Maya S.",
-  "Idris H.",
+// Hardcoded indices for the 40 active users (out of 500) — stable, hand-picked
+// to scatter across the 25x20 grid so the pattern reads as "spread, not clustered".
+const ACTIVE_INDICES_ARR = [
+  12, 45, 67, 89, 102, 134, 156, 178, 199, 215,
+  234, 256, 278, 290, 312, 345, 367, 389, 401, 423,
+  445, 467, 489, 15, 38, 72, 94, 115, 147, 182,
+  205, 248, 271, 305, 338, 372, 395, 418, 452, 475,
 ];
+const ACTIVE_INDICES = new Set(ACTIVE_INDICES_ARR);
+// Stagger order: each active dot gets an index 0..39, used to delay its reveal.
+const ACTIVE_ORDER: Record<number, number> = ACTIVE_INDICES_ARR
+  .slice()
+  .sort((a, b) => a - b)
+  .reduce((acc, idx, order) => {
+    acc[idx] = order;
+    return acc;
+  }, {} as Record<number, number>);
 
-function avatarUrl(seed: string) {
-  return `https://api.dicebear.com/7.x/notionists/svg?seed=${encodeURIComponent(seed)}&backgroundColor=fef3c7,dcfce7,dbeafe,fee2e2,ede9fe&radius=50`;
+const TOTAL_DOTS = 500;
+const GRID_COLS = 20;
+
+function CompassMark({ size = 48 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 64 64"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ color: TOKENS.primary }}
+      aria-hidden="true"
+    >
+      <circle cx="32" cy="32" r="29" stroke="currentColor" strokeWidth={2.2} fill="none" />
+      <g transform="rotate(-22 32 32)">
+        <path d="M32 10 L36 32 L32 54 L28 32 Z" fill="currentColor" />
+        <circle cx="32" cy="32" r="2.2" fill={TOKENS.bg} />
+      </g>
+    </svg>
+  );
 }
-
-type Peer = {
-  seed: string;
-  top: string;
-  left: string;
-  size: number;
-  driftDuration: number;
-  driftDelay: number;
-  pulseDuration: number;
-  pulseDelay: number;
-  peakOpacity: number;
-  driftVariant: 1 | 2 | 3 | 4;
-};
-
-const PEERS: Peer[] = [
-  { seed: AVATAR_SEEDS[0], top: "12%", left: "72%", size: 64, driftDuration: 22, driftDelay: 0,   pulseDuration: 9,  pulseDelay: 0,   peakOpacity: 0.34, driftVariant: 1 },
-  { seed: AVATAR_SEEDS[1], top: "26%", left: "88%", size: 48, driftDuration: 19, driftDelay: 3,   pulseDuration: 11, pulseDelay: 2,   peakOpacity: 0.30, driftVariant: 2 },
-  { seed: AVATAR_SEEDS[2], top: "50%", left: "70%", size: 56, driftDuration: 24, driftDelay: 1,   pulseDuration: 12, pulseDelay: 4,   peakOpacity: 0.32, driftVariant: 3 },
-  { seed: AVATAR_SEEDS[3], top: "64%", left: "90%", size: 42, driftDuration: 17, driftDelay: 5,   pulseDuration: 10, pulseDelay: 1,   peakOpacity: 0.28, driftVariant: 4 },
-  { seed: AVATAR_SEEDS[4], top: "82%", left: "78%", size: 60, driftDuration: 21, driftDelay: 2,   pulseDuration: 13, pulseDelay: 6,   peakOpacity: 0.34, driftVariant: 1 },
-  { seed: AVATAR_SEEDS[5], top: "92%", left: "60%", size: 44, driftDuration: 23, driftDelay: 4,   pulseDuration: 11, pulseDelay: 3,   peakOpacity: 0.26, driftVariant: 2 },
-  { seed: AVATAR_SEEDS[6], top: "8%",  left: "4%",  size: 50, driftDuration: 20, driftDelay: 6,   pulseDuration: 12, pulseDelay: 5,   peakOpacity: 0.28, driftVariant: 3 },
-  { seed: AVATAR_SEEDS[7], top: "78%", left: "3%",  size: 46, driftDuration: 25, driftDelay: 2.5, pulseDuration: 10, pulseDelay: 7,   peakOpacity: 0.30, driftVariant: 4 },
-  { seed: AVATAR_SEEDS[8], top: "38%", left: "94%", size: 38, driftDuration: 18, driftDelay: 7,   pulseDuration: 9,  pulseDelay: 0,   peakOpacity: 0.26, driftVariant: 1 },
-  { seed: AVATAR_SEEDS[9], top: "88%", left: "44%", size: 40, driftDuration: 19, driftDelay: 8,   pulseDuration: 11, pulseDelay: 4,   peakOpacity: 0.24, driftVariant: 2 },
-];
-
-const CONNECTORS = [
-  { x1: "72%", y1: "15%", x2: "88%", y2: "28%", duration: 14, delay: 1 },
-  { x1: "70%", y1: "53%", x2: "90%", y2: "66%", duration: 16, delay: 6 },
-  { x1: "78%", y1: "85%", x2: "60%", y2: "94%", duration: 15, delay: 11 },
-  { x1: "4%",  y1: "10%", x2: "3%",  y2: "80%", duration: 18, delay: 3 },
-];
 
 export default function CoverPage() {
   const [, navigate] = useLocation();
@@ -78,88 +69,8 @@ export default function CoverPage() {
       style={{ backgroundColor: TOKENS.bg, color: TOKENS.text, fontFamily: "'Inter', system-ui, sans-serif" }}
       data-testid="cover-page"
     >
-      {/* Ambient peer-avatar background layer */}
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none wm-peer-layer"
-        style={{
-          opacity: transitioning ? 0 : 1,
-          transition: "opacity 320ms ease",
-        }}
-      >
-        {/* Connector lines */}
-        <svg
-          className="absolute inset-0 w-full h-full"
-          preserveAspectRatio="none"
-          style={{ overflow: "visible" }}
-        >
-          {CONNECTORS.map((c, i) => (
-            <line
-              key={i}
-              x1={c.x1}
-              y1={c.y1}
-              x2={c.x2}
-              y2={c.y2}
-              stroke={TOKENS.rule}
-              strokeWidth="1"
-              strokeLinecap="round"
-              className="wm-peer-connector"
-              style={{
-                animationDuration: `${c.duration}s`,
-                animationDelay: `${c.delay}s`,
-              }}
-            />
-          ))}
-        </svg>
-
-        {/* Avatars */}
-        {PEERS.map((p, i) => (
-          <div
-            key={i}
-            className={`absolute wm-peer wm-peer-drift-${p.driftVariant}`}
-            style={{
-              top: p.top,
-              left: p.left,
-              width: `${p.size}px`,
-              height: `${p.size}px`,
-              marginTop: `-${p.size / 2}px`,
-              marginLeft: `-${p.size / 2}px`,
-              animationDuration: `${p.driftDuration}s`,
-              animationDelay: `${p.driftDelay}s`,
-              ["--wm-peak" as string]: p.peakOpacity,
-              ["--wm-pulse-duration" as string]: `${p.pulseDuration}s`,
-              ["--wm-pulse-delay" as string]: `${p.pulseDelay}s`,
-            }}
-          >
-            <div className="wm-peer-pulse w-full h-full">
-              <img
-                src={avatarUrl(p.seed)}
-                alt=""
-                width={p.size}
-                height={p.size}
-                loading="lazy"
-                className="w-full h-full rounded-full"
-                style={{
-                  filter: "saturate(0.8)",
-                  boxShadow: "0 1px 2px rgba(58,58,58,0.06)",
-                }}
-              />
-            </div>
-          </div>
-        ))}
-
-        {/* Soft cream wash to protect headline + body legibility */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `radial-gradient(ellipse at 28% 50%, ${TOKENS.bg} 0%, ${TOKENS.bg} 32%, rgba(251,248,244,0) 65%)`,
-          }}
-        />
-      </div>
-
-      {/* Foreground content */}
-      <div
-        className="absolute inset-0 z-10 flex items-center px-[8vw] md:px-[10vw]"
+      <main
+        className="relative z-10 flex min-h-screen flex-col lg:flex-row"
         style={{
           opacity: transitioning ? 0 : 1,
           transform: transitioning ? "translateY(-12px)" : "translateY(0)",
@@ -167,37 +78,42 @@ export default function CoverPage() {
           animation: "wm-cover-fade 900ms ease-out both",
         }}
       >
-        <div className="w-full max-w-[860px]">
-          <div
-            className="text-[12px] md:text-[13px] font-medium mb-12 md:mb-16"
-            style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}
-          >
-            COMPASS
+        {/* Left column — content */}
+        <div className="flex w-full flex-col justify-center px-[8vw] py-16 lg:w-[55%] lg:px-[6vw] lg:py-24">
+          <div className="mb-12 lg:mb-16">
+            <CompassMark size={48} />
           </div>
 
-          <h1
-            className="font-serif italic leading-[1.04] tracking-tight text-[44px] md:text-[78px]"
-            style={{ color: TOKENS.text, fontFamily: "'Playfair Display', Georgia, serif" }}
-          >
-            Making private AI use visible.
-          </h1>
+          <div className="max-w-[640px] space-y-6">
+            <div
+              className="text-[12px] md:text-[13px] font-medium"
+              style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}
+            >
+              COMPASS
+            </div>
 
-          <h2
-            className="font-serif italic leading-[1.1] tracking-tight text-[28px] md:text-[44px] mt-4 md:mt-6"
-            style={{ color: TOKENS.primary, fontFamily: "'Playfair Display', Georgia, serif" }}
-          >
-            So the 460 can learn from the 40.
-          </h2>
+            <h1
+              className="font-serif italic leading-[1.04] tracking-tight text-[44px] md:text-[68px]"
+              style={{ color: TOKENS.text, fontFamily: "'Playfair Display', Georgia, serif" }}
+            >
+              Making private AI use visible.
+            </h1>
 
-          <div className="h-px w-[120px] mt-10 md:mt-12" style={{ backgroundColor: TOKENS.rule }} />
+            <h2
+              className="font-serif italic leading-[1.1] tracking-tight text-[26px] md:text-[36px]"
+              style={{ color: TOKENS.primary, fontFamily: "'Playfair Display', Georgia, serif" }}
+            >
+              So the 460 can learn from the 40.
+            </h2>
 
-          <p
-            className="mt-8 md:mt-10 text-[16px] md:text-[18px] leading-[1.6] max-w-[640px]"
-            style={{ color: TOKENS.text }}
-          >
-            A peer-led workflow sharing feature built on Chico.ai. Active users share what works.
-            Non-adopters discover it — filtered by role, surfaced at the right moment.
-          </p>
+            <p
+              className="text-[16px] md:text-[18px] leading-[1.6] max-w-[560px]"
+              style={{ color: TOKENS.text }}
+            >
+              A peer-led workflow sharing feature built on Chico.ai. Active users share what works.
+              Non-adopters discover it — filtered by role, surfaced at the right moment.
+            </p>
+          </div>
 
           <div className="mt-10 md:mt-12 flex flex-wrap items-center gap-x-8 gap-y-4">
             <button
@@ -231,15 +147,12 @@ export default function CoverPage() {
             </Link>
           </div>
 
-          <div className="mt-16 md:mt-20 flex flex-wrap items-center gap-x-6 gap-y-3">
+          <div className="mt-12 md:mt-16 flex flex-wrap items-center gap-x-6 gap-y-3">
             <Link
               href="/about"
               data-testid="link-about-build"
               className="inline-flex items-center gap-2 text-[12px] font-medium uppercase hover:opacity-70 transition-opacity no-underline"
-              style={{
-                color: TOKENS.muted,
-                letterSpacing: "0.28em",
-              }}
+              style={{ color: TOKENS.muted, letterSpacing: "0.28em" }}
             >
               About this build
               <ArrowRight className="w-3 h-3" strokeWidth={1.75} />
@@ -249,10 +162,7 @@ export default function CoverPage() {
               href="/essay"
               data-testid="link-essay"
               className="inline-flex items-center gap-2 text-[12px] font-medium uppercase hover:opacity-70 transition-opacity no-underline"
-              style={{
-                color: TOKENS.muted,
-                letterSpacing: "0.28em",
-              }}
+              style={{ color: TOKENS.muted, letterSpacing: "0.28em" }}
             >
               The argument
               <ArrowRight className="w-3 h-3" strokeWidth={1.75} />
@@ -263,17 +173,51 @@ export default function CoverPage() {
               download
               data-testid="link-one-pager-pdf"
               className="inline-flex items-center gap-2 text-[12px] font-medium uppercase hover:opacity-70 transition-opacity no-underline"
-              style={{
-                color: TOKENS.muted,
-                letterSpacing: "0.28em",
-              }}
+              style={{ color: TOKENS.muted, letterSpacing: "0.28em" }}
             >
               One-pager (PDF)
               <ArrowRight className="w-3 h-3" strokeWidth={1.75} />
             </a>
           </div>
         </div>
-      </div>
+
+        {/* Right column — 500 dot grid (the 40 vs 460 made visible) */}
+        <div
+          className="relative flex w-full items-center justify-center px-[8vw] pb-24 pt-4 lg:w-[45%] lg:border-l lg:px-12 lg:pb-12 lg:pt-12"
+          style={{ borderColor: "rgba(58,58,58,0.06)" }}
+        >
+          <div className="w-full max-w-[520px]">
+            <div
+              aria-hidden="true"
+              className="grid gap-2 lg:gap-3"
+              style={{ gridTemplateColumns: `repeat(${GRID_COLS}, minmax(0, 1fr))` }}
+            >
+              {Array.from({ length: TOTAL_DOTS }).map((_, i) => {
+                const isActive = ACTIVE_INDICES.has(i);
+                const order = isActive ? ACTIVE_ORDER[i] ?? 0 : 0;
+                const delayMs = isActive ? 300 + order * 35 : 0;
+                return (
+                  <div
+                    key={i}
+                    className={isActive ? "wm-dot wm-dot-active" : "wm-dot wm-dot-muted"}
+                    style={
+                      isActive
+                        ? ({ ["--wm-dot-delay" as string]: `${delayMs}ms` } as React.CSSProperties)
+                        : undefined
+                    }
+                  />
+                );
+              })}
+            </div>
+            <div
+              className="mt-8 text-center text-[13px] tracking-wide"
+              style={{ color: TOKENS.muted }}
+            >
+              40 of 500 users drive most AI activity.
+            </div>
+          </div>
+        </div>
+      </main>
 
       {/* Inverted transition flash */}
       <div
@@ -319,7 +263,7 @@ export default function CoverPage() {
             fill="currentColor"
             aria-hidden="true"
           >
-            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
           </svg>
           Builder: Gordon Healis
         </a>
@@ -331,72 +275,35 @@ export default function CoverPage() {
           to { opacity: 1; transform: translateY(0); }
         }
 
-        .wm-peer {
-          will-change: transform;
-          animation-iteration-count: infinite;
-          animation-timing-function: ease-in-out;
+        .wm-dot {
+          aspect-ratio: 1 / 1;
+          border-radius: 9999px;
         }
-        @keyframes wm-drift-1 {
-          0%   { transform: translate(0, 0); }
-          50%  { transform: translate(-14px, 10px); }
-          100% { transform: translate(0, 0); }
+        .wm-dot-muted {
+          background-color: transparent;
+          border: 1px solid ${TOKENS.rule};
+          opacity: 0.4;
         }
-        @keyframes wm-drift-2 {
-          0%   { transform: translate(0, 0); }
-          50%  { transform: translate(12px, -10px); }
-          100% { transform: translate(0, 0); }
-        }
-        @keyframes wm-drift-3 {
-          0%   { transform: translate(0, 0); }
-          50%  { transform: translate(-10px, -14px); }
-          100% { transform: translate(0, 0); }
-        }
-        @keyframes wm-drift-4 {
-          0%   { transform: translate(0, 0); }
-          50%  { transform: translate(14px, 12px); }
-          100% { transform: translate(0, 0); }
-        }
-        .wm-peer-drift-1 { animation-name: wm-drift-1; }
-        .wm-peer-drift-2 { animation-name: wm-drift-2; }
-        .wm-peer-drift-3 { animation-name: wm-drift-3; }
-        .wm-peer-drift-4 { animation-name: wm-drift-4; }
-
-        @keyframes wm-peer-pulse {
-          0%   { opacity: calc(var(--wm-peak) * 0.55); }
-          50%  { opacity: var(--wm-peak); }
-          100% { opacity: calc(var(--wm-peak) * 0.55); }
-        }
-        .wm-peer-pulse {
-          opacity: var(--wm-peak);
-          animation-name: wm-peer-pulse;
-          animation-duration: var(--wm-pulse-duration);
-          animation-delay: var(--wm-pulse-delay);
-          animation-iteration-count: infinite;
-          animation-timing-function: ease-in-out;
-        }
-
-        @keyframes wm-peer-connector {
-          0%   { opacity: 0; }
-          15%  { opacity: 0.55; }
-          35%  { opacity: 0.55; }
-          55%  { opacity: 0; }
-          100% { opacity: 0; }
-        }
-        .wm-peer-connector {
+        .wm-dot-active {
+          background-color: ${TOKENS.primary};
+          border: 1px solid ${TOKENS.primary};
+          box-shadow: 0 0 10px ${TOKENS.primary}40;
           opacity: 0;
-          animation-name: wm-peer-connector;
-          animation-iteration-count: infinite;
-          animation-timing-function: ease-in-out;
+          transform: scale(0.4);
+          animation: wm-dot-in 520ms cubic-bezier(0.22, 1, 0.36, 1) var(--wm-dot-delay, 0ms) forwards;
+        }
+        @keyframes wm-dot-in {
+          0%   { opacity: 0; transform: scale(0.4); }
+          60%  { opacity: 1; transform: scale(1.18); }
+          100% { opacity: 1; transform: scale(1.1); }
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .wm-peer,
-          .wm-peer-pulse,
-          .wm-peer-connector {
+          .wm-dot-active {
             animation: none !important;
+            opacity: 1 !important;
+            transform: scale(1.1) !important;
           }
-          .wm-peer-pulse { opacity: var(--wm-peak); }
-          .wm-peer-connector { opacity: 0.35; }
         }
       `}</style>
     </div>
