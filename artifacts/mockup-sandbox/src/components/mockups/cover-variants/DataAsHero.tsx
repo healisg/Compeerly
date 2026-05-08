@@ -2,12 +2,21 @@ import React, { useMemo } from 'react';
 import { ArrowRight } from 'lucide-react';
 
 // Hardcoded indices for the 40 active users to keep it stable
-const ACTIVE_INDICES = new Set([
+const ACTIVE_INDICES_ARR = [
   12, 45, 67, 89, 102, 134, 156, 178, 199, 215,
   234, 256, 278, 290, 312, 345, 367, 389, 401, 423,
   445, 467, 489, 15, 38, 72, 94, 115, 147, 182,
   205, 248, 271, 305, 338, 372, 395, 418, 452, 475
-]);
+];
+const ACTIVE_INDICES = new Set(ACTIVE_INDICES_ARR);
+// Map each active dot to a stagger order (0..39) for the fade-in
+const ACTIVE_ORDER: Record<number, number> = ACTIVE_INDICES_ARR
+  .slice()
+  .sort((a, b) => a - b)
+  .reduce((acc, idx, order) => {
+    acc[idx] = order;
+    return acc;
+  }, {} as Record<number, number>);
 
 const BRAND = {
   bgCream: '#FBF8F4',
@@ -117,20 +126,34 @@ export function DataAsHero() {
                 gridTemplateColumns: 'repeat(20, minmax(0, 1fr))',
               }}
             >
-              {dots.map((dot) => (
-                <div 
-                  key={dot.id}
-                  className="aspect-square rounded-full transition-all duration-700 ease-in-out"
-                  style={{
-                    backgroundColor: dot.isActive ? BRAND.primaryForestGreen : 'transparent',
-                    border: `1px solid ${dot.isActive ? BRAND.primaryForestGreen : BRAND.ruleSand}`,
-                    opacity: dot.isActive ? 1 : 0.4,
-                    transform: dot.isActive ? 'scale(1.1)' : 'scale(1)',
-                    boxShadow: dot.isActive ? `0 0 10px ${BRAND.primaryForestGreen}40` : 'none'
-                  }}
-                />
-              ))}
+              {dots.map((dot) => {
+                const order = dot.isActive ? ACTIVE_ORDER[dot.id] ?? 0 : 0;
+                const delayMs = dot.isActive ? 300 + order * 35 : 0;
+                return (
+                  <div
+                    key={dot.id}
+                    className="aspect-square rounded-full"
+                    style={{
+                      backgroundColor: dot.isActive ? BRAND.primaryForestGreen : 'transparent',
+                      border: `1px solid ${dot.isActive ? BRAND.primaryForestGreen : BRAND.ruleSand}`,
+                      boxShadow: dot.isActive ? `0 0 10px ${BRAND.primaryForestGreen}40` : 'none',
+                      opacity: dot.isActive ? 0 : 0.4,
+                      transform: dot.isActive ? 'scale(0.4)' : 'scale(1)',
+                      animation: dot.isActive
+                        ? `compass-dot-in 520ms cubic-bezier(0.22, 1, 0.36, 1) ${delayMs}ms forwards`
+                        : 'none',
+                    }}
+                  />
+                );
+              })}
             </div>
+            <style>{`
+              @keyframes compass-dot-in {
+                0%   { opacity: 0; transform: scale(0.4); }
+                60%  { opacity: 1; transform: scale(1.18); }
+                100% { opacity: 1; transform: scale(1.1); }
+              }
+            `}</style>
             
             <div 
               className="mt-8 text-center text-sm tracking-wide"
