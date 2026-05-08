@@ -125,6 +125,93 @@ const NEXT = [
   },
 ];
 
+// ─── PhaseDonut ────────────────────────────────────────────────────────────
+
+function PhaseDonut({
+  activePhase,
+  setActivePhase,
+}: {
+  activePhase: string;
+  setActivePhase: (key: string) => void;
+}) {
+  const CX = 60, CY = 60, R_OUTER = 48, R_INNER = 30, GAP = 3;
+
+  function hrs(time: string): number {
+    const m = time.match(/\d+/);
+    return m ? +m[0] : 0;
+  }
+
+  function pt(r: number, deg: number) {
+    const rad = ((deg - 90) * Math.PI) / 180;
+    return { x: CX + r * Math.cos(rad), y: CY + r * Math.sin(rad) };
+  }
+
+  function arcPath(startDeg: number, endDeg: number): string {
+    const s = startDeg + GAP / 2;
+    const e = endDeg - GAP / 2;
+    const large = e - s > 180 ? 1 : 0;
+    const o1 = pt(R_OUTER, s), o2 = pt(R_OUTER, e);
+    const i1 = pt(R_INNER, s), i2 = pt(R_INNER, e);
+    const f = (n: number) => n.toFixed(2);
+    return `M ${f(o1.x)} ${f(o1.y)} A ${R_OUTER} ${R_OUTER} 0 ${large} 1 ${f(o2.x)} ${f(o2.y)} L ${f(i2.x)} ${f(i2.y)} A ${R_INNER} ${R_INNER} 0 ${large} 0 ${f(i1.x)} ${f(i1.y)} Z`;
+  }
+
+  const total = PHASES.reduce((s, p) => s + hrs(p.time), 0);
+  let cursor = 0;
+  const segments = PHASES.map((p) => {
+    const h = hrs(p.time);
+    const start = (cursor / total) * 360;
+    const end = ((cursor + h) / total) * 360;
+    cursor += h;
+    return { key: p.key, start, end };
+  });
+
+  const activeHrs = hrs(PHASES.find((p) => p.key === activePhase)?.time ?? "0");
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "12px 0 14px" }}>
+      <svg viewBox="0 0 120 120" width="106" height="106" style={{ display: "block" }} aria-label="Phase time distribution">
+        {segments.map((seg) => {
+          const isActive = seg.key === activePhase;
+          return (
+            <path
+              key={seg.key}
+              d={arcPath(seg.start, seg.end)}
+              fill={isActive ? TOKENS.primary : TOKENS.rule}
+              style={{ cursor: "pointer", transition: "fill 0.18s ease" }}
+              onClick={() => setActivePhase(seg.key)}
+              role="button"
+              aria-label={`Select ${seg.key} phase`}
+            />
+          );
+        })}
+        <text
+          x="60" y="56"
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fontSize="15"
+          fontWeight="600"
+          fontFamily="'Playfair Display', Georgia, serif"
+          fontStyle="italic"
+          fill={TOKENS.text}
+        >
+          ~{activeHrs}h
+        </text>
+        <text
+          x="60" y="70"
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fontSize="8"
+          fontFamily="'Inter', system-ui, sans-serif"
+          fill={TOKENS.muted}
+        >
+          of {total}h
+        </text>
+      </svg>
+    </div>
+  );
+}
+
 export default function AboutPage() {
   const [activePhase, setActivePhase] = useState<string>(PHASES[0].key);
   const phase = PHASES.find((p) => p.key === activePhase) ?? PHASES[0];
@@ -310,21 +397,25 @@ export default function AboutPage() {
                 );
               })}
 
-              {/* Total row — pinned to bottom */}
-              <div
-                style={{
-                  marginTop: "auto",
-                  padding: "11px 18px",
-                  borderTop: `1px solid ${TOKENS.rule}`,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <span style={{ fontSize: "12px", fontWeight: 600, color: TOKENS.text }}>
-                  Total
-                </span>
-                <span style={{ fontSize: "12px", color: TOKENS.muted }}>~17 hrs</span>
+              {/* Total row + donut — pinned to bottom */}
+              <div style={{ marginTop: "auto" }}>
+                <div
+                  style={{
+                    padding: "11px 18px",
+                    borderTop: `1px solid ${TOKENS.rule}`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <span style={{ fontSize: "12px", fontWeight: 600, color: TOKENS.text }}>
+                    Total
+                  </span>
+                  <span style={{ fontSize: "12px", color: TOKENS.muted }}>~17 hrs</span>
+                </div>
+                <div style={{ borderTop: `1px solid ${TOKENS.rule}` }}>
+                  <PhaseDonut activePhase={activePhase} setActivePhase={setActivePhase} />
+                </div>
               </div>
             </div>
 
