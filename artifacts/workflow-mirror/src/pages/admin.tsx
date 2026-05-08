@@ -32,10 +32,10 @@ const KPIS = [
     caption: "Capture is voluntary. The 5 are doing it anyway.",
   },
   {
-    label: "The 460 who tried",
-    value: "89",
-    delta: "of 460 latent users this week",
-    caption: "Tried a peer workflow at least once.",
+    label: "Latent users who tried",
+    value: "89 of 460",
+    delta: "Tried a peer workflow this week",
+    caption: "The non-adopter pool the pilot is here to activate.",
   },
   {
     label: "Activation rate",
@@ -279,18 +279,17 @@ export default function AdminPage() {
               color: TOKENS.text,
             }}
           >
-            £6,900 reclaimed this week
+            £6,900 reclaimed this week across 28 peer-shared workflows.
             <br />
-            across 28 peer-shared workflows.
+            <span style={{ color: TOKENS.primary }}>At full adoption: £358,800/year.</span>
           </h1>
           <div className="h-px w-[120px] mt-10" style={{ backgroundColor: TOKENS.rule }} />
           <p
             className="mt-8 text-[16px] md:text-[18px] leading-[1.6] max-w-[640px]"
             style={{ color: TOKENS.text }}
           >
-            At full adoption — 69 active peers × 2 hours/week × £50 — that's{" "}
-            <span style={{ color: TOKENS.primary, fontWeight: 500 }}>£358,800 a year</span>{" "}
-            per enterprise client. The pilot is testing the curve, not the ceiling.
+            69 active peers × 2 hours/week × £50, per enterprise client. The pilot is
+            testing the curve, not the ceiling.
           </p>
         </section>
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation } from "wouter";
+import { Link, useLocation } from "wouter";
 import { ArrowRight } from "lucide-react";
 
 const TOKENS = {
@@ -215,10 +215,10 @@ export default function CoverPage() {
               Explore Workflow Mirror
               <ArrowRight className="w-4 h-4" strokeWidth={1.75} />
             </button>
-            <a
-              href={`${import.meta.env.BASE_URL}admin`}
+            <Link
+              href="/admin"
               data-testid="link-admin-view"
-              className="inline-flex items-center gap-2 text-[14px] font-medium hover:opacity-70 transition-opacity"
+              className="inline-flex items-center gap-2 text-[14px] font-medium hover:opacity-70 transition-opacity no-underline"
               style={{
                 color: TOKENS.muted,
                 borderBottom: `1px solid ${TOKENS.rule}`,
@@ -228,7 +228,7 @@ export default function CoverPage() {
             >
               See the admin view
               <ArrowRight className="w-3.5 h-3.5" strokeWidth={1.75} />
-            </a>
+            </Link>
           </div>
         </div>
       </div>
