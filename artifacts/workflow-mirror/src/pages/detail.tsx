@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "wouter";
 import { useWorkflows } from "@/lib/workflows";
-import { ArrowLeft, Clock, Activity, ExternalLink, Lightbulb, Check } from "lucide-react";
+import { Workflow } from "@/lib/workflows";
+import { ArrowLeft, Clock, Activity, ExternalLink, Lightbulb, Check, Copy, CheckCheck, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -24,9 +25,41 @@ function toolDotColor(tool: string) {
   return "#78716c";
 }
 
+function getToolUrl(tool: string, prompt?: string) {
+  if (tool.toLowerCase().includes("claude")) {
+    const base = "https://claude.ai/new";
+    return prompt ? `${base}?q=${encodeURIComponent(prompt)}` : base;
+  }
+  if (tool.toLowerCase().includes("chatgpt")) return "https://chat.openai.com";
+  if (tool.toLowerCase().includes("gemini")) return "https://gemini.google.com";
+  return "#";
+}
+
+function buildStarterPrompt(workflow: Workflow): string {
+  const stepLines = workflow.steps
+    .map((step, i) => `${i + 1}. ${step}`)
+    .join("\n");
+
+  const tipSection = workflow.tips
+    ? `\nOne thing to keep in mind: ${workflow.tips}`
+    : "";
+
+  return `I need your help with: ${workflow.title}
+
+${workflow.summary}
+
+Here's how I'd like to work through this with you:
+
+${stepLines}
+${tipSection}
+
+I'll share the relevant materials as we go. Please let me know when you're ready to start.`;
+}
+
 export default function DetailPage() {
   const params = useParams();
   const { workflows, incrementWorkedForMe } = useWorkflows();
+  const [copied, setCopied] = useState(false);
 
   const workflowId = Number(params.id);
   const workflow = workflows.find((w) => w.id === workflowId);
@@ -48,11 +81,24 @@ export default function DetailPage() {
     );
   }
 
-  const getToolUrl = (tool: string) => {
-    if (tool.toLowerCase().includes("claude")) return "https://claude.ai";
-    if (tool.toLowerCase().includes("chatgpt")) return "https://chat.openai.com";
-    if (tool.toLowerCase().includes("gemini")) return "https://gemini.google.com";
-    return "#";
+  const starterPrompt = buildStarterPrompt(workflow);
+  const supportsUrlPrompt = workflow.aiTool.toLowerCase().includes("claude");
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(starterPrompt);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  };
+
+  const handleOpenTool = () => {
+    window.open(getToolUrl(workflow.aiTool, supportsUrlPrompt ? starterPrompt : undefined), "_blank");
+  };
+
+  const handleCopyAndOpen = async () => {
+    await navigator.clipboard.writeText(starterPrompt);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+    window.open(getToolUrl(workflow.aiTool, supportsUrlPrompt ? starterPrompt : undefined), "_blank");
   };
 
   return (
@@ -64,8 +110,8 @@ export default function DetailPage() {
             Back to Mirror
           </Link>
           <div className="flex items-center gap-3">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="gap-2"
               onClick={() => incrementWorkedForMe(workflow.id)}
               data-testid="button-worked"
@@ -73,11 +119,12 @@ export default function DetailPage() {
               <Check className="w-4 h-4 text-accent" />
               Worked for me ({workflow.workedForMeCount})
             </Button>
-            <Button 
+            <Button
               className="gap-2"
-              onClick={() => window.open(getToolUrl(workflow.aiTool), "_blank")}
+              onClick={handleCopyAndOpen}
               data-testid="button-try"
             >
+              <Zap className="w-4 h-4" />
               Try in {workflow.aiTool}
               <ExternalLink className="w-4 h-4" />
             </Button>
@@ -175,6 +222,79 @@ export default function DetailPage() {
               </div>
             </div>
           )}
+
+          {/* Starter Prompt — the one-click bridge */}
+          <div
+            className="rounded-2xl border-2 border-primary/20 overflow-hidden"
+            data-testid="container-starter-prompt"
+          >
+            {/* Header bar */}
+            <div className="bg-primary px-6 py-4 flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <Zap className="w-4 h-4 text-primary-foreground" />
+                <span className="text-sm font-semibold text-primary-foreground tracking-wide uppercase">
+                  Your starter prompt
+                </span>
+              </div>
+              <span className="text-xs text-primary-foreground/70 font-medium">
+                {supportsUrlPrompt
+                  ? `Opens pre-filled in ${workflow.aiTool}`
+                  : `Copy, then paste into ${workflow.aiTool}`}
+              </span>
+            </div>
+
+            {/* Prompt body */}
+            <div className="bg-card p-6 space-y-5">
+              <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">
+                This prompt is ready to use — just fill in your own materials where indicated.
+              </p>
+              <pre
+                className="text-sm text-card-foreground leading-relaxed whitespace-pre-wrap font-sans bg-background rounded-xl p-5 border border-border select-all cursor-text"
+                data-testid="text-starter-prompt"
+              >
+                {starterPrompt}
+              </pre>
+
+              <div className="flex flex-wrap items-center gap-3 pt-1">
+                <Button
+                  variant="outline"
+                  className="gap-2"
+                  onClick={handleCopy}
+                  data-testid="button-copy-prompt"
+                >
+                  {copied ? (
+                    <>
+                      <CheckCheck className="w-4 h-4 text-accent" />
+                      Copied
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4" />
+                      Copy prompt
+                    </>
+                  )}
+                </Button>
+
+                <Button
+                  className="gap-2"
+                  onClick={handleCopyAndOpen}
+                  data-testid="button-open-tool"
+                >
+                  <Zap className="w-4 h-4" />
+                  {supportsUrlPrompt
+                    ? `Open in ${workflow.aiTool} — prompt ready`
+                    : `Copy & open ${workflow.aiTool}`}
+                  <ExternalLink className="w-4 h-4" />
+                </Button>
+              </div>
+
+              {!supportsUrlPrompt && (
+                <p className="text-xs text-muted-foreground">
+                  The prompt will be copied to your clipboard. Paste it when {workflow.aiTool} opens.
+                </p>
+              )}
+            </div>
+          </div>
         </div>
       </main>
     </div>
