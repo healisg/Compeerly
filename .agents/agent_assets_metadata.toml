@@ -12,3 +12,9 @@ id = "BD60qKXBB39vSe5o5k1W8"
 uri = "file://.local/outputs/Attachment-Mirror.pdf"
 type = "pdf"
 title = "Attachment Mirror.pdf"
+
+[[outputs]]
+id = "3wu7ME97VBbThC5EpHWaK"
+uri = "file://BRANDING.md"
+type = "text"
+title = "Workflow Mirror — Brand Guide"
