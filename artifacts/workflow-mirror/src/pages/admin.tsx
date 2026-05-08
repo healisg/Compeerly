@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { ArrowLeft, ArrowUpRight, Check, ChevronDown } from "lucide-react";
 
@@ -55,7 +55,6 @@ type PeerRow = {
   worked: number;
   hours: string;
   weeklyDelta: number;
-  suggestRole: string | null;
   propagation: PropStep[];
 };
 
@@ -68,7 +67,6 @@ const PEER_NETWORK: PeerRow[] = [
     worked: 9,
     hours: "17.2 hrs",
     weeklyDelta: 3,
-    suggestRole: "Finance Analysts",
     propagation: [
       { name: "Priya N.", action: "shared", week: "Wk 2" },
       { name: "Devon R.", action: "tried", week: "Wk 2" },
@@ -83,7 +81,6 @@ const PEER_NETWORK: PeerRow[] = [
     worked: 18,
     hours: "23.5 hrs",
     weeklyDelta: 4,
-    suggestRole: null,
     propagation: [
       { name: "Marcus T.", action: "shared", week: "Wk 1" },
       { name: "Jordan K.", action: "tried · then shared to 3 others", week: "Wk 2" },
@@ -98,7 +95,6 @@ const PEER_NETWORK: PeerRow[] = [
     worked: 7,
     hours: "14.0 hrs",
     weeklyDelta: 2,
-    suggestRole: "Finance Analysts",
     propagation: [
       { name: "Jordan K.", action: "shared", week: "Wk 2" },
       { name: "Priya N.", action: "tried", week: "Wk 3" },
@@ -113,7 +109,6 @@ const PEER_NETWORK: PeerRow[] = [
     worked: 4,
     hours: "8.4 hrs",
     weeklyDelta: 0,
-    suggestRole: "HR Business Partners",
     propagation: [
       { name: "Sana A.", action: "shared", week: "Wk 3" },
       { name: "Devon R.", action: "tried", week: "Wk 3" },
@@ -127,7 +122,6 @@ const PEER_NETWORK: PeerRow[] = [
     worked: 6,
     hours: "6.1 hrs",
     weeklyDelta: 1,
-    suggestRole: "Compliance Officers",
     propagation: [
       { name: "Devon R.", action: "shared", week: "Wk 3" },
       { name: "Sana A.", action: "tried", week: "Wk 3" },
@@ -178,14 +172,45 @@ const SPARKLINE = [
   { week: "W4", value: 89 },
 ];
 
-// ─── Network graph data ────────────────────────────────────────────────────
+// ─── Suggest role derivation ───────────────────────────────────────────────
+// Maps contributor role (singular) to coverage key (plural).
+const ROLE_SINGULAR_TO_PLURAL: Record<string, string> = {
+  "Operations Manager": "Operations Managers",
+  "Account Manager": "Account Managers",
+  "Sales Analyst": "Sales Analysts",
+  "Compliance Officer": "Compliance Officers",
+  "HR Business Partner": "HR Business Partners",
+};
 
-const GRAPH_NODES = [
-  { name: "Marcus T.", x: 280, y: 112, r: 22 },
-  { name: "Priya N.", x: 108, y: 68, r: 17 },
-  { name: "Jordan K.", x: 452, y: 68, r: 15 },
-  { name: "Devon R.", x: 158, y: 178, r: 13 },
-  { name: "Sana A.", x: 415, y: 182, r: 11 },
+/**
+ * Derives which under-covered role to surface for a given workflow row.
+ * Criteria:
+ *   1. Workflow must not be too dominant already (tried < 20).
+ *   2. Success rate must exceed 55% to be worth recommending.
+ *   3. Pick the most under-covered role (lowest pct, under: true) that is
+ *      NOT the contributor's own role — cross-referencing ROLE_COVERAGE.
+ */
+function computeSuggestRole(row: PeerRow): string | null {
+  if (row.tried >= 20) return null;
+  if (row.worked / row.tried < 0.55) return null;
+
+  const ownRolePlural = ROLE_SINGULAR_TO_PLURAL[row.role] ?? "";
+
+  const candidate = ROLE_COVERAGE
+    .filter((r) => r.under && r.role !== ownRolePlural)
+    .sort((a, b) => a.pct - b.pct)[0];
+
+  return candidate?.role ?? null;
+}
+
+// ─── Force-directed graph ──────────────────────────────────────────────────
+
+const GRAPH_NODES_BASE = [
+  { name: "Marcus T.", r: 22 },
+  { name: "Priya N.", r: 17 },
+  { name: "Jordan K.", r: 15 },
+  { name: "Devon R.", r: 13 },
+  { name: "Sana A.", r: 11 },
 ];
 
 const GRAPH_EDGES = [
@@ -195,6 +220,93 @@ const GRAPH_EDGES = [
   { from: "Jordan K.", to: "Priya N.", weight: 1 },
   { from: "Sana A.", to: "Devon R.", weight: 1 },
 ];
+
+type SimNode = { name: string; r: number; x: number; y: number; vx: number; vy: number };
+
+/**
+ * Runs a simple spring-force simulation to compute node positions.
+ * Uses Coulomb repulsion between all pairs + Hooke spring attraction
+ * along edges + weak centre gravity. Returns final x/y per node.
+ */
+function runForceSimulation(
+  W: number,
+  H: number,
+): Array<{ name: string; r: number; x: number; y: number }> {
+  const cx = W / 2;
+  const cy = H / 2;
+  const n = GRAPH_NODES_BASE.length;
+
+  // Initialise on a circle so the simulation starts from a spread-out state.
+  const nodes: SimNode[] = GRAPH_NODES_BASE.map((base, i) => ({
+    name: base.name,
+    r: base.r,
+    x: cx + Math.cos((2 * Math.PI * i) / n) * 155,
+    y: cy + Math.sin((2 * Math.PI * i) / n) * 80,
+    vx: 0,
+    vy: 0,
+  }));
+
+  const repulsion = 3200;
+  const springK = 0.06;
+  const idealLength = 185;
+  const damping = 0.82;
+  const gravity = 0.006;
+  const iterations = 280;
+
+  for (let iter = 0; iter < iterations; iter++) {
+    // Coulomb repulsion between every pair
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[j].x - nodes[i].x || 0.01;
+        const dy = nodes[j].y - nodes[i].y || 0.01;
+        const distSq = dx * dx + dy * dy;
+        const dist = Math.sqrt(distSq);
+        const f = repulsion / distSq;
+        const fx = (f * dx) / dist;
+        const fy = (f * dy) / dist;
+        nodes[i].vx -= fx;
+        nodes[i].vy -= fy;
+        nodes[j].vx += fx;
+        nodes[j].vy += fy;
+      }
+    }
+
+    // Hooke spring attraction along edges (weight scales ideal length)
+    for (const edge of GRAPH_EDGES) {
+      const a = nodes.find((nd) => nd.name === edge.from)!;
+      const b = nodes.find((nd) => nd.name === edge.to)!;
+      const dx = b.x - a.x;
+      const dy = b.y - a.y;
+      const dist = Math.sqrt(dx * dx + dy * dy) || 0.01;
+      const edgeIdeal = idealLength * (1 - (edge.weight - 1) * 0.12);
+      const f = springK * (dist - edgeIdeal);
+      const fx = (f * dx) / dist;
+      const fy = (f * dy) / dist;
+      a.vx += fx;
+      a.vy += fy;
+      b.vx -= fx;
+      b.vy -= fy;
+    }
+
+    // Weak gravity toward centre
+    for (const nd of nodes) {
+      nd.vx += (cx - nd.x) * gravity;
+      nd.vy += (cy - nd.y) * gravity;
+    }
+
+    // Integrate & clamp
+    for (const nd of nodes) {
+      nd.vx *= damping;
+      nd.vy *= damping;
+      nd.x += nd.vx;
+      nd.y += nd.vy;
+      nd.x = Math.max(nd.r + 22, Math.min(W - nd.r - 22, nd.x));
+      nd.y = Math.max(nd.r + 22, Math.min(H - nd.r - 22, nd.y));
+    }
+  }
+
+  return nodes.map(({ name, r, x, y }) => ({ name, r, x, y }));
+}
 
 function nodeInitials(name: string) {
   return name
@@ -215,7 +327,17 @@ function NetworkGraph({
   onNodeHover: (name: string | null) => void;
 }) {
   const W = 560;
-  const H = 230;
+  const H = 228;
+
+  // Force simulation runs once synchronously during initialisation.
+  const [positions] = useState(() => runForceSimulation(W, H));
+
+  // Mount flag — triggers entry animations via CSS transition.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   const connectedTo = (name: string): Set<string> => {
     const s = new Set<string>();
@@ -235,8 +357,8 @@ function NetworkGraph({
   };
 
   const edgeOpacity = (e: (typeof GRAPH_EDGES)[0]) => {
-    if (!hoveredNode) return 0.28;
-    if (e.from === hoveredNode || e.to === hoveredNode) return 0.7;
+    if (!hoveredNode) return 0.3;
+    if (e.from === hoveredNode || e.to === hoveredNode) return 0.75;
     return 0.05;
   };
 
@@ -249,46 +371,50 @@ function NetworkGraph({
       style={{ display: "block", maxHeight: "210px" }}
       aria-label="Peer influence network"
     >
-      <defs>
-        <style>{`
-          .net-node { transition: opacity 0.18s ease; }
-          .net-edge { transition: opacity 0.18s ease; }
-        `}</style>
-      </defs>
-
-      {/* Edges */}
+      {/* ── Edges: draw-in animation on mount, opacity on hover ── */}
       {GRAPH_EDGES.map((edge, i) => {
-        const f = GRAPH_NODES.find((n) => n.name === edge.from)!;
-        const t = GRAPH_NODES.find((n) => n.name === edge.to)!;
-        const mx = (f.x + t.x) / 2 + (f.y - t.y) * 0.12;
-        const my = (f.y + t.y) / 2 + (t.x - f.x) * 0.12;
+        const f = positions.find((n) => n.name === edge.from)!;
+        const t = positions.find((n) => n.name === edge.to)!;
+        // Slight curve: pull the control point perpendicular to mid
+        const mx = (f.x + t.x) / 2 + (f.y - t.y) * 0.1;
+        const my = (f.y + t.y) / 2 + (t.x - f.x) * 0.1;
+        // Stagger draw-in after nodes have faded in (~0.5s head-start)
+        const delay = mounted ? "0s" : `${0.5 + i * 0.1}s`;
         return (
           <path
             key={i}
-            className="net-edge"
             d={`M ${f.x} ${f.y} Q ${mx} ${my} ${t.x} ${t.y}`}
+            pathLength="1"
             stroke={TOKENS.primary}
             strokeWidth={edgeWidth(edge.weight)}
-            strokeOpacity={edgeOpacity(edge)}
             fill="none"
             strokeLinecap="round"
+            style={{
+              strokeDasharray: 1,
+              strokeDashoffset: mounted ? 0 : 1,
+              opacity: mounted ? edgeOpacity(edge) : 0,
+              transition: `stroke-dashoffset 0.55s cubic-bezier(0.4,0,0.2,1) ${delay}, opacity ${mounted ? "0.18s" : "0.3s"} ease ${delay}`,
+            }}
           />
         );
       })}
 
-      {/* Nodes */}
-      {GRAPH_NODES.map((node) => {
+      {/* ── Nodes: fade-in on mount, opacity on hover ── */}
+      {positions.map((node, i) => {
         const isHovered = hoveredNode === node.name;
-        const opacity = nodeOpacity(node.name);
+        const nodeDelay = mounted ? "0s" : `${0.06 + i * 0.07}s`;
         return (
           <g
             key={node.name}
-            className="net-node"
-            style={{ cursor: "pointer", opacity }}
+            style={{
+              cursor: "pointer",
+              opacity: mounted ? nodeOpacity(node.name) : 0,
+              transition: `opacity ${mounted ? "0.18s" : "0.38s"} ease ${nodeDelay}`,
+            }}
             onMouseEnter={() => onNodeHover(node.name)}
             onMouseLeave={() => onNodeHover(null)}
           >
-            {/* Pulse ring when hovered */}
+            {/* Pulse ring on hover */}
             {isHovered && (
               <circle
                 cx={node.x}
@@ -308,6 +434,7 @@ function NetworkGraph({
               fill={isHovered ? TOKENS.primary : TOKENS.card}
               stroke={TOKENS.primary}
               strokeWidth="1.5"
+              style={{ transition: "fill 0.18s ease" }}
             />
             {/* Initials */}
             <text
@@ -319,7 +446,7 @@ function NetworkGraph({
               fontWeight="600"
               fill={isHovered ? "#fff" : TOKENS.primary}
               fontFamily="'Inter', system-ui, sans-serif"
-              style={{ pointerEvents: "none", userSelect: "none" }}
+              style={{ pointerEvents: "none", userSelect: "none", transition: "fill 0.18s ease" }}
             >
               {nodeInitials(node.name)}
             </text>
@@ -354,7 +481,7 @@ function Sparkline() {
   const max = Math.max(...SPARKLINE.map((d) => d.value));
   const points = SPARKLINE.map((d, i) => {
     const x = padX + (i * (W - padX * 2)) / (SPARKLINE.length - 1);
-    const y = padY + ((H - padY - padBottom) * (1 - d.value / max));
+    const y = padY + (H - padY - padBottom) * (1 - d.value / max);
     return { x, y, ...d };
   });
 
@@ -655,6 +782,7 @@ export default function AdminPage() {
               const isExpanded = expandedRow === row.contributor;
               const isHighlighted = hoveredNode === row.contributor;
               const isRecognised = recognised[row.contributor];
+              const suggestRole = computeSuggestRole(row);
 
               return (
                 <div
@@ -665,13 +793,12 @@ export default function AdminPage() {
                     transition: "background-color 0.18s ease",
                   }}
                 >
-                  {/* Main row — clickable */}
+                  {/* Main row — click to expand */}
                   <button
                     type="button"
                     onClick={() => setExpandedRow(isExpanded ? null : row.contributor)}
-                    className="w-full text-left"
                     aria-expanded={isExpanded}
-                    style={{ background: "none", cursor: "pointer", display: "block", width: "100%" }}
+                    style={{ background: "none", cursor: "pointer", display: "block", width: "100%", textAlign: "left" }}
                   >
                     <div className="grid grid-cols-12 gap-4 items-center py-5 px-1">
                       {/* Avatar + name */}
@@ -694,13 +821,12 @@ export default function AdminPage() {
                         </div>
                       </div>
 
-                      {/* Workflow title */}
+                      {/* Workflow title + suggest chip */}
                       <div className="col-span-12 md:col-span-3">
                         <div className="text-[14px]" style={{ color: TOKENS.text }}>
                           {row.title}
                         </div>
-                        {/* "Who to reach next" chip — inline */}
-                        {row.suggestRole && (
+                        {suggestRole && (
                           <div className="mt-1.5">
                             <span
                               style={{
@@ -710,9 +836,10 @@ export default function AdminPage() {
                                 padding: "1px 7px",
                                 borderRadius: "2px",
                                 opacity: 0.85,
+                                whiteSpace: "nowrap",
                               }}
                             >
-                              → Suggest to {row.suggestRole}
+                              → Suggest to {suggestRole}
                             </span>
                           </div>
                         )}
@@ -735,30 +862,30 @@ export default function AdminPage() {
                           {row.hours}
                         </span>
                         <ChevronDown
-                          className="w-4 h-4 shrink-0 transition-transform"
+                          className="w-4 h-4 shrink-0"
                           strokeWidth={1.75}
                           style={{
                             color: TOKENS.muted,
                             transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
+                            transition: "transform 0.25s ease",
                           }}
                         />
                       </div>
                     </div>
                   </button>
 
-                  {/* Expanded content */}
+                  {/* Expanded: propagation chain + Recognise */}
                   <div
                     style={{
                       overflow: "hidden",
-                      maxHeight: isExpanded ? "400px" : "0px",
+                      maxHeight: isExpanded ? "420px" : "0px",
                       transition: "max-height 0.3s ease",
                     }}
                   >
                     <div
                       style={{
-                        padding: "0 4px 20px 56px",
+                        padding: "18px 4px 22px 56px",
                         borderTop: `1px solid ${TOKENS.rule}`,
-                        paddingTop: "18px",
                         display: "flex",
                         flexDirection: "column",
                         gap: "18px",
@@ -772,23 +899,38 @@ export default function AdminPage() {
                         >
                           Propagation chain
                         </div>
-                        <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
-                          {row.propagation.map((step, i) => (
-                            <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0" }}>
-                              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginRight: "12px" }}>
+                        <div style={{ display: "flex", flexDirection: "column" }}>
+                          {row.propagation.map((step, si) => (
+                            <div key={si} style={{ display: "flex", alignItems: "flex-start", gap: "0" }}>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  alignItems: "center",
+                                  marginRight: "12px",
+                                }}
+                              >
                                 <img
-                                  src={step.name === "3 others" ? `https://api.dicebear.com/7.x/notionists/svg?seed=group&backgroundColor=fef3c7&radius=50` : avatarUrl(step.name)}
+                                  src={avatarUrl(step.name)}
                                   alt=""
-                                  width={28}
-                                  height={28}
+                                  width={26}
+                                  height={26}
                                   className="rounded-full"
                                   style={{ filter: "saturate(0.8)", flexShrink: 0 }}
                                 />
-                                {i < row.propagation.length - 1 && (
-                                  <div style={{ width: "1px", height: "18px", backgroundColor: TOKENS.rule, marginTop: "2px", marginBottom: "2px" }} />
+                                {si < row.propagation.length - 1 && (
+                                  <div
+                                    style={{
+                                      width: "1px",
+                                      height: "16px",
+                                      backgroundColor: TOKENS.rule,
+                                      marginTop: "2px",
+                                      marginBottom: "2px",
+                                    }}
+                                  />
                                 )}
                               </div>
-                              <div style={{ paddingBottom: i < row.propagation.length - 1 ? "0" : "0", paddingTop: "4px" }}>
+                              <div style={{ paddingTop: "4px" }}>
                                 <span className="text-[13px] font-medium" style={{ color: TOKENS.text }}>
                                   {step.name}
                                 </span>
@@ -814,35 +956,33 @@ export default function AdminPage() {
                       </div>
 
                       {/* Recognise button */}
-                      <div>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setRecognised((s) => ({ ...s, [row.contributor]: true }));
-                          }}
-                          className="inline-flex items-center gap-2 text-[13px] font-medium hover:opacity-70 transition-opacity"
-                          style={{
-                            color: isRecognised ? TOKENS.muted : TOKENS.primary,
-                            borderBottom: `1px solid ${isRecognised ? TOKENS.rule : TOKENS.primary}`,
-                            paddingBottom: "2px",
-                            background: "none",
-                            cursor: isRecognised ? "default" : "pointer",
-                          }}
-                          data-testid={`recognise-${row.contributor}`}
-                        >
-                          {isRecognised ? (
-                            <>
-                              <Check className="w-3.5 h-3.5" strokeWidth={1.75} /> Recognised
-                            </>
-                          ) : (
-                            <>
-                              Recognise {row.contributor.split(" ")[0]}
-                              <ArrowUpRight className="w-3.5 h-3.5" strokeWidth={1.75} />
-                            </>
-                          )}
-                        </button>
-                      </div>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setRecognised((s) => ({ ...s, [row.contributor]: true }));
+                        }}
+                        className="inline-flex items-center gap-2 text-[13px] font-medium hover:opacity-70 transition-opacity self-start"
+                        style={{
+                          color: isRecognised ? TOKENS.muted : TOKENS.primary,
+                          borderBottom: `1px solid ${isRecognised ? TOKENS.rule : TOKENS.primary}`,
+                          paddingBottom: "2px",
+                          background: "none",
+                          cursor: isRecognised ? "default" : "pointer",
+                        }}
+                        data-testid={`recognise-${row.contributor}`}
+                      >
+                        {isRecognised ? (
+                          <>
+                            <Check className="w-3.5 h-3.5" strokeWidth={1.75} /> Recognised
+                          </>
+                        ) : (
+                          <>
+                            Recognise {row.contributor.split(" ")[0]}
+                            <ArrowUpRight className="w-3.5 h-3.5" strokeWidth={1.75} />
+                          </>
+                        )}
+                      </button>
                     </div>
                   </div>
                 </div>
