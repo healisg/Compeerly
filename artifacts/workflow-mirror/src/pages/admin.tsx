@@ -173,7 +173,7 @@ const SPARKLINE = [
 ];
 
 // ─── Suggest role derivation ───────────────────────────────────────────────
-// Maps contributor role (singular) to coverage key (plural).
+
 const ROLE_SINGULAR_TO_PLURAL: Record<string, string> = {
   "Operations Manager": "Operations Managers",
   "Account Manager": "Account Managers",
@@ -182,14 +182,9 @@ const ROLE_SINGULAR_TO_PLURAL: Record<string, string> = {
   "HR Business Partner": "HR Business Partners",
 };
 
-/**
- * Derives which under-covered role to surface for a given workflow row.
- * Criteria:
- *   1. Workflow must not be too dominant already (tried < 20).
- *   2. Success rate must exceed 55% to be worth recommending.
- *   3. Pick the most under-covered role (lowest pct, under: true) that is
- *      NOT the contributor's own role — cross-referencing ROLE_COVERAGE.
- */
+// Returns the most under-covered role that this workflow should be suggested to.
+// Conditions: tried < 20 (not yet saturated), success rate > 55%, and the
+// target must be an under-covered role that isn't the contributor's own.
 function computeSuggestRole(row: PeerRow): string | null {
   if (row.tried >= 20) return null;
   if (row.worked / row.tried < 0.55) return null;
@@ -223,11 +218,7 @@ const GRAPH_EDGES = [
 
 type SimNode = { name: string; r: number; x: number; y: number; vx: number; vy: number };
 
-/**
- * Runs a simple spring-force simulation to compute node positions.
- * Uses Coulomb repulsion between all pairs + Hooke spring attraction
- * along edges + weak centre gravity. Returns final x/y per node.
- */
+// Spring-force simulation: Coulomb repulsion + Hooke spring edges + centre gravity.
 function runForceSimulation(
   W: number,
   H: number,
@@ -332,11 +323,18 @@ function NetworkGraph({
   // Force simulation runs once synchronously during initialisation.
   const [positions] = useState(() => runForceSimulation(W, H));
 
-  // Mount flag — triggers entry animations via CSS transition.
+  // Two-phase animation: `mounted` triggers entry transitions (with stagger),
+  // `animated` flips true after all entry transitions complete so hover
+  // transitions skip the stagger delay and feel instant.
   const [mounted, setMounted] = useState(false);
+  const [animated, setAnimated] = useState(false);
   useEffect(() => {
-    const id = requestAnimationFrame(() => setMounted(true));
-    return () => cancelAnimationFrame(id);
+    const rafId = requestAnimationFrame(() => setMounted(true));
+    const timerId = setTimeout(() => setAnimated(true), 1300);
+    return () => {
+      cancelAnimationFrame(rafId);
+      clearTimeout(timerId);
+    };
   }, []);
 
   const connectedTo = (name: string): Set<string> => {
@@ -371,15 +369,18 @@ function NetworkGraph({
       style={{ display: "block", maxHeight: "210px" }}
       aria-label="Peer influence network"
     >
-      {/* ── Edges: draw-in animation on mount, opacity on hover ── */}
+      {/* ── Edges: draw-in on mount (staggered), opacity on hover ── */}
       {GRAPH_EDGES.map((edge, i) => {
         const f = positions.find((n) => n.name === edge.from)!;
         const t = positions.find((n) => n.name === edge.to)!;
-        // Slight curve: pull the control point perpendicular to mid
         const mx = (f.x + t.x) / 2 + (f.y - t.y) * 0.1;
         const my = (f.y + t.y) / 2 + (t.x - f.x) * 0.1;
-        // Stagger draw-in after nodes have faded in (~0.5s head-start)
-        const delay = mounted ? "0s" : `${0.5 + i * 0.1}s`;
+        // Stagger fires during initial mount (mounted=true, animated=false).
+        // Once animated=true all delays become 0s so hover feels instant.
+        const staggerDelay = `${0.5 + i * 0.1}s`;
+        const delay = mounted && !animated ? staggerDelay : "0s";
+        const dashDuration = animated ? "0s" : "0.55s";
+        const opacityDuration = animated ? "0.18s" : "0.3s";
         return (
           <path
             key={i}
@@ -393,23 +394,25 @@ function NetworkGraph({
               strokeDasharray: 1,
               strokeDashoffset: mounted ? 0 : 1,
               opacity: mounted ? edgeOpacity(edge) : 0,
-              transition: `stroke-dashoffset 0.55s cubic-bezier(0.4,0,0.2,1) ${delay}, opacity ${mounted ? "0.18s" : "0.3s"} ease ${delay}`,
+              transition: `stroke-dashoffset ${dashDuration} cubic-bezier(0.4,0,0.2,1) ${delay}, opacity ${opacityDuration} ease ${delay}`,
             }}
           />
         );
       })}
 
-      {/* ── Nodes: fade-in on mount, opacity on hover ── */}
+      {/* ── Nodes: fade-in on mount (staggered), opacity on hover ── */}
       {positions.map((node, i) => {
         const isHovered = hoveredNode === node.name;
-        const nodeDelay = mounted ? "0s" : `${0.06 + i * 0.07}s`;
+        const staggerDelay = `${0.06 + i * 0.07}s`;
+        const nodeDelay = mounted && !animated ? staggerDelay : "0s";
+        const nodeDuration = animated ? "0.18s" : "0.38s";
         return (
           <g
             key={node.name}
             style={{
               cursor: "pointer",
               opacity: mounted ? nodeOpacity(node.name) : 0,
-              transition: `opacity ${mounted ? "0.18s" : "0.38s"} ease ${nodeDelay}`,
+              transition: `opacity ${nodeDuration} ease ${nodeDelay}`,
             }}
             onMouseEnter={() => onNodeHover(node.name)}
             onMouseLeave={() => onNodeHover(null)}
