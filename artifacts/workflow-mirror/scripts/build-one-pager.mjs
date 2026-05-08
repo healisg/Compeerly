@@ -57,26 +57,83 @@ doc.registerFont("sans", path.join(FONTS, "Inter-Regular.ttf"));
 doc.rect(0, 0, PAGE_W, PAGE_H).fill(C.bg);
 
 // =========================================================================
+// COMPASS MARK — ported from src/components/compass-mark.tsx
+// SVG viewBox is 0 0 64 64; circle cx=32 cy=32 r=29; needles rotated -22°.
+// =========================================================================
+function drawCompassMark(x, y, size, color, opacity = 1) {
+  const s = size / 64; // scale factor from 64-unit viewBox
+  const cx = x + size / 2;
+  const cy = y + size / 2;
+  const strokeW = 2.2 * s;
+
+  doc.save();
+  doc.opacity(opacity);
+
+  // Ring
+  doc
+    .strokeColor(color)
+    .lineWidth(strokeW)
+    .circle(cx, cy, 29 * s)
+    .stroke();
+
+  // Rotate around centre by -22° for both needles
+  doc.translate(cx, cy).rotate(-22).translate(-cx, -cy);
+
+  // Front needle: M32 9 L40 34 L32 31 L24 34 Z
+  const front = [
+    [32, 9],
+    [40, 34],
+    [32, 31],
+    [24, 34],
+  ];
+  doc.fillColor(color).opacity(opacity);
+  doc.moveTo(x + front[0][0] * s, y + front[0][1] * s);
+  for (let i = 1; i < front.length; i++) {
+    doc.lineTo(x + front[i][0] * s, y + front[i][1] * s);
+  }
+  doc.closePath().fill();
+
+  // Back needle: M32 55 L24 30 L32 33 L40 30 Z, opacity 0.22
+  const back = [
+    [32, 55],
+    [24, 30],
+    [32, 33],
+    [40, 30],
+  ];
+  doc.fillColor(color).opacity(opacity * 0.22);
+  doc.moveTo(x + back[0][0] * s, y + back[0][1] * s);
+  for (let i = 1; i < back.length; i++) {
+    doc.lineTo(x + back[i][0] * s, y + back[i][1] * s);
+  }
+  doc.closePath().fill();
+
+  doc.restore();
+}
+
+// =========================================================================
 // 1. HEADER STRIP
 // =========================================================================
 // Forest green progress band (echo of slide chrome top bar)
 doc.rect(0, 0, PAGE_W, 4).fill(C.primary);
 
-let y = 24;
+let y = 28;
 
 // Eyebrow
 doc.font("sans").fontSize(7.5).fillColor(C.muted).text("ONE-PAGER  ·  AI ADOPTION PM SUBMISSION", MARGIN_X, y, {
   characterSpacing: 2.4,
   width: CONTENT_W,
 });
-y += 18;
+y += 26;
 
-// Title — the product name, prominent
-doc.font("serif-italic").fontSize(40).fillColor(C.text).text("Compass", MARGIN_X, y, {
-  width: CONTENT_W,
+// Header lockup: Compass mark to the left of the wordmark
+const markSize = 38;
+drawCompassMark(MARGIN_X, y - 2, markSize, C.primary, 1);
+doc.font("serif-italic").fontSize(40).fillColor(C.text).text("Compass", MARGIN_X + markSize + 12, y - 6, {
+  width: CONTENT_W - markSize - 12,
   lineGap: -2,
+  lineBreak: false,
 });
-y += 44;
+y += 48;
 
 // Tagline (per spec)
 doc.font("serif-italic").fontSize(15).fillColor(C.primary).text(
@@ -85,14 +142,14 @@ doc.font("serif-italic").fontSize(15).fillColor(C.primary).text(
   y,
   { width: CONTENT_W },
 );
-y += 26;
+y += 28;
 
 // Section divider
 function rule(yPos, color = C.rule) {
   doc.strokeColor(color).lineWidth(0.6).moveTo(MARGIN_X, yPos).lineTo(PAGE_W - MARGIN_X, yPos).stroke();
 }
 rule(y);
-y += 14;
+y += 16;
 
 // =========================================================================
 // SECTION HELPERS
@@ -120,11 +177,10 @@ function body(text, x, yPos, width, opts = {}) {
 // =========================================================================
 // 2. THE PROBLEM (full width, with stat callout)
 // =========================================================================
-const sectionStart = y;
 eyebrow("01 · THE PROBLEM", MARGIN_X, y);
-y += 12;
+y += 14;
 heading("Chico.ai measures the adoption gap. It does not close it.", MARGIN_X, y, 13);
-y += 20;
+y += 22;
 
 // Two columns: paragraph (left, 65%) + stat (right, 35%)
 const leftW = CONTENT_W * 0.62;
@@ -137,7 +193,7 @@ const probParaEnd = body(
   MARGIN_X,
   y,
   leftW,
-  { lineGap: 2.5 },
+  { lineGap: 2.8 },
 );
 
 // Stat callout
@@ -162,35 +218,35 @@ doc.font("sans").fontSize(6.5).fillColor(C.muted).text(
   { width: statW, characterSpacing: 1.2 },
 );
 
-y = Math.max(probParaEnd, probParaY + 84) + 14;
+y = Math.max(probParaEnd, probParaY + 84) + 16;
 rule(y);
-y += 14;
+y += 16;
 
 // =========================================================================
 // 3. THE INSIGHT
 // =========================================================================
 eyebrow("02 · THE INSIGHT", MARGIN_X, y);
-y += 12;
+y += 14;
 heading("Prescribed recipes replicate the threat. Peer discovery honours expertise.", MARGIN_X, y, 13);
-y += 20;
+y += 22;
 y = body(
   "Top-down playbooks tell people their existing way of working is wrong. That triggers identity threat — and shadow AI. Peer-led discovery flips it: active users share what already works, in their own words. Non-adopters find role-relevant proof, on their own terms, with no manager visibility and no mandate. Visibility, not training, is the gap.",
   MARGIN_X,
   y,
   CONTENT_W,
-  { lineGap: 2.5 },
+  { lineGap: 2.8 },
 );
-y += 14;
+y += 16;
 rule(y);
-y += 14;
+y += 16;
 
 // =========================================================================
 // 4. THE PRODUCT (3 blocks)
 // =========================================================================
 eyebrow("03 · THE PRODUCT", MARGIN_X, y);
-y += 12;
+y += 14;
 heading("Three surfaces, one motion.", MARGIN_X, y, 13);
-y += 22;
+y += 26;
 
 const blocks = [
   {
@@ -210,20 +266,21 @@ const blocks = [
 const blockGap = 14;
 const blockW = (CONTENT_W - blockGap * 2) / 3;
 const blocksY = y;
+const blockHeight = 58;
 let maxBlockEnd = y;
 
 blocks.forEach((b, i) => {
   const bx = MARGIN_X + i * (blockW + blockGap);
-  // Left forest green stripe
-  doc.rect(bx, blocksY, 2, 56).fill(C.primary);
-  eyebrow(b.label, bx + 10, blocksY + 2, C.primary);
-  const endY = body(b.body, bx + 10, blocksY + 14, blockW - 10, { size: 8.5, lineGap: 2 });
+  // Left forest green stripe (taller, with breathing room)
+  doc.rect(bx, blocksY, 2, blockHeight).fill(C.primary);
+  eyebrow(b.label, bx + 14, blocksY + 6, C.primary);
+  const endY = body(b.body, bx + 14, blocksY + 20, blockW - 14, { size: 8.5, lineGap: 2.4 });
   maxBlockEnd = Math.max(maxBlockEnd, endY);
 });
 
-y = maxBlockEnd + 14;
+y = Math.max(maxBlockEnd, blocksY + blockHeight) + 20;
 rule(y);
-y += 14;
+y += 16;
 
 // =========================================================================
 // 5. THE PILOT + 6. THE ROI (side by side)
@@ -234,8 +291,8 @@ const colTop = y;
 
 // Left column: Pilot
 eyebrow("04 · THE PILOT", MARGIN_X, colTop);
-heading("Concierge first. Engineer later.", MARGIN_X, colTop + 12, 13);
-let pilotY = colTop + 32;
+heading("Concierge first. Engineer later.", MARGIN_X, colTop + 14, 13);
+let pilotY = colTop + 36;
 const pilotItems = [
   { week: "Wks 1–2", text: "Capture by hand. Five sharers. Five published workflows. Zero new code." },
   { week: "Wks 3–4", text: "Surface to ~60 matched peers. Measure activation rate (≥2 AI uses in 7 days)." },
@@ -246,16 +303,16 @@ pilotItems.forEach((p) => {
     width: 64,
     lineBreak: false,
   });
-  const endY = body(p.text, MARGIN_X + 70, pilotY - 1, colW - 70, { size: 8.5, lineGap: 2 });
-  pilotY = Math.max(endY, pilotY + 22) + 8;
+  const endY = body(p.text, MARGIN_X + 70, pilotY - 1, colW - 70, { size: 8.5, lineGap: 2.2 });
+  pilotY = Math.max(endY, pilotY + 22) + 10;
 });
 const pilotEnd = pilotY;
 
 // Right column: ROI
 const roiX = MARGIN_X + colW + colGap;
 eyebrow("05 · THE ROI", roiX, colTop);
-heading("£358,800 per enterprise client, annualised.", roiX, colTop + 12, 13);
-let roiY = colTop + 36;
+heading("£358,800 per enterprise client, annualised.", roiX, colTop + 14, 13);
+let roiY = colTop + 40;
 
 // ROI math line
 doc.font("sans").fontSize(8.5).fillColor(C.text).text(
@@ -264,12 +321,12 @@ doc.font("sans").fontSize(8.5).fillColor(C.text).text(
   roiY,
   { width: colW, lineGap: 2 },
 );
-roiY = doc.y + 8;
+roiY = doc.y + 10;
 doc.font("serif-italic").fontSize(20).fillColor(C.primary).text("£6,900 / week", roiX, roiY, {
   width: colW,
   lineBreak: false,
 });
-roiY += 26;
+roiY += 30;
 doc.font("sans").fontSize(7.5).fillColor(C.muted).text(
   "Conservative 15% activation against the 460 non-active pool. Reconciles with the deck's RoiModel slide and the admin view.",
   roiX,
@@ -280,7 +337,7 @@ const roiEnd = doc.y;
 
 y = Math.max(pilotEnd, roiEnd) + 14;
 rule(y);
-y += 14;
+y += 12;
 
 // =========================================================================
 // 7. RISKS & WHAT I'D DO NEXT (side by side)
@@ -298,7 +355,7 @@ const risks = [
 let riskY = riskTop + 32;
 risks.forEach((r) => {
   doc.fillColor(C.primary).rect(MARGIN_X, riskY + 4, 3, 3).fill();
-  const endY = body(r, MARGIN_X + 10, riskY, colW - 10, { size: 8.2, lineGap: 1.8 });
+  const endY = body(r, MARGIN_X + 10, riskY, colW - 10, { size: 8.2, lineGap: 1.6 });
   riskY = endY + 5;
 });
 
@@ -314,28 +371,38 @@ const nexts = [
 let nextY = riskTop + 32;
 nexts.forEach((n) => {
   doc.fillColor(C.primary).rect(nextX, nextY + 4, 3, 3).fill();
-  const endY = body(n, nextX + 10, nextY, colW - 10, { size: 8.2, lineGap: 1.8 });
+  const endY = body(n, nextX + 10, nextY, colW - 10, { size: 8.2, lineGap: 1.6 });
   nextY = endY + 5;
 });
 
 y = Math.max(riskY, nextY) + 8;
 
 // =========================================================================
-// 8. FOOTER STRIP
+// 8. FOOTER STRIP — with mini Compass mark lockup
 // =========================================================================
 const footerY = PAGE_H - MARGIN_BOTTOM - 8;
-rule(footerY - 10);
+rule(footerY - 12);
 doc.font("sans").fontSize(7).fillColor(C.muted).text(
   "Built for Chico.ai  ·  AI Adoption PM submission  ·  Solo build  ·  May 2026",
   MARGIN_X,
   footerY,
   { characterSpacing: 1.4, width: CONTENT_W * 0.75, lineBreak: false },
 );
+
+// Footer right-side lockup: small muted mark + COMPASS wordmark
+const footerWordmark = "COMPASS";
+doc.font("sans").fontSize(7).fillColor(C.muted);
+const wordmarkW = doc.widthOfString(footerWordmark, { characterSpacing: 2.2 });
+const footerMarkSize = 10;
+const footerLockupRightEdge = PAGE_W - MARGIN_X;
+const footerWordmarkX = footerLockupRightEdge - wordmarkW;
+const footerMarkX = footerWordmarkX - footerMarkSize - 5;
+drawCompassMark(footerMarkX, footerY - 2, footerMarkSize, C.muted, 0.85);
 doc.font("sans").fontSize(7).fillColor(C.muted).text(
-  "COMPASS",
-  MARGIN_X,
+  footerWordmark,
+  footerWordmarkX,
   footerY,
-  { characterSpacing: 2.2, width: CONTENT_W, align: "right", lineBreak: false },
+  { characterSpacing: 2.2, lineBreak: false },
 );
 
 doc.end();
