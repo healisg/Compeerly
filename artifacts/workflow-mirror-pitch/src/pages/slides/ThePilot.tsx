@@ -14,41 +14,46 @@ export default function ThePilotSlide() {
 
       <div className="absolute top-[23vh] left-[5.5vw] right-[5.5vw]">
         <h2 className="font-display text-[4.6vw] leading-[1.05] tracking-tight text-text" style={{ textWrap: "balance" }}>
-          Six weeks. Three accounts. One question.
+          Concierge first. Engineer later.
         </h2>
       </div>
 
-      <div className="absolute top-[42vh] left-[5.5vw] right-[5.5vw] space-y-[2.6vh]">
-        <div className="flex items-baseline gap-[2vw] border-b border-rule pb-[2vh]">
+      <div className="absolute top-[40vh] left-[5.5vw] right-[5.5vw] space-y-[1.6vh]">
+        <div className="flex items-baseline gap-[2vw] border-b border-rule pb-[1.4vh]">
           <span className="font-display text-[3vw] text-primary font-semibold tabular-nums w-[5vw] shrink-0">01</span>
           <p className="font-body text-[1.6vw] leading-[1.4] text-text">
-            Recruit 50 power users across three customer accounts.
+            One client.
           </p>
         </div>
-        <div className="flex items-baseline gap-[2vw] border-b border-rule pb-[2vh]">
+        <div className="flex items-baseline gap-[2vw] border-b border-rule pb-[1.4vh]">
           <span className="font-display text-[3vw] text-primary font-semibold tabular-nums w-[5vw] shrink-0">02</span>
           <p className="font-body text-[1.6vw] leading-[1.4] text-text">
-            Seed each account with five starter workflows from the design partners.
+            Interview 10 active users.
           </p>
         </div>
-        <div className="flex items-baseline gap-[2vw] border-b border-rule pb-[2vh]">
+        <div className="flex items-baseline gap-[2vw] border-b border-rule pb-[1.4vh]">
           <span className="font-display text-[3vw] text-primary font-semibold tabular-nums w-[5vw] shrink-0">03</span>
           <p className="font-body text-[1.6vw] leading-[1.4] text-text">
-            Run for six weeks with weekly check-ins, no incentives.
+            Manually curate and publish their workflows.
           </p>
         </div>
-        <div className="flex items-baseline gap-[2vw] border-b border-rule pb-[2vh]">
+        <div className="flex items-baseline gap-[2vw] border-b border-rule pb-[1.4vh]">
           <span className="font-display text-[3vw] text-primary font-semibold tabular-nums w-[5vw] shrink-0">04</span>
           <p className="font-body text-[1.6vw] leading-[1.4] text-text">
-            Measure adoption rate, "worked for me" rate, and qualitative trust.
+            Surface them to 50 non-active users in matched roles.
           </p>
         </div>
         <div className="flex items-baseline gap-[2vw]">
           <span className="font-display text-[3vw] text-accent font-semibold tabular-nums w-[5vw] shrink-0">05</span>
           <p className="font-body text-[1.6vw] leading-[1.4] text-text">
-            Decide go / no-go on broad rollout. One number gates the call: 0.8.
+            30 days. Measure activation rate.
           </p>
         </div>
+      </div>
+
+      <div className="absolute bottom-[4vh] left-[5.5vw] right-[5.5vw] flex items-center gap-[1.5vw] text-[1.5vw] text-muted">
+        <span className="h-[1px] w-[3vw] bg-rule" />
+        <span className="font-display italic">No engineering lift beyond a new tab in the existing dashboard.</span>
       </div>
     </div>
   );
