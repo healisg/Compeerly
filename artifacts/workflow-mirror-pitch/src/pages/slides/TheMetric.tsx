@@ -4,14 +4,11 @@ export default function TheMetricSlide() {
   return (
     <div className="w-screen h-screen overflow-hidden relative bg-bg">
       <SlideChrome slideNumber={9} totalSlides={12} />
-
       <div className="absolute top-[14vh] left-[5.5vw] flex items-baseline gap-[1.2vw]">
         <span className="font-display italic text-[2vw] text-accent">09</span>
-        <span className="text-[1.6vw] uppercase tracking-[0.3em] text-muted font-semibold">
-          The Metric
-        </span>
+        <span className="text-[1.6vw] uppercase tracking-[0.3em] text-muted font-semibold">The North Star
+</span>
       </div>
-
       <div className="absolute top-[26vh] left-[5.5vw] right-[5.5vw]">
         <div className="text-[1.5vw] uppercase tracking-[0.3em] text-accent font-semibold mb-[2vh]">
           One metric
@@ -20,7 +17,6 @@ export default function TheMetricSlide() {
           Activation rate among non-active users exposed to peer workflows.
         </h2>
       </div>
-
       <div className="absolute bottom-[12vh] left-[5.5vw] right-[5.5vw] grid grid-cols-2 gap-[5vw] items-end">
         <div>
           <div className="text-[1.5vw] uppercase tracking-[0.3em] text-muted font-semibold mb-[2vh]">
