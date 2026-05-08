@@ -300,7 +300,7 @@ export default function CoverPage() {
       </div>
 
       <footer
-        className="absolute bottom-6 left-[8vw] right-[8vw] flex items-center justify-between text-[12px] uppercase tracking-[0.28em]"
+        className="absolute bottom-6 left-[8vw] right-[8vw] z-30 flex items-center justify-between text-[12px] uppercase tracking-[0.28em]"
         style={{ color: TOKENS.muted }}
       >
         <span>Compass</span>
