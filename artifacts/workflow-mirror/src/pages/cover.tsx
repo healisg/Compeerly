@@ -230,6 +230,21 @@ export default function CoverPage() {
               <ArrowRight className="w-3.5 h-3.5" strokeWidth={1.75} />
             </Link>
           </div>
+
+          <div className="mt-16 md:mt-20">
+            <Link
+              href="/about"
+              data-testid="link-about-build"
+              className="inline-flex items-center gap-2 text-[12px] font-medium uppercase hover:opacity-70 transition-opacity no-underline"
+              style={{
+                color: TOKENS.muted,
+                letterSpacing: "0.28em",
+              }}
+            >
+              About this build
+              <ArrowRight className="w-3 h-3" strokeWidth={1.75} />
+            </Link>
+          </div>
         </div>
       </div>
 
