@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "wouter";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 
@@ -11,6 +12,14 @@ const TOKENS = {
   card: "#FFFFFF",
 };
 
+type Section = {
+  key: string;
+  num: string;
+  title: string;
+  standfirst: string;
+  body: React.ReactNode;
+};
+
 type Source = {
   n: number;
   cite: string;
@@ -20,26 +29,22 @@ type Source = {
 const SOURCES: Source[] = [
   {
     n: 1,
-    cite:
-      "Baym, N., Dillon, E., & Jaffe, S. (2026). \"Peer Influence Can Make or Break Your AI Rollout.\" Harvard Business Review, March 2026.",
+    cite: 'Baym, N., Dillon, E., & Jaffe, S. (2026). "Peer Influence Can Make or Break Your AI Rollout." Harvard Business Review, March 2026.',
     url: "https://hbr.org/2026/03/peer-influence-can-make-or-break-your-ai-rollout",
   },
   {
     n: 2,
-    cite:
-      "Hermann, E., Puntoni, S., & Morewedge, C. K. (2026). \"AI Adoption Is a Challenge. Here's a Solution.\" Knowledge at Wharton.",
+    cite: 'Hermann, E., Puntoni, S., & Morewedge, C. K. (2026). "AI Adoption Is a Challenge. Here\'s a Solution." Knowledge at Wharton.',
     url: "https://knowledge.wharton.upenn.edu/article/ai-adoption-is-a-challenge-heres-a-solution/",
   },
   {
     n: 3,
-    cite:
-      "American Psychological Association (2023). \"Electronically monitoring your employees? It's impacting their mental health.\"",
+    cite: 'American Psychological Association (2023). "Electronically monitoring your employees? It\'s impacting their mental health."',
     url: "https://www.apa.org/topics/healthy-workplaces/employee-electronic-monitoring",
   },
   {
     n: 4,
-    cite:
-      "Sandvik, J., Saouma, R., Seegert, N., & Stanton, C. (2025). \"Should Human Capital Development Programs be Mandatory or Voluntary? Evidence from a Field Experiment on Mentorship.\" Management Science.",
+    cite: 'Sandvik, J., Saouma, R., Seegert, N., & Stanton, C. (2025). "Should Human Capital Development Programs be Mandatory or Voluntary? Evidence from a Field Experiment on Mentorship." Management Science.',
     url: "https://doi.org/10.1287/mnsc.2024.07524",
   },
   {
@@ -49,20 +54,12 @@ const SOURCES: Source[] = [
   },
   {
     n: 6,
-    cite:
-      "Wang, J., Shih, P. C., & Carroll, J. M. (2015). \"Revisiting Linus's law: Benefits and challenges of open source software peer review.\" International Journal of Human-Computer Studies, 77, 52–65.",
-    url: "https://doi.org/10.1016/j.ijhcs.2015.01.005",
-  },
-  {
-    n: 7,
-    cite:
-      "BCG (2025). \"AI at Work 2025: Momentum Builds, but Gaps Remain.\" Boston Consulting Group — leadership-vs-frontline AI usage gap.",
+    cite: 'BCG (2025). "AI at Work 2025: Momentum Builds, but Gaps Remain." Boston Consulting Group.',
     url: "https://www.bcg.com/publications/2025/ai-at-work-momentum-builds-but-gaps-remain",
   },
   {
-    n: 8,
-    cite:
-      "Microsoft & LinkedIn (2024). \"AI at Work Is Here. Now Comes the Hard Part.\" Work Trend Index Annual Report — Copilot/AI penetration among knowledge workers.",
+    n: 7,
+    cite: 'Microsoft & LinkedIn (2024). "AI at Work Is Here. Now Comes the Hard Part." Work Trend Index Annual Report.',
     url: "https://www.microsoft.com/en-us/worklab/work-trend-index/ai-at-work-is-here-now-comes-the-hard-part",
   },
 ];
@@ -80,7 +77,187 @@ function Cite({ n }: { n: number }) {
   );
 }
 
+function P({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <p className={`mb-5 ${className}`} style={{ color: TOKENS.text }}>
+      {children}
+    </p>
+  );
+}
+
+function Pull({ children }: { children: React.ReactNode }) {
+  return (
+    <blockquote
+      className="my-10 py-2 pl-6"
+      style={{ borderLeft: `2px solid ${TOKENS.rule}` }}
+    >
+      <p
+        className="font-serif italic text-[21px] md:text-[23px] leading-[1.4]"
+        style={{ color: TOKENS.text, fontFamily: "'Playfair Display', Georgia, serif" }}
+      >
+        {children}
+      </p>
+    </blockquote>
+  );
+}
+
+const SECTIONS: Section[] = [
+  {
+    key: "visibility",
+    num: "01",
+    title: "The problem isn't capability. It's visibility.",
+    standfirst:
+      "Enterprise AI tools have a distribution problem, not a training problem. The gap between heavy users and non-users has one root cause — and the dashboard can see it but not fix it.",
+    body: (
+      <>
+        <P>
+          BCG's 2026 AI at Work survey found that 88% of executives use AI regularly,
+          against 51% of frontline employees.<Cite n={6} /> Microsoft and LinkedIn's Work
+          Trend Index put generative AI use at 75% of global knowledge workers, with adoption
+          nearly doubling in six months.<Cite n={7} /> The tools are deployed. The licences
+          are paid. The gap is not access.
+        </P>
+        <P>
+          The most direct evidence for what the gap actually is comes from a 2026 Microsoft
+          Research study published in Harvard Business Review. Among employees in the top
+          quartile of AI usage, 88% described peers as the most influential factor in shaping
+          their AI behaviour. Among employees in the bottom quartile, only 50% did.<Cite n={1} />
+        </P>
+        <P>
+          The same study found that 12% of low-use employees said AI had literally never come
+          up in informal conversation with their colleagues — compared to just 1% of heavy
+          users.<Cite n={1} /> That is not a training gap. It is a visibility gap. Non-adopters
+          are not unable to use AI. They have simply never seen a person they trust use it for
+          a task that resembles their own.
+        </P>
+        <Pull>
+          The dashboard can see who isn't using AI. It cannot make those conversations happen.
+        </Pull>
+        <P>
+          The consequence of invisible AI use is predictable. Approximately 31% of US knowledge
+          workers admit to actively working around their company's AI initiatives.<Cite n={2} />
+          More than half report they would use AI tools without formal approval — creating a
+          substantial shadow AI economy that usage dashboards observe but cannot address. The
+          information about what's working stays private. Non-adopters have no social proof
+          that the technology works in their specific role, for their specific tasks, in the
+          hands of people they actually trust.
+        </P>
+        <P>
+          Workflow Mirror is a direct response to that structural problem. It makes private AI
+          use visible and shareable — converting what is currently an invisible individual
+          practice into a social, observable norm. The mechanism is not training. It is
+          exposure.
+        </P>
+      </>
+    ),
+  },
+  {
+    key: "peers",
+    num: "02",
+    title: "Why peers are more persuasive than managers.",
+    standfirst:
+      "Peer influence is not a nice-to-have on top of a manager-led programme. It is a psychologically distinct mechanism that manager-led mandates actively undermine.",
+    body: (
+      <>
+        <P>
+          Everett Rogers' foundational research on the diffusion of innovations established
+          that adoption decisions are driven primarily by subjective evaluations from trusted
+          peers, not by objective assessments from authority figures.<Cite n={5} /> The reason
+          is straightforward: a peer who shares a workflow is saying "this worked for me, in a
+          job like yours, with constraints like yours." A manager who runs a training session
+          is saying "this is what the organisation requires of you." These produce
+          fundamentally different responses.
+        </P>
+        <P>
+          Wharton research frames the mechanism in terms of self-determination theory.<Cite n={2} />
+          Genuine adoption requires three psychological conditions: autonomy — the sense that
+          you are choosing to act; competence — the sense that you are capable; and relatedness
+          — the sense that your behaviour connects you to people you respect. Manager-led
+          mandates frequently undermine all three. They remove autonomy by making adoption
+          compulsory, they undermine competence by imposing generic workflows that may not fit
+          specific roles, and they damage relatedness by framing AI adoption as a compliance
+          exercise rather than a shared professional practice.
+        </P>
+        <Pull>
+          A peer sharing a workflow says: this worked for me. A mandate says: this is required
+          of you. The psychological effect is not subtle.
+        </Pull>
+        <P>
+          The Microsoft Research data makes an important distinction about where leadership
+          does and does not contribute. 17% of heavy AI users cited leaders as influential —
+          but specifically through modelling: seeing a leader demonstrate a real use of AI,
+          including failures.<Cite n={1} /> Just 12% of light users described any meaningful
+          leadership influence at all. The operative verb is modelling, not mandating. Leaders
+          who use AI visibly and share their own experiences contribute meaningfully to
+          adoption. Leaders who mandate use and track compliance do not.
+        </P>
+        <P>
+          This distinction matters for product design. A peer-led platform creates a space
+          where leaders can participate as peers — sharing their own workflows alongside
+          everyone else — without the platform becoming a surveillance instrument. The
+          modelling effect is preserved. The mandate effect is deliberately absent.
+        </P>
+      </>
+    ),
+  },
+  {
+    key: "design",
+    num: "03",
+    title: "The design that follows from the evidence.",
+    standfirst:
+      "Once the mechanism is clear, the product decisions follow directly. Opt-in, no surveillance layer, friction asymmetry. Each choice is evidence-backed — not a philosophical preference.",
+    body: (
+      <>
+        <P>
+          The deliberate exclusion of a management surveillance layer is the most consequential
+          design decision in Workflow Mirror. The American Psychological Association reports
+          that among electronically monitored employees, 56% feel tense or stressed at work —
+          compared to 40% of non-monitored employees.<Cite n={3} /> Monitored employees are
+          more likely to do the bare minimum required. For a knowledge-sharing platform,
+          the implications are direct: an employee who shares a workflow on a platform
+          management can monitor will not share authentically. They will share the workflow
+          that makes them look competent, not the one that is genuinely useful. Surveillance
+          destroys the authenticity that makes peer sharing worth anything.
+        </P>
+        <P>
+          On opt-in participation: the honest counter-evidence is a 2025 field experiment
+          published in Management Science, which found that a mandatory mentorship programme
+          successfully raised productivity while a voluntary version did not.<Cite n={4} /> The
+          mechanism was self-selection — the employees with the most to gain were the most
+          likely to opt out of the voluntary programme. This finding is real and cannot be
+          dismissed.
+        </P>
+        <Pull>
+          The answer is not mandate. It is friction asymmetry.
+        </Pull>
+        <P>
+          The Management Science study was conducted with formal mentorship — 30-minute weekly
+          meetings over four weeks, sustained vulnerability, active participation. The friction
+          of that programme is orders of magnitude higher than browsing a searchable library of
+          short workflow descriptions. The opt-in threshold for <em>reading</em> a peer's
+          workflow should be effectively zero: no registration, no signal, no inbox. The
+          opt-in threshold for <em>sharing</em> should be deliberate — the 2–5 minute
+          commitment is itself a quality filter that screens for genuine engagement.
+        </P>
+        <P>
+          For a PM building in this space, these constraints are not soft guardrails — they are
+          the product. The pressure to add manager visibility, assignment flows, or completion
+          tracking will arrive in the first commercial conversation. Shipping those features
+          does not extend the product. It replaces it with something that produces the
+          compliance behaviour the evidence says peer-led platforms exist to avoid. The job is
+          to know which features earn the authenticity that makes the rest work — and to defend
+          that boundary in the meetings where the product is actually decided.
+        </P>
+      </>
+    ),
+  },
+];
+
 export default function EssayPage() {
+  const [active, setActive] = useState<string>(SECTIONS[0].key);
+  const section = SECTIONS.find((s) => s.key === active) ?? SECTIONS[0];
+  const idx = SECTIONS.findIndex((s) => s.key === active);
+
   return (
     <div
       className="min-h-screen"
@@ -88,10 +265,10 @@ export default function EssayPage() {
         backgroundColor: TOKENS.bg,
         color: TOKENS.text,
         fontFamily: "'Inter', system-ui, sans-serif",
+        overflowX: "hidden",
       }}
       data-testid="page-essay"
     >
-      {/* Top chrome — matches admin/about */}
       <header
         className="px-8 md:px-16 lg:px-24 py-6 flex items-center justify-between"
         style={{ borderBottom: `1px solid ${TOKENS.rule}` }}
@@ -109,312 +286,158 @@ export default function EssayPage() {
           className="text-[11px] font-medium uppercase"
           style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}
         >
-          Workflow Mirror · Essay
+          Workflow Mirror · The argument
         </div>
       </header>
 
-      <main className="px-8 md:px-16 lg:px-24 py-16 md:py-20 max-w-[820px] mx-auto">
-        {/* Eyebrow */}
-        <div
-          className="text-[11px] font-medium uppercase mb-6"
-          style={{ color: TOKENS.accent, letterSpacing: "0.32em" }}
-        >
-          The argument
+      <main className="px-8 md:px-16 lg:px-24 py-14 md:py-18 max-w-[860px] mx-auto">
+        {/* Page header */}
+        <div className="mb-12">
+          <div
+            className="text-[11px] font-medium uppercase mb-5"
+            style={{ color: TOKENS.accent, letterSpacing: "0.32em" }}
+          >
+            The case for peer-led AI adoption
+          </div>
+          <h1
+            className="font-serif italic leading-[1.06] tracking-tight text-[36px] md:text-[52px] mb-5"
+            style={{ color: TOKENS.text, fontFamily: "'Playfair Display', Georgia, serif" }}
+            data-testid="essay-title"
+          >
+            Why peer-led adoption beats manager-led mandates.
+          </h1>
+          <p className="text-[16px] leading-[1.6] max-w-[58ch]" style={{ color: TOKENS.muted }}>
+            Three sections, grounded in evidence. The structural problem, the mechanism that
+            solves it, and the design choices that follow.
+          </p>
+          <div className="flex items-center gap-4 mt-6 text-[12px]" style={{ color: TOKENS.muted }}>
+            <span>3 sections · ~12 min · British English</span>
+          </div>
         </div>
 
-        {/* Title */}
-        <h1
-          className="font-serif italic leading-[1.05] tracking-tight text-[40px] md:text-[56px] mb-6"
-          style={{
-            color: TOKENS.text,
-            fontFamily: "'Playfair Display', Georgia, serif",
-          }}
-          data-testid="essay-title"
-        >
-          Recipes are still top-down. Here's why the 460 won't follow them.
-        </h1>
-
-        {/* Standfirst */}
-        <p
-          className="text-[18px] md:text-[19px] leading-[1.55] mb-2"
-          style={{ color: TOKENS.muted, maxWidth: "62ch" }}
-        >
-          A direct response to the &ldquo;recipes, not training&rdquo; thesis — and the
-          case for peer-led discovery as the only mechanism that survives contact with
-          enterprise reality.
-        </p>
-
-        {/* Meta */}
+        {/* Section tab nav */}
         <div
-          className="text-[12px] mt-6 mb-12"
-          style={{ color: TOKENS.muted, letterSpacing: "0.06em" }}
+          className="flex flex-wrap gap-0 mb-0"
+          style={{ borderBottom: `1px solid ${TOKENS.rule}` }}
+          role="tablist"
+          aria-label="Essay sections"
         >
-          7 minutes · May 2026 · British English
+          {SECTIONS.map((s) => {
+            const isActive = s.key === active;
+            return (
+              <button
+                key={s.key}
+                role="tab"
+                aria-selected={isActive}
+                aria-controls={`section-panel-${s.key}`}
+                id={`section-tab-${s.key}`}
+                type="button"
+                onClick={() => setActive(s.key)}
+                data-testid={`tab-${s.key}`}
+                className="flex items-center gap-2 px-4 py-3.5 text-[13px] whitespace-nowrap transition-colors relative shrink-0"
+                style={{
+                  color: isActive ? TOKENS.primary : TOKENS.muted,
+                  fontWeight: isActive ? 600 : 400,
+                  borderBottom: isActive ? `2px solid ${TOKENS.primary}` : "2px solid transparent",
+                  marginBottom: "-1px",
+                  background: "none",
+                  cursor: "pointer",
+                }}
+              >
+                <span
+                  className="text-[11px]"
+                  style={{
+                    color: isActive ? TOKENS.primary : TOKENS.muted,
+                    fontFamily: "'Playfair Display', Georgia, serif",
+                    fontStyle: "italic",
+                  }}
+                >
+                  {s.num}
+                </span>
+                <span className="hidden sm:inline">{s.title.split(".")[0]}.</span>
+                <span className="sm:hidden">Section {s.num}</span>
+              </button>
+            );
+          })}
         </div>
 
-        <div className="h-px w-[120px] mb-12" style={{ backgroundColor: TOKENS.rule }} />
-
-        {/* Body */}
-        <article
-          className="text-[16.5px] leading-[1.78]"
-          style={{ color: TOKENS.text, maxWidth: "68ch" }}
+        {/* Section content */}
+        <div
+          id={`section-panel-${section.key}`}
+          role="tabpanel"
+          aria-labelledby={`section-tab-${section.key}`}
+          className="pt-10 pb-4"
+          data-testid={`panel-${section.key}`}
         >
-          {/* Section 1 — Shared diagnosis */}
+          <div
+            className="text-[11px] font-medium uppercase mb-4"
+            style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}
+          >
+            Section {section.num} of {SECTIONS.length}
+          </div>
           <h2
-            className="font-serif italic text-[26px] md:text-[30px] leading-[1.2] mt-2 mb-5"
+            className="font-serif italic text-[28px] md:text-[38px] leading-[1.1] tracking-tight mb-5"
             style={{ color: TOKENS.text, fontFamily: "'Playfair Display', Georgia, serif" }}
           >
-            What the recipes camp gets right.
+            {section.title}
           </h2>
-
-          <p className="mb-5">
-            Start with the agreement. Generic AI training does not move the needle.
-            The competing submission's diagnosis is correct: rolling out a Copilot
-            licence and a 45-minute video does not change behaviour, because the
-            gap is not at the company level — it is at the task level. People do
-            not need to be told that AI exists. They need to know what to do with
-            it on a Tuesday afternoon, with a half-finished spreadsheet and a
-            client call in twenty minutes.
-          </p>
-          <p className="mb-5">
-            That diagnosis is also right that identity threat is the live wire.
-            Senior people resist generic training because the implicit message —
-            &ldquo;your existing way of working is wrong, here is the correct
-            one&rdquo; — collides with their professional self-image
-            <Cite n={2} />. Compliance follows; learning does not. So far, so
-            agreed.
-          </p>
-          <p className="mb-5">
-            The disagreement is about the proposed cure. The recipes camp wants
-            to give those same senior people a curated playbook of pre-approved
-            workflows: here is how a financial analyst should write a board
-            update, here is how a recruiter should shortlist a CV. Their
-            argument is that recipes are concrete enough to use and specific
-            enough to bypass identity threat. They are not. They re-introduce
-            the threat in a thinner disguise.
-          </p>
-
-          {/* Section 2 — Where prescription breaks down */}
-          <h2
-            className="font-serif italic text-[26px] md:text-[30px] leading-[1.2] mt-12 mb-5"
-            style={{ color: TOKENS.text, fontFamily: "'Playfair Display', Georgia, serif" }}
+          <p
+            className="text-[16px] md:text-[17px] leading-[1.55] mb-10 max-w-[58ch]"
+            style={{ color: TOKENS.muted }}
           >
-            Where prescription breaks down.
-          </h2>
-
-          <p className="mb-5">
-            The same identity-threat argument that explains why generic training
-            fails also explains why prescribed recipes will plateau. A senior
-            analyst told &ldquo;here is the recipe you should follow&rdquo; feels
-            the same as a senior analyst told &ldquo;here is the training you must
-            complete.&rdquo; The voice is different — more specific, more
-            tactical — but the speaker is the same. It is the organisation,
-            telling an expert how to do their job.
-          </p>
-          <p className="mb-5">
-            Self-determination research is unambiguous on this point. Adoption
-            requires three conditions: autonomy (I am choosing this), competence
-            (I can do this), and relatedness (this connects me to people I
-            respect)<Cite n={2} />. Recipes deliver one of the three. They
-            confer a kind of competence — &ldquo;here are the steps&rdquo; —
-            but they remove autonomy by pre-deciding the right approach, and
-            they damage relatedness by routing knowledge through the centre
-            rather than across the team. The result is the same as training:
-            adoption rates that look acceptable on the dashboard, and a long
-            tail of polite, performative usage underneath.
+            {section.standfirst}
           </p>
 
-          {/* Pull quote */}
-          <blockquote
-            className="my-10 py-2 pl-6"
-            style={{ borderLeft: `2px solid ${TOKENS.rule}` }}
+          <div className="h-px w-[80px] mb-10" style={{ backgroundColor: TOKENS.rule }} />
+
+          <article
+            className="text-[16px] leading-[1.78] max-w-[66ch]"
+            style={{ color: TOKENS.text }}
           >
-            <p
-              className="font-serif italic text-[22px] md:text-[24px] leading-[1.4]"
-              style={{
-                color: TOKENS.text,
-                fontFamily: "'Playfair Display', Georgia, serif",
-              }}
-            >
-              Recipes do not solve the identity-threat problem. They re-instantiate
-              it with a better menu.
-            </p>
-          </blockquote>
+            {section.body}
+          </article>
+        </div>
 
-          <p className="mb-5">
-            There is also a quality problem with central curation that the
-            recipes camp underplays. Workflow knowledge is tacit: it depends on
-            the constraints of the role, the data available, the team's house
-            style, and a hundred other small things that the curator does not
-            know. A pre-approved recipe written for &ldquo;the recruiter&rdquo;
-            is not written for any actual recruiter. It generalises away the
-            very things that make a workflow work.
-          </p>
-
-          {/* Section 3 — The peer-led mechanism */}
-          <h2
-            className="font-serif italic text-[26px] md:text-[30px] leading-[1.2] mt-12 mb-5"
-            style={{ color: TOKENS.text, fontFamily: "'Playfair Display', Georgia, serif" }}
+        {/* Section navigation */}
+        <div
+          className="flex items-center justify-between pt-8 mt-4"
+          style={{ borderTop: `1px solid ${TOKENS.rule}` }}
+        >
+          <button
+            type="button"
+            onClick={() => idx > 0 && setActive(SECTIONS[idx - 1].key)}
+            disabled={idx === 0}
+            className="inline-flex items-center gap-2 text-[13px] font-medium transition-opacity disabled:opacity-25 hover:opacity-70"
+            style={{ color: TOKENS.muted, background: "none", cursor: idx === 0 ? "default" : "pointer" }}
+            aria-label="Previous section"
           >
-            What peer-led actually does differently.
-          </h2>
-
-          <p className="mb-5">
-            When Priya N., a senior analyst on the team, posts the prompt she
-            uses to draft her weekly board update — including the bit where she
-            asks the model to argue against itself before she writes the final
-            paragraph — three things change at once. Her expertise is honoured
-            rather than replaced; the workflow comes with the implicit context
-            of someone with constraints like mine; and the act of sharing
-            converts a private practice into a visible social norm.
-          </p>
-          <p className="mb-5">
-            That last shift is the one most adoption strategies miss. Adoption
-            is a status question before it is a competence question. Diffusion
-            research has shown for sixty years that people adopt new
-            behaviours when they see trusted peers doing them, not when they
-            are told to<Cite n={5} />. A peer who shares a workflow is
-            implicitly saying: &ldquo;this worked for me, in a job like yours,
-            with constraints like yours.&rdquo; That is a fundamentally
-            different message from &ldquo;the organisation has approved this
-            recipe.&rdquo; The first invites; the second instructs.
-          </p>
-          <p className="mb-5">
-            The peer-led model also dissolves the surveillance problem the
-            recipes camp does not even acknowledge it has. Approved recipes
-            need adoption tracking to know whether they are working — which
-            re-introduces exactly the monitoring layer that drives shadow AI
-            in the first place. Peer sharing requires no such tracking.
-            Whether the workflow spread is visible in the workflow's own
-            engagement, not in an admin's dashboard.
-          </p>
-
-          {/* Section 4 — The data */}
-          <h2
-            className="font-serif italic text-[26px] md:text-[30px] leading-[1.2] mt-12 mb-5"
-            style={{ color: TOKENS.text, fontFamily: "'Playfair Display', Georgia, serif" }}
+            ← {idx > 0 ? SECTIONS[idx - 1].title.split(".")[0] : ""}
+          </button>
+          <span className="text-[12px]" style={{ color: TOKENS.muted }}>
+            {idx + 1} / {SECTIONS.length}
+          </span>
+          <button
+            type="button"
+            onClick={() => idx < SECTIONS.length - 1 && setActive(SECTIONS[idx + 1].key)}
+            disabled={idx === SECTIONS.length - 1}
+            className="inline-flex items-center gap-2 text-[13px] font-medium transition-opacity disabled:opacity-25 hover:opacity-70"
+            style={{ color: TOKENS.muted, background: "none", cursor: idx === SECTIONS.length - 1 ? "default" : "pointer" }}
+            aria-label="Next section"
           >
-            What the data actually supports.
-          </h2>
+            {idx < SECTIONS.length - 1 ? SECTIONS[idx + 1].title.split(".")[0] : ""} →
+          </button>
+        </div>
 
-          <p className="mb-5">
-            Set the macro picture first. BCG's 2025 AI at Work survey
-            reported that 88% of executives use AI regularly, against 51%
-            of frontline employees<Cite n={7} />. Microsoft and LinkedIn's
-            Work Trend Index put generative AI use at 75% of global
-            knowledge workers, with usage nearly doubling in six
-            months<Cite n={8} />. AI at work is no longer a leadership
-            curiosity; it is a daily-use technology with a stubborn
-            distribution problem. The dashboard sees the gap. It cannot
-            close it.
-          </p>
-          <p className="mb-5">
-            The strongest single piece of evidence on <em>why</em> the gap
-            persists is from a 2026 Microsoft Research study published in
-            the Harvard Business Review. Among heavy AI users, 88% named
-            peers as the most influential factor in shaping their AI
-            behaviour. Among light users, only 50% did<Cite n={1} />. The
-            same study reported that 12% of light users said AI had
-            literally never come up in informal conversation with their
-            colleagues, against 1% of heavy users. That is not a training
-            gap. It is a visibility gap.
-          </p>
-          <p className="mb-5">
-            The same body of research is also realistic about leadership.
-            Leaders matter, but in a specific way: 17% of heavy users cited
-            leaders modelling AI use as influential — leaders showing their
-            own real workflows, including the failures — versus 12% of light
-            users<Cite n={1} />. The operative verb is modelling, not
-            mandating. A peer-led product allows leaders to participate as
-            peers; a recipes catalogue casts them as authors of the canon.
-            The first is supported by the data; the second is not.
-          </p>
-          <p className="mb-5">
-            On the surveillance question, the evidence is unambiguous and
-            unfashionable. Among electronically monitored employees, 56%
-            report feeling tense or stressed at work, against 40% of
-            non-monitored employees<Cite n={3} />. Roughly 31% of US
-            knowledge workers admit to actively working around their
-            company's AI initiatives<Cite n={2} />. Any product that needs
-            to track recipe adoption to prove its value is feeding that
-            number, not reducing it.
-          </p>
-          <p className="mb-5">
-            The honest counter-evidence is the &ldquo;voluntary trap.&rdquo;
-            A 2025 field experiment in Management Science found that a
-            mandatory mentorship programme raised productivity where a
-            voluntary version of the same programme did not — the people
-            who would have benefitted most were the ones least likely to
-            opt in<Cite n={4} />. That finding is real, and any peer-led
-            product has to take it seriously. The mitigation is not
-            mandate; it is friction asymmetry. The opt-in cost of
-            <em> reading</em> a peer's workflow should be effectively zero
-            — no registration, no signal, no inbox. The opt-in cost of
-            <em> sharing</em> should be deliberate, because the deliberation
-            is itself the quality filter. That is exactly the
-            consumption/contribution split the product is built around.
-          </p>
-          <p className="mb-5">
-            On the &ldquo;low-quality workflow&rdquo; risk, peer networks are
-            more self-correcting than they look. Linus's law applies:
-            workflows that are flawed are tried, found unhelpful, and
-            quietly abandoned, while workflows that work spread<Cite n={6} />.
-            Structured templates and role-based filtering close most of the
-            remaining gap. None of these mitigations require an editorial
-            layer; they require sensible defaults.
-          </p>
-
-          {/* Section 5 — What this means for the role */}
+        {/* Sources — shown only on last section, or always at bottom */}
+        <div className="mt-16">
+          <div className="h-px w-full mb-12" style={{ backgroundColor: TOKENS.rule }} />
           <h2
-            className="font-serif italic text-[26px] md:text-[30px] leading-[1.2] mt-12 mb-5"
-            style={{ color: TOKENS.text, fontFamily: "'Playfair Display', Georgia, serif" }}
-          >
-            What this means for the AI Adoption PM role.
-          </h2>
-
-          <p className="mb-5">
-            Shipping a peer-led product is not the easier path. A recipes
-            catalogue is, in some ways, the safer pitch — it has a clean
-            content pipeline, a satisfying admin surface, and a story that
-            executives find legible. Peer-led requires harder work in
-            places that do not show up on a roadmap: concierge capture for
-            the first two weeks, contributor recognition that does not
-            tip over into surveillance, role-coverage analytics that
-            measure breadth without policing individuals, an anti-spam
-            posture that protects the signal, and the discipline to
-            <em> not</em> add the admin-assignment features that would
-            betray the model the moment they ship.
-          </p>
-          <p className="mb-5">
-            That last discipline is the part the role actually tests. The
-            pressure to add a &ldquo;flag this employee&rdquo; button, an
-            &ldquo;assign this workflow&rdquo; flow, or a &ldquo;manager
-            view&rdquo; will arrive in the first sales conversation. An
-            AI Adoption PM who ships those features has not built a
-            peer-led product; they have built a recipes catalogue with
-            extra steps. The job is to know which features earn the
-            authenticity that makes the rest of the product work, and to
-            defend that boundary in the meetings where the product is
-            actually decided.
-          </p>
-          <p className="mb-7">
-            The recipes thesis is not wrong about the problem. It is wrong
-            about the only mechanism that survives contact with how
-            enterprise people actually behave when they are asked to
-            change how they work. That mechanism is peer-led, opt-in,
-            and surveillance-free — or it is not the mechanism at all.
-          </p>
-
-          <div className="h-px w-full my-14" style={{ backgroundColor: TOKENS.rule }} />
-
-          {/* Sources */}
-          <h2
-            className="font-serif italic text-[24px] md:text-[26px] mb-6"
+            className="font-serif italic text-[22px] md:text-[24px] mb-6"
             style={{ color: TOKENS.text, fontFamily: "'Playfair Display', Georgia, serif" }}
           >
             Sources.
           </h2>
-          <ol className="space-y-4 text-[13.5px] leading-[1.65]" style={{ color: TOKENS.muted }}>
+          <ol className="space-y-4 text-[13px] leading-[1.65]" style={{ color: TOKENS.muted }}>
             {SOURCES.map((s) => (
               <li
                 key={s.n}
@@ -448,26 +471,24 @@ export default function EssayPage() {
               </li>
             ))}
           </ol>
+        </div>
 
-          {/* Footer */}
-          <div
-            className="mt-16 pt-8 flex items-baseline justify-between flex-wrap gap-4 text-[12px]"
-            style={{ color: TOKENS.muted, borderTop: `1px solid ${TOKENS.rule}` }}
+        {/* Footer */}
+        <div
+          className="mt-12 pt-8 flex items-baseline justify-between flex-wrap gap-4 text-[12px]"
+          style={{ color: TOKENS.muted, borderTop: `1px solid ${TOKENS.rule}` }}
+        >
+          <div>Workflow Mirror · May 2026 · Evidence-based</div>
+          <Link
+            href="/about"
+            className="inline-flex items-center gap-1.5 hover:opacity-70 transition-opacity"
+            style={{ color: TOKENS.muted }}
+            data-testid="link-back-about"
           >
-            <div>
-              Workflow Mirror · An essay in support of the build · May 2026
-            </div>
-            <Link
-              href="/about"
-              className="inline-flex items-center gap-1.5 hover:opacity-70 transition-opacity"
-              style={{ color: TOKENS.muted }}
-              data-testid="link-back-about"
-            >
-              How I built this
-              <ArrowUpRight className="w-3 h-3" strokeWidth={1.75} />
-            </Link>
-          </div>
-        </article>
+            How I built this
+            <ArrowUpRight className="w-3 h-3" strokeWidth={1.75} />
+          </Link>
+        </div>
       </main>
     </div>
   );
