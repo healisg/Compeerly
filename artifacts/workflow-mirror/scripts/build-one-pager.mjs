@@ -177,6 +177,7 @@ function body(text, x, yPos, width, opts = {}) {
 // =========================================================================
 // 2. THE PROBLEM (full width, with stat callout)
 // =========================================================================
+const probEyebrowY = y;
 eyebrow("01 · THE PROBLEM", MARGIN_X, y);
 y += 14;
 heading("Chico.ai measures the adoption gap. It does not close it.", MARGIN_X, y, 13);
@@ -196,8 +197,9 @@ const probParaEnd = body(
   { lineGap: 2.8 },
 );
 
-// Stat callout
-doc.font("serif").fontSize(28).fillColor(C.primary).text("88%", statX, probParaY - 2, {
+// Stat callout — top-aligned with the "01 · THE PROBLEM" eyebrow on the left
+const statTopY = probEyebrowY - 6;
+doc.font("serif").fontSize(28).fillColor(C.primary).text("88%", statX, statTopY, {
   width: statW,
   lineBreak: false,
 });
@@ -208,17 +210,17 @@ doc
   .text(
     "of heavy AI users name peers as the strongest influence on their workflow — vs 50% of light users.",
     statX,
-    probParaY + 32,
+    statTopY + 34,
     { width: statW, lineGap: 1.5 },
   );
 doc.font("sans").fontSize(6.5).fillColor(C.muted).text(
   "Microsoft Research, 2026",
   statX,
-  probParaY + 70,
+  statTopY + 72,
   { width: statW, characterSpacing: 1.2 },
 );
 
-y = Math.max(probParaEnd, probParaY + 84) + 16;
+y = probParaEnd + 16;
 rule(y);
 y += 16;
 
