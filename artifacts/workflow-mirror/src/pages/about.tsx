@@ -178,9 +178,17 @@ function PhaseDonut({
               key={seg.key}
               d={arcPath(seg.start, seg.end)}
               fill={isActive ? TOKENS.primary : TOKENS.rule}
-              style={{ cursor: "pointer", transition: "fill 0.18s ease" }}
+              style={{ cursor: "pointer", transition: "fill 0.18s ease", outline: "none" }}
               onClick={() => setActivePhase(seg.key)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setActivePhase(seg.key);
+                }
+              }}
+              tabIndex={0}
               role="button"
+              aria-pressed={isActive}
               aria-label={`Select ${seg.key} phase`}
             />
           );
@@ -208,6 +216,17 @@ function PhaseDonut({
           of {total}h
         </text>
       </svg>
+      <div
+        style={{
+          fontSize: "10px",
+          color: TOKENS.muted,
+          letterSpacing: "0.2em",
+          textTransform: "uppercase",
+          marginTop: "4px",
+        }}
+      >
+        {total} hrs total
+      </div>
     </div>
   );
 }
