@@ -6,7 +6,7 @@ import { WorkflowCard } from "@/components/workflow-card";
 import { PromptBar } from "@/components/prompt-bar";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Sparkles, SlidersHorizontal } from "lucide-react";
+import { Plus, Sparkles, SlidersHorizontal, X } from "lucide-react";
 
 export default function FeedPage() {
   const { workflows } = useWorkflows();
@@ -72,7 +72,7 @@ export default function FeedPage() {
         </div>
 
         <div className="mb-10 pb-6 border-b border-border/60">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <Button
               variant="outline"
               className="gap-2 rounded-xl px-4 h-9"
@@ -82,6 +82,42 @@ export default function FeedPage() {
               <SlidersHorizontal className="w-4 h-4" />
               {activeFilterCount > 0 ? `Filter · ${activeFilterCount}` : "Filter"}
             </Button>
+            {!filtersOpen && roleFilter !== "all" && (
+              <button
+                type="button"
+                className="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary px-3 h-7 text-sm font-medium hover:bg-primary/20 transition-colors"
+                data-testid="chip-role"
+                onClick={() => setRoleFilter("all")}
+                aria-label={`Remove role filter: ${roleFilter}`}
+              >
+                {roleFilter}
+                <X className="w-3 h-3" />
+              </button>
+            )}
+            {!filtersOpen && aiToolFilter !== "all" && (
+              <button
+                type="button"
+                className="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary px-3 h-7 text-sm font-medium hover:bg-primary/20 transition-colors"
+                data-testid="chip-ai-tool"
+                onClick={() => setAiToolFilter("all")}
+                aria-label={`Remove AI tool filter: ${aiToolFilter}`}
+              >
+                {aiToolFilter}
+                <X className="w-3 h-3" />
+              </button>
+            )}
+            {!filtersOpen && categoryFilter !== "all" && (
+              <button
+                type="button"
+                className="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary px-3 h-7 text-sm font-medium hover:bg-primary/20 transition-colors"
+                data-testid="chip-category"
+                onClick={() => setCategoryFilter("all")}
+                aria-label={`Remove category filter: ${categoryFilter}`}
+              >
+                {categoryFilter}
+                <X className="w-3 h-3" />
+              </button>
+            )}
             {activeFilterCount > 0 && (
               <button
                 onClick={() => {
