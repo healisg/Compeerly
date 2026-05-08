@@ -36,7 +36,7 @@ const PHASES: Phase[] = [
       "31% of knowledge workers actively work around their company's AI initiatives. Surveillance-first products feed that number. Peer-led ones reduce it.",
     ],
     tools: ["Manus AI", "Claude Sonnet 4.5", "Wispr Flow"],
-    skills: ["web-search", "ai-integrations-anthropic"],
+    skills: ["web-search", "ai-integrations-anthropic", "deep-research"],
   },
   {
     key: "thesis",
