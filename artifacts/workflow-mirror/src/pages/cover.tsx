@@ -69,7 +69,7 @@ export default function CoverPage() {
     setTransitioning(true);
     window.setTimeout(() => {
       navigate("/feed");
-    }, 450);
+    }, 1200);
   };
 
   return (
