@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { ArrowLeft, ArrowUpRight, Check, ChevronDown, RotateCcw } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Check, ChevronDown, Copy, RotateCcw } from "lucide-react";
 import { DISMISSED_KEY as NUDGE_DISMISSED_KEY } from "../components/nudge-strip";
 
 const TOKENS = {
@@ -687,12 +687,23 @@ export default function AdminPage() {
   const [recognised, setRecognised] = useState<Record<string, boolean>>({});
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const [nudgeResetDone, setNudgeResetDone] = useState(false);
+  const [copiedDemo, setCopiedDemo] = useState(false);
 
   function handleResetNudge() {
     localStorage.removeItem(NUDGE_DISMISSED_KEY);
     window.dispatchEvent(new CustomEvent("compass:nudge-reset"));
     setNudgeResetDone(true);
     setTimeout(() => setNudgeResetDone(false), 2500);
+  }
+
+  function handleCopyDemoLink() {
+    const url = `${window.location.origin}${window.location.pathname.replace(/\/admin\/?$/, "")}/feed?nudge=reset`;
+    navigator.clipboard.writeText(url).then(() => {
+      setCopiedDemo(true);
+      setTimeout(() => setCopiedDemo(false), 2000);
+    }).catch(() => {
+      window.prompt("Copy this link:", url);
+    });
   }
 
   return (
@@ -1193,32 +1204,60 @@ export default function AdminPage() {
           <div className="text-[11.5px]" style={{ color: TOKENS.muted }}>
             All numbers reconcile with the pitch deck (RoiModel slide). Pilot data is illustrative for this submission.
           </div>
-          <button
-            type="button"
-            onClick={handleResetNudge}
-            className="inline-flex items-center gap-2 text-[12px] font-medium self-start sm:self-auto shrink-0 transition-opacity hover:opacity-70"
-            style={{
-              color: nudgeResetDone ? TOKENS.primary : TOKENS.muted,
-              border: `1px solid ${nudgeResetDone ? TOKENS.primary : TOKENS.rule}`,
-              borderRadius: 3,
-              padding: "5px 12px",
-              background: nudgeResetDone ? "#dcfce7" : "transparent",
-              transition: "color 0.2s, border-color 0.2s, background 0.2s",
-            }}
-            data-testid="admin-reset-nudge"
-          >
-            {nudgeResetDone ? (
-              <>
-                <Check className="w-3.5 h-3.5" />
-                Nudge strip reset
-              </>
-            ) : (
-              <>
-                <RotateCcw className="w-3.5 h-3.5" />
-                Reset nudge demo
-              </>
-            )}
-          </button>
+          <div className="flex items-center gap-2 self-start sm:self-auto shrink-0">
+            <button
+              type="button"
+              onClick={handleCopyDemoLink}
+              className="inline-flex items-center gap-2 text-[12px] font-medium transition-opacity hover:opacity-70"
+              style={{
+                color: copiedDemo ? TOKENS.primary : TOKENS.muted,
+                border: `1px solid ${copiedDemo ? TOKENS.primary : TOKENS.rule}`,
+                borderRadius: 3,
+                padding: "5px 12px",
+                background: copiedDemo ? "#dcfce7" : "transparent",
+                transition: "color 0.2s, border-color 0.2s, background 0.2s",
+              }}
+              data-testid="admin-copy-demo-link"
+            >
+              {copiedDemo ? (
+                <>
+                  <Check className="w-3.5 h-3.5" />
+                  Copied!
+                </>
+              ) : (
+                <>
+                  <Copy className="w-3.5 h-3.5" />
+                  Copy demo link
+                </>
+              )}
+            </button>
+            <button
+              type="button"
+              onClick={handleResetNudge}
+              className="inline-flex items-center gap-2 text-[12px] font-medium transition-opacity hover:opacity-70"
+              style={{
+                color: nudgeResetDone ? TOKENS.primary : TOKENS.muted,
+                border: `1px solid ${nudgeResetDone ? TOKENS.primary : TOKENS.rule}`,
+                borderRadius: 3,
+                padding: "5px 12px",
+                background: nudgeResetDone ? "#dcfce7" : "transparent",
+                transition: "color 0.2s, border-color 0.2s, background 0.2s",
+              }}
+              data-testid="admin-reset-nudge"
+            >
+              {nudgeResetDone ? (
+                <>
+                  <Check className="w-3.5 h-3.5" />
+                  Nudge strip reset
+                </>
+              ) : (
+                <>
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  Reset nudge demo
+                </>
+              )}
+            </button>
+          </div>
         </div>
       </main>
     </div>
