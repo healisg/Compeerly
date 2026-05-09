@@ -132,7 +132,7 @@ export function ThreePromptWithRail() {
               index={1}
               id="q-workflow"
               label="What's the workflow?"
-              hint="One sentence. Plain English."
+              hint="A sentence or two. Plain English."
               placeholder="e.g. Drafting weekly pipeline updates for the leadership thread"
               filled
               value="Drafting weekly pipeline updates for the leadership thread"
