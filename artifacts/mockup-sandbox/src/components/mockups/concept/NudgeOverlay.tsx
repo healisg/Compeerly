@@ -1,4 +1,5 @@
-import { Sparkles, X, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
+import { PromptBar } from "../../PromptBar";
 
 const T = {
   bg: "#FBF8F4",
@@ -233,78 +234,11 @@ export function NudgeOverlay() {
             <span>Notes</span>
           </div>
 
-          {/* The floating Compass nudge bar — overlay */}
-          <div
-            className="absolute left-1/2 -translate-x-1/2 px-4"
-            style={{ bottom: 28, width: "min(720px, calc(100% - 64px))" }}
-          >
-            <div
-              className="flex items-center gap-3 px-4 py-3"
-              style={{
-                background: "#fff",
-                border: `1px solid ${T.rule}`,
-                borderRadius: 4,
-                boxShadow: "0 18px 48px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.08)",
-                fontFamily: T.ui,
-              }}
-            >
-              <span className="inline-flex items-center justify-center" style={{ width: 28, height: 28, borderRadius: 999, background: "rgba(22,101,52,0.1)" }}>
-                <svg width={16} height={16} viewBox="0 0 64 64" fill="none" style={{ color: T.primary }}>
-                  <circle cx="32" cy="32" r="29" stroke="currentColor" strokeWidth={3} />
-                  <g transform="rotate(-22 32 32)">
-                    <path d="M32 9 L40 34 L32 31 L24 34 Z" fill="currentColor" />
-                  </g>
-                </svg>
-              </span>
-
-              <div
-                className="inline-flex items-center gap-1.5 px-3 h-8 text-[12px]"
-                style={{ border: `1px solid ${T.rule}`, borderRadius: 2, color: T.text, background: T.bg }}
-              >
-                <span style={{ color: T.mutedStrong }}>Your role</span>
-                <ChevronDown className="w-3 h-3" strokeWidth={1.5} style={{ color: T.muted }} />
-              </div>
-
-              <div
-                className="flex-1 px-3 h-8 inline-flex items-center text-[12.5px]"
-                style={{ border: `1px solid ${T.rule}`, borderRadius: 2, background: T.bg, color: T.muted }}
-              >
-                Describe a workflow you've used…
-              </div>
-
-              <button
-                type="button"
-                className="px-3 h-8 text-[12.5px] font-medium"
-                style={{ border: `1px solid ${T.rule}`, borderRadius: 2, color: T.text, background: "#fff" }}
-              >
-                Find similar
-              </button>
-
-              <button
-                type="button"
-                className="inline-flex items-center gap-1.5 px-3 h-8 text-[12.5px] font-medium"
-                style={{ background: T.primary, color: "#FBF8F4", borderRadius: 2 }}
-              >
-                <Sparkles className="w-3.5 h-3.5" strokeWidth={1.5} />
-                Structure with AI
-              </button>
-
-              <button
-                type="button"
-                aria-label="Dismiss"
-                className="inline-flex items-center justify-center"
-                style={{ width: 24, height: 24, color: T.mutedStrong }}
-              >
-                <X className="w-3.5 h-3.5" strokeWidth={1.5} />
-              </button>
-            </div>
-
-            {/* Soft shadow base */}
-            <div
-              className="mx-auto mt-1"
-              style={{ width: "60%", height: 6, background: "radial-gradient(ellipse at center, rgba(0,0,0,0.18), transparent 70%)" }}
-            />
-          </div>
+          {/* The floating Compass nudge bar — re-uses the live PromptBar component */}
+          <PromptBar
+            roles={["Account Manager", "Operations Manager", "Sales Analyst", "Compliance Officer", "HR Business Partner", "BD Manager"]}
+            immediate
+          />
         </div>
 
         {/* Footer caption */}
