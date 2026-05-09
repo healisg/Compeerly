@@ -205,7 +205,7 @@ export function NudgeStrip() {
                         }}
                         data-testid="nudge-strip-cta"
                       >
-                        ✨ Structure with AI
+                        ✨ Structure with Compass
                       </a>
                     </div>
                     <p className="text-[11px] mt-2.5" style={{ color: T.muted }}>

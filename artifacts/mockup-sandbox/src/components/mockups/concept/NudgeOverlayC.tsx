@@ -126,7 +126,7 @@ function NudgeBarC({ dismissed, onDismiss }: { dismissed: boolean; onDismiss: ()
                 className="h-9 px-4 text-[13px] font-medium shrink-0"
                 style={{ background: T.primary, color: "#FBF8F4", borderRadius: 2 }}
               >
-                ✨ Structure with AI
+                ✨ Structure with Compass
               </button>
             </div>
             <p className="text-[11px] mt-2" style={{ color: T.muted }}>
