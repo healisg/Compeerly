@@ -20,7 +20,7 @@ export default function TheGapSlide() {
         </div>
         <div className="mt-[6vh] h-[2px] w-[10vw] bg-rule" />
         <p className="mt-[4vh] font-display italic text-[2.4vw] text-text/85 max-w-[58vw] text-center leading-[1.3]" style={{ textWrap: "balance" }}>
-          500 enterprise customers use Chico daily.
+          500 enterprise customers use Chico.ai daily.
           Only 40 have meaningfully adopted the AI features.
         </p>
       </div>
