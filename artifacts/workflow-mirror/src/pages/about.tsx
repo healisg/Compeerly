@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "wouter";
 import { ArrowLeft, ArrowUpRight, Download, ChevronRight } from "lucide-react";
+import { PageFooter } from "@/components/page-footer";
 
 const TOKENS = {
   primary: "#166534",
@@ -703,6 +704,7 @@ export default function AboutPage() {
           </Link>
         </div>
       </main>
+      <PageFooter />
     </div>
   );
 }

@@ -13,6 +13,7 @@ import {
   X,
 } from "lucide-react";
 import { CompassMark } from "@/components/compass-mark";
+import { PageFooter } from "@/components/page-footer";
 
 const T = {
   bg: "#FBF8F4",
@@ -690,6 +691,7 @@ export default function FeedPage() {
           </>
         )}
       </main>
+      <PageFooter />
     </div>
   );
 }

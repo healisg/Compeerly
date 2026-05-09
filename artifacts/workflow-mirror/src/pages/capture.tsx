@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { CompassMark } from "@/components/compass-mark";
+import { PageFooter } from "@/components/page-footer";
 
 const T = {
   bg: '#FBF8F4',
@@ -526,6 +527,7 @@ export default function CapturePage() {
           </div>
         </aside>
       </main>
+      <PageFooter />
     </div>
   );
 }

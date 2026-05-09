@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { ArrowLeft, ArrowUpRight, Check, ChevronDown, Copy, RotateCcw } from "lucide-react";
+import { PageFooter } from "@/components/page-footer";
 import { DISMISSED_KEY as NUDGE_DISMISSED_KEY } from "../components/nudge-strip";
 
 const TOKENS = {
@@ -1257,6 +1258,7 @@ export default function AdminPage() {
           </div>
         </div>
       </main>
+      <PageFooter />
     </div>
   );
 }

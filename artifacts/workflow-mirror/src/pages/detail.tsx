@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "wouter";
 import { useWorkflows } from "@/lib/workflows";
+import { PageFooter } from "@/components/page-footer";
 import { Workflow } from "@/lib/workflows";
 import {
   ArrowLeft,
@@ -551,6 +552,7 @@ export default function DetailPage() {
           </div>
         </div>
       </main>
+      <PageFooter />
     </div>
   );
 }
