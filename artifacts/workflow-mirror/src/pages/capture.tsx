@@ -53,7 +53,7 @@ export default function CapturePage() {
   const [, setLocation] = useLocation();
   const search = useSearch();
   const params = new URLSearchParams(search);
-  const prefilledDescription = params.get("description") ?? "";
+  const prefilledDescription = params.get("prefill") ?? params.get("description") ?? "";
 
   const { addWorkflow } = useWorkflows();
   const { toast } = useToast();
