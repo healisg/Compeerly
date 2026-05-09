@@ -10,6 +10,7 @@ import DetailPage from "@/pages/detail";
 import AdminPage from "@/pages/admin";
 import AboutPage from "@/pages/about";
 import EssayPage from "@/pages/essay";
+import OgCard from "@/pages/og-card";
 import { WorkflowProvider } from "@/lib/workflows";
 import { NudgeStrip } from "@/components/nudge-strip";
 
@@ -25,6 +26,7 @@ function Router() {
       <Route path="/admin" component={AdminPage} />
       <Route path="/about" component={AboutPage} />
       <Route path="/essay" component={EssayPage} />
+      <Route path="/og-card" component={OgCard} />
       <Route component={NotFound} />
     </Switch>
   );
