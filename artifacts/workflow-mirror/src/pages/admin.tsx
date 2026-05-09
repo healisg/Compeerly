@@ -736,7 +736,6 @@ export default function AdminPage() {
           </div>
         </div>
       </header>
-
       <main className="max-w-6xl mx-auto px-6 md:px-10 pt-16 pb-32">
         {/* Hero */}
         <section className="max-w-3xl mb-20">
@@ -1201,9 +1200,7 @@ export default function AdminPage() {
           className="mt-24 pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
           style={{ borderTop: `1px solid ${TOKENS.rule}` }}
         >
-          <div className="text-[11.5px]" style={{ color: TOKENS.muted }}>
-            All numbers reconcile with the pitch deck (RoiModel slide). Pilot data is illustrative for this submission.
-          </div>
+          <div className="text-[11.5px]" style={{ color: TOKENS.muted }}>Pilot data is illustrative for this submission.</div>
           <div className="flex items-center gap-2 self-start sm:self-auto shrink-0">
             <button
               type="button"
