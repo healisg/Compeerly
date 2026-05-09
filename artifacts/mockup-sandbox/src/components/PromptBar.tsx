@@ -1,19 +1,10 @@
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 
-/**
- * Sandbox copy of artifacts/workflow-mirror/src/components/prompt-bar.tsx.
- *
- * Preserves the same exported component name, props API and overall structure
- * so this concept mockup can demonstrate the *real* Compass nudge overlay
- * (just rendered without the workflow-mirror app's shadcn/wouter dependencies).
- */
-
 interface PromptBarProps {
   roles: string[];
   onFindWorkflow?: (role: string) => void;
   onStructureMine?: (params: { role: string; description: string }) => void;
-  /** When true, skip the 2s reveal delay so the bar shows immediately on the canvas. */
   immediate?: boolean;
 }
 
