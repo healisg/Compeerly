@@ -112,7 +112,7 @@ function NudgeBarC({ dismissed, onDismiss }: { dismissed: boolean; onDismiss: ()
             style={{ borderTop: `1px solid ${T.rule}` }}
           >
             <p className="text-[11px] mb-2.5 mt-3" style={{ color: T.mutedStrong }}>
-              We pre-filled what we detected. Edit if needed, then hand it to AI:
+              We pre-filled what we detected. Edit if needed, then hand to Compass:
             </p>
             <div className="flex items-center gap-2">
               <input
