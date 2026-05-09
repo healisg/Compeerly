@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { ArrowLeft, ArrowUpRight, Check, ChevronDown } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Check, ChevronDown, RotateCcw } from "lucide-react";
+import { DISMISSED_KEY as NUDGE_DISMISSED_KEY } from "../components/nudge-strip";
 
 const TOKENS = {
   primary: "#166534",
@@ -685,6 +686,14 @@ export default function AdminPage() {
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
   const [recognised, setRecognised] = useState<Record<string, boolean>>({});
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const [nudgeResetDone, setNudgeResetDone] = useState(false);
+
+  function handleResetNudge() {
+    localStorage.removeItem(NUDGE_DISMISSED_KEY);
+    window.dispatchEvent(new CustomEvent("compass:nudge-reset"));
+    setNudgeResetDone(true);
+    setTimeout(() => setNudgeResetDone(false), 2500);
+  }
 
   return (
     <div
@@ -1176,12 +1185,40 @@ export default function AdminPage() {
           </div>
         </section>
 
-        {/* Footer */}
+        {/* Demo tools */}
         <div
-          className="mt-24 pt-8 text-[11.5px]"
-          style={{ color: TOKENS.muted, borderTop: `1px solid ${TOKENS.rule}` }}
+          className="mt-24 pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+          style={{ borderTop: `1px solid ${TOKENS.rule}` }}
         >
-          All numbers reconcile with the pitch deck (RoiModel slide). Pilot data is illustrative for this submission.
+          <div className="text-[11.5px]" style={{ color: TOKENS.muted }}>
+            All numbers reconcile with the pitch deck (RoiModel slide). Pilot data is illustrative for this submission.
+          </div>
+          <button
+            type="button"
+            onClick={handleResetNudge}
+            className="inline-flex items-center gap-2 text-[12px] font-medium self-start sm:self-auto shrink-0 transition-opacity hover:opacity-70"
+            style={{
+              color: nudgeResetDone ? TOKENS.primary : TOKENS.muted,
+              border: `1px solid ${nudgeResetDone ? TOKENS.primary : TOKENS.rule}`,
+              borderRadius: 3,
+              padding: "5px 12px",
+              background: nudgeResetDone ? "#dcfce7" : "transparent",
+              transition: "color 0.2s, border-color 0.2s, background 0.2s",
+            }}
+            data-testid="admin-reset-nudge"
+          >
+            {nudgeResetDone ? (
+              <>
+                <Check className="w-3.5 h-3.5" />
+                Nudge strip reset
+              </>
+            ) : (
+              <>
+                <RotateCcw className="w-3.5 h-3.5" />
+                Reset nudge demo
+              </>
+            )}
+          </button>
         </div>
       </main>
     </div>

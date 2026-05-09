@@ -15,16 +15,20 @@ const T = {
   ui: "'Inter', system-ui, sans-serif",
 };
 
-const DISMISSED_KEY = "compass.nudgeStripDismissed";
+export const DISMISSED_KEY = "compass.nudgeStripDismissed";
 const DEMO_DELAY_MS = 30_000;
 const ALLOWED_PATHS = ["/feed", "/workflow"];
 
-function isDemoMode() {
-  return new URLSearchParams(window.location.search).get("nudge") === "demo";
+function getNudgeParam() {
+  return new URLSearchParams(window.location.search).get("nudge");
 }
 
 export function NudgeStrip() {
   const [location] = useLocation();
+  // Track search string separately — wouter's useLocation returns pathname only,
+  // so we sync it on every location change to make the main effect react to
+  // query-param changes (e.g. navigating to /feed?nudge=reset while already on /feed).
+  const [search, setSearch] = useState(() => window.location.search);
   const [visible, setVisible] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [dismissed, setDismissed] = useState(false);
@@ -35,7 +39,38 @@ export function NudgeStrip() {
 
   const onAllowedPage = ALLOWED_PATHS.some((p) => location.startsWith(p));
 
+  // Sync search whenever the SPA route changes.
   useEffect(() => {
+    setSearch(window.location.search);
+  }, [location]);
+
+  // Listen for the admin-page reset event so the strip reappears immediately
+  // without any page navigation or reload.
+  useEffect(() => {
+    function handleAdminReset() {
+      localStorage.removeItem(DISMISSED_KEY);
+      setDismissed(false);
+      setVisible(true);
+    }
+    window.addEventListener("compass:nudge-reset", handleAdminReset);
+    return () => window.removeEventListener("compass:nudge-reset", handleAdminReset);
+  }, []);
+
+  // Main visibility logic — re-runs whenever the allowed-page flag or search
+  // string changes so ?nudge=reset and ?nudge=demo are always picked up.
+  useEffect(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+
+    const nudgeParam = getNudgeParam();
+
+    if (nudgeParam === "reset") {
+      // Clear persisted flag AND in-memory state, then show immediately.
+      localStorage.removeItem(DISMISSED_KEY);
+      setDismissed(false);
+      setVisible(true);
+      return;
+    }
+
     const wasDismissed = localStorage.getItem(DISMISSED_KEY) === "true";
     if (wasDismissed) {
       setDismissed(true);
@@ -44,12 +79,12 @@ export function NudgeStrip() {
 
     if (!onAllowedPage) return;
 
-    const delay = isDemoMode() ? 0 : DEMO_DELAY_MS;
+    const delay = nudgeParam === "demo" ? 0 : DEMO_DELAY_MS;
     timerRef.current = setTimeout(() => setVisible(true), delay);
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
-  }, [onAllowedPage]);
+  }, [onAllowedPage, search]);
 
   const handleDismiss = () => {
     localStorage.setItem(DISMISSED_KEY, "true");
