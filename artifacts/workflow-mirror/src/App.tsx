@@ -11,6 +11,7 @@ import AdminPage from "@/pages/admin";
 import AboutPage from "@/pages/about";
 import EssayPage from "@/pages/essay";
 import { WorkflowProvider } from "@/lib/workflows";
+import { NudgeStrip } from "@/components/nudge-strip";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ function App() {
         <WorkflowProvider>
           <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
             <Router />
+            <NudgeStrip />
           </WouterRouter>
         </WorkflowProvider>
         <Toaster />
