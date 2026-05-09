@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 export type FileInput = {
   label: string;
@@ -186,10 +186,32 @@ type WorkflowContextType = {
   incrementWorkedForMe: (id: number) => void;
 };
 
+const STORAGE_KEY = "compass.userWorkflows";
+
+function loadUserWorkflows(): Workflow[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return [];
+    return JSON.parse(raw) as Workflow[];
+  } catch {
+    return [];
+  }
+}
+
+function saveUserWorkflows(workflows: Workflow[]) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(workflows));
+  } catch {}
+}
+
+const seedIds = new Set(seedData.map((w) => w.id));
+
 const WorkflowContext = createContext<WorkflowContextType | null>(null);
 
 export function WorkflowProvider({ children }: { children: ReactNode }) {
-  const [workflows, setWorkflows] = useState<Workflow[]>(seedData);
+  const [userWorkflows, setUserWorkflows] = useState<Workflow[]>(() => loadUserWorkflows());
+
+  const workflows = [...userWorkflows, ...seedData];
 
   const addWorkflow = (
     workflow: Omit<Workflow, "id" | "workedForMeCount" | "author" | "timeManual" | "timeWithAI" | "peerCount"> &
@@ -204,15 +226,25 @@ export function WorkflowProvider({ children }: { children: ReactNode }) {
       id: Date.now(),
       workedForMeCount: 0,
     };
-    setWorkflows((prev) => [newWorkflow, ...prev]);
+    setUserWorkflows((prev) => {
+      const next = [newWorkflow, ...prev];
+      saveUserWorkflows(next);
+      return next;
+    });
   };
 
   const incrementWorkedForMe = (id: number) => {
-    setWorkflows((prev) =>
-      prev.map((w) =>
+    if (seedIds.has(id)) {
+      // seed workflows are read-only; no-op for persistence (count resets on refresh by design)
+      return;
+    }
+    setUserWorkflows((prev) => {
+      const next = prev.map((w) =>
         w.id === id ? { ...w, workedForMeCount: w.workedForMeCount + 1 } : w
-      )
-    );
+      );
+      saveUserWorkflows(next);
+      return next;
+    });
   };
 
   return (
