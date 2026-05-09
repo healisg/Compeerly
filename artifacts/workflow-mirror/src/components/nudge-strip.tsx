@@ -103,11 +103,12 @@ export function NudgeStrip() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 80, opacity: 0 }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed bottom-5 left-1/2 z-50 w-full max-w-2xl px-4"
-          style={{ transform: "translateX(-50%)", fontFamily: T.ui }}
+          className="fixed bottom-5 left-0 right-0 z-50 flex justify-center px-4"
+          style={{ fontFamily: T.ui }}
           data-testid="nudge-strip"
         >
           <div
+            className="w-full max-w-2xl"
             style={{
               background: T.bg,
               border: `1px solid ${T.rule}`,
