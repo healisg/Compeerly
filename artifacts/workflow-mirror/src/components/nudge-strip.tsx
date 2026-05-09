@@ -141,7 +141,7 @@ export function NudgeStrip() {
 
               {/* Pattern pill */}
               <div
-                className="flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium shrink-0"
+                className="flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium min-w-0 overflow-hidden"
                 style={{
                   background: "rgba(146,64,14,0.09)",
                   borderRadius: 999,
@@ -149,10 +149,10 @@ export function NudgeStrip() {
                 }}
               >
                 <span
-                  className="inline-block rounded-full"
+                  className="shrink-0 inline-block rounded-full"
                   style={{ width: 6, height: 6, background: T.accent }}
                 />
-                Renewal emails · 4× this morning
+                <span className="truncate">Renewal emails · 4× this morning</span>
               </div>
 
               {/* Soft peer hint */}
