@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, useLocation, useSearch } from "wouter";
 import { useWorkflows } from "@/lib/workflows";
 import type { FileInput } from "@/lib/workflows";
@@ -57,6 +57,14 @@ export default function CapturePage() {
 
   const { addWorkflow } = useWorkflows();
   const { toast } = useToast();
+
+  const workflowInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (prefilledDescription) {
+      workflowInputRef.current?.focus();
+    }
+  }, [prefilledDescription]);
 
   const [workflow, setWorkflow] = useState(prefilledDescription);
   const [selectedTool, setSelectedTool] = useState('Claude');
@@ -352,6 +360,7 @@ export default function CapturePage() {
                 </div>
                 <div className="sm:col-span-7">
                   <input
+                    ref={workflowInputRef}
                     id="q-workflow"
                     type="text"
                     value={workflow}
