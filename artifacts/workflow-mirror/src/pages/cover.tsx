@@ -73,17 +73,17 @@ export default function CoverPage() {
             </div>
 
             <h1
-              className="font-serif italic leading-[1.04] tracking-tight text-[44px] md:text-[68px]"
+              className="font-serif leading-[1.04] tracking-tight text-[44px] md:text-[68px]"
               style={{ color: TOKENS.text, fontFamily: "'Playfair Display', Georgia, serif" }}
             >
-              Making private AI use visible.
+              Making private AI use <em className="italic">visible.</em>
             </h1>
 
             <h2
-              className="font-serif italic leading-[1.1] tracking-tight text-[26px] md:text-[36px]"
+              className="font-serif leading-[1.1] tracking-tight text-[26px] md:text-[36px]"
               style={{ color: TOKENS.primary, fontFamily: "'Playfair Display', Georgia, serif" }}
             >
-              So the 460 can learn from the 40.
+              So the <em className="italic">460</em> can learn from the <em className="italic">40.</em>
             </h2>
 
             <p
