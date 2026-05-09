@@ -183,12 +183,31 @@ function ActivityNudgeBanner() {
 }
 
 function FeedCard({ workflow, peerLabel }: { workflow: Workflow; peerLabel?: string }) {
+  const [hovered, setHovered] = useState(false);
   return (
-    <Link href={`/workflow/${workflow.id}`} className="block h-full no-underline" data-testid={`card-workflow-${workflow.id}`}>
+    <Link
+      href={`/workflow/${workflow.id}`}
+      className="block h-full no-underline"
+      data-testid={`card-workflow-${workflow.id}`}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
       <article
-        className="group h-full p-5 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(22,101,52,0.14)]"
-        style={{ background: "#FFFEFB", border: `1px solid ${T.rule}`, borderRadius: 4, cursor: "pointer" }}
+        className="h-full flex flex-col"
+        style={{
+          padding: 20,
+          background: hovered ? "#F7F2EA" : "#FFFEFB",
+          border: `1px solid ${hovered ? T.primary : T.rule}`,
+          borderRadius: 4,
+          cursor: "pointer",
+          transform: hovered ? "translateY(-4px)" : "translateY(0)",
+          boxShadow: hovered
+            ? "0 20px 48px rgba(22,101,52,0.14), 0 4px 12px rgba(22,101,52,0.07)"
+            : "0 1px 3px rgba(0,0,0,0.04)",
+          transition: "transform 0.22s cubic-bezier(0.22,1,0.36,1), box-shadow 0.22s cubic-bezier(0.22,1,0.36,1), border-color 0.18s ease, background 0.18s ease",
+        }}
       >
+        {/* Author row */}
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2.5">
             <Mono initials={monogram(workflow.author)} size={28} />
@@ -201,23 +220,29 @@ function FeedCard({ workflow, peerLabel }: { workflow: Workflow; peerLabel?: str
               </p>
             </div>
           </div>
-          <div className="transition-transform duration-300 group-hover:translate-y-[-1px] group-hover:scale-[1.03]">
-            <ToolTag tool={workflow.aiTool} />
-          </div>
+          <ToolTag tool={workflow.aiTool} />
         </div>
 
+        {/* Title */}
         <h3
-          className="text-[19px] leading-snug mb-3 transition-colors duration-300 group-hover:text-[color:var(--card-accent)]"
-          style={{ fontFamily: T.serif, fontWeight: 500, color: T.text, ["--card-accent" as any]: T.primary }}
+          className="text-[19px] leading-snug mb-3"
+          style={{
+            fontFamily: T.serif,
+            fontWeight: 500,
+            color: hovered ? T.primary : T.text,
+            transition: "color 0.18s ease",
+          }}
           data-testid="text-title"
         >
           {workflow.title}
         </h3>
 
+        {/* Time strip */}
         <div className="mb-3">
           <TimeStrip from={workflow.timeManual} to={workflow.timeWithAI} />
         </div>
 
+        {/* Meta */}
         <p
           className="text-[10px] font-semibold uppercase tracking-wider mb-2"
           style={{ color: T.mutedStrong }}
@@ -226,15 +251,23 @@ function FeedCard({ workflow, peerLabel }: { workflow: Workflow; peerLabel?: str
           <span data-testid="badge-category">{workflow.category}</span> · {workflow.frequency}
         </p>
 
+        {/* Summary */}
         <p
-          className="text-[13px] mb-4 line-clamp-2 transition-colors duration-300 group-hover:text-[color:var(--card-accent)]"
-          style={{ color: T.text, lineHeight: 1.55, ["--card-accent" as any]: T.primary }}
+          className="text-[13px] mb-4 line-clamp-2"
+          style={{ color: T.mutedStrong, lineHeight: 1.55 }}
           data-testid="text-summary"
         >
           {workflow.summary}
         </p>
 
-        <div className="mt-auto pt-3 flex items-center justify-between border-t transition-colors duration-300 group-hover:border-[color:var(--card-accent)]" style={{ borderColor: T.rule, ["--card-accent" as any]: T.primary }}>
+        {/* Footer stats */}
+        <div
+          className="mt-auto pt-3 flex items-center justify-between border-t"
+          style={{
+            borderColor: hovered ? T.primary : T.rule,
+            transition: "border-color 0.18s ease",
+          }}
+        >
           <span className="inline-flex items-center gap-1.5 text-[11px]" style={{ color: T.mutedStrong }} data-testid="text-peer-stat">
             <Users className="w-3 h-3" strokeWidth={ICON} />
             <span style={{ color: T.text, fontWeight: 600 }}>{workflow.peerCount}</span>{" "}
@@ -245,9 +278,20 @@ function FeedCard({ workflow, peerLabel }: { workflow: Workflow; peerLabel?: str
             <span style={{ color: T.text, fontWeight: 600 }}>{workflow.workedForMeCount}</span> worked for me
           </span>
         </div>
-        <div className="mt-4 flex items-center justify-between text-[11px] opacity-0 translate-y-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0" style={{ color: T.primary }}>
-          <span>Open workflow</span>
-          <ArrowRight className="w-3.5 h-3.5" strokeWidth={ICON} />
+
+        {/* "Read workflow" CTA — slides up on hover, takes no space when hidden */}
+        <div
+          style={{
+            maxHeight: hovered ? 32 : 0,
+            opacity: hovered ? 1 : 0,
+            overflow: "hidden",
+            transition: "max-height 0.22s cubic-bezier(0.22,1,0.36,1), opacity 0.18s ease",
+          }}
+        >
+          <div className="pt-3 flex items-center justify-between text-[11.5px] font-medium" style={{ color: T.primary }}>
+            <span>Read workflow</span>
+            <ArrowRight className="w-3.5 h-3.5" strokeWidth={ICON} />
+          </div>
         </div>
       </article>
     </Link>
