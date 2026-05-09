@@ -13,8 +13,11 @@ export const modules: ModuleMap = {
   "./components/mockups/cover-variants/HybridDataPeek.tsx": () => import("../components/mockups/cover-variants/HybridDataPeek.tsx"),
   "./components/mockups/cover-variants/HybridDataPeekAnimated.tsx": () => import("../components/mockups/cover-variants/HybridDataPeekAnimated.tsx"),
   "./components/mockups/cover-variants/ProductPeek.tsx": () => import("../components/mockups/cover-variants/ProductPeek.tsx"),
+  "./components/mockups/feed-variants/Briefing.tsx": () => import("../components/mockups/feed-variants/Briefing.tsx"),
   "./components/mockups/feed-variants/Colleague.tsx": () => import("../components/mockups/feed-variants/Colleague.tsx"),
   "./components/mockups/feed-variants/CommonGround.tsx": () => import("../components/mockups/feed-variants/CommonGround.tsx"),
+  "./components/mockups/feed-variants/Companion.tsx": () => import("../components/mockups/feed-variants/Companion.tsx"),
   "./components/mockups/feed-variants/Hybrid.tsx": () => import("../components/mockups/feed-variants/Hybrid.tsx"),
+  "./components/mockups/feed-variants/Library.tsx": () => import("../components/mockups/feed-variants/Library.tsx"),
   "./components/mockups/feed-variants/Signal.tsx": () => import("../components/mockups/feed-variants/Signal.tsx")
 };
