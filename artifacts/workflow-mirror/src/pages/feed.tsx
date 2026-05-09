@@ -146,7 +146,7 @@ function ActivityNudgeBanner() {
       initial={{ opacity: 0, y: -6 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="mb-8 flex items-center gap-5 px-5 py-4"
+      className="mb-8 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 px-4 sm:px-5 py-4"
       style={{ background: T.card, borderRadius: 2 }}
       data-testid="activity-nudge"
     >
@@ -159,23 +159,25 @@ function ActivityNudgeBanner() {
       <p className="flex-1 text-[14px]" style={{ color: T.text, fontFamily: T.serif, lineHeight: 1.45 }}>
         {headline}
       </p>
-      <a
-        href="#most-copied"
-        className="inline-flex items-center gap-1.5 text-[12.5px] font-medium shrink-0 hover:opacity-80 transition-opacity"
-        style={{ color: T.primary, fontFamily: T.ui }}
-      >
-        {cta} <ArrowRight className="w-3.5 h-3.5" strokeWidth={ICON} />
-      </a>
-      <button
-        type="button"
-        onClick={handleDismiss}
-        aria-label="Dismiss"
-        className="shrink-0 hover:opacity-70 transition-opacity"
-        style={{ color: T.mutedStrong }}
-        data-testid="button-dismiss-nudge"
-      >
-        <X className="w-4 h-4" strokeWidth={ICON} />
-      </button>
+      <div className="flex items-center gap-4 sm:gap-3 shrink-0">
+        <a
+          href="#most-copied"
+          className="inline-flex items-center gap-1.5 text-[12.5px] font-medium hover:opacity-80 transition-opacity"
+          style={{ color: T.primary, fontFamily: T.ui }}
+        >
+          {cta} <ArrowRight className="w-3.5 h-3.5" strokeWidth={ICON} />
+        </a>
+        <button
+          type="button"
+          onClick={handleDismiss}
+          aria-label="Dismiss"
+          className="hover:opacity-70 transition-opacity"
+          style={{ color: T.mutedStrong }}
+          data-testid="button-dismiss-nudge"
+        >
+          <X className="w-4 h-4" strokeWidth={ICON} />
+        </button>
+      </div>
     </motion.div>
   );
 }
@@ -240,7 +242,7 @@ function FeedCard({ workflow, peerLabel }: { workflow: Workflow; peerLabel?: str
 
 function LeadStory({ workflow }: { workflow: Workflow }) {
   return (
-    <article className="grid grid-cols-12 gap-8 p-7 mb-12" style={{ background: T.card, borderRadius: 4 }} data-testid="lead-story">
+    <article className="grid grid-cols-12 gap-5 sm:gap-8 p-5 sm:p-7 mb-12" style={{ background: T.card, borderRadius: 4 }} data-testid="lead-story">
       <div className="col-span-12 md:col-span-7">
         <div className="flex items-center gap-3 mb-4">
           <Mono initials={monogram(workflow.author)} />
@@ -257,7 +259,7 @@ function LeadStory({ workflow }: { workflow: Workflow }) {
           </span>
         </div>
         <Link href={`/workflow/${workflow.id}`} className="no-underline">
-          <h2 className="text-[30px] leading-[1.1] mb-4 hover:opacity-80 transition-opacity" style={{ fontFamily: T.serif, fontWeight: 500, color: T.text }}>
+          <h2 className="text-[24px] sm:text-[30px] leading-[1.15] sm:leading-[1.1] mb-4 hover:opacity-80 transition-opacity" style={{ fontFamily: T.serif, fontWeight: 500, color: T.text }}>
             {workflow.title}
           </h2>
         </Link>
@@ -283,14 +285,14 @@ function LeadStory({ workflow }: { workflow: Workflow }) {
           </span>
         </div>
       </div>
-      <div className="col-span-12 md:col-span-5 md:pl-8 md:border-l" style={{ borderColor: "rgba(58,58,58,0.12)" }}>
+      <div className="col-span-12 md:col-span-5 md:pl-8 md:border-l mt-2 md:mt-0 pt-5 md:pt-0 border-t md:border-t-0" style={{ borderColor: "rgba(58,58,58,0.12)" }}>
         <p className="text-[10px] font-semibold uppercase tracking-[0.22em] mb-3" style={{ color: T.mutedStrong }}>
           Time saved per cycle
         </p>
         <div className="flex items-baseline gap-3 mb-2">
           <span
-            className="leading-none"
-            style={{ fontFamily: T.serif, color: T.primary, fontWeight: 500, fontSize: 56 }}
+            className="leading-none text-[40px] sm:text-[56px]"
+            style={{ fontFamily: T.serif, color: T.primary, fontWeight: 500 }}
             data-testid="text-time-saved-hero"
           >
             {workflow.timeSaved}
@@ -364,36 +366,37 @@ export default function FeedPage() {
         className="sticky top-0 z-20 border-b backdrop-blur-md"
         style={{ borderColor: T.rule, backgroundColor: "rgba(251,248,244,0.85)" }}
       >
-        <div className="max-w-[1180px] mx-auto px-10 h-16 flex items-center justify-between">
-          <Link href="/" className="no-underline">
+        <div className="max-w-[1180px] mx-auto px-5 sm:px-10 h-16 flex items-center justify-between gap-3">
+          <Link href="/" className="no-underline min-w-0">
             <div className="flex items-center gap-3 hover:opacity-80 transition-opacity">
               <CompassMark size={22} className="text-primary" />
               <span className="text-[20px]" style={{ fontFamily: T.serif, fontWeight: 600, color: T.text }}>
                 Compass
               </span>
               <span
-                className="text-[10px] font-semibold uppercase tracking-[0.18em] pl-3 border-l"
+                className="hidden sm:inline text-[10px] font-semibold uppercase tracking-[0.18em] pl-3 border-l"
                 style={{ color: T.mutedStrong, borderColor: T.rule }}
               >
                 Chico.ai Internal
               </span>
             </div>
           </Link>
-          <Link href="/capture" className="no-underline">
+          <Link href="/capture" className="no-underline shrink-0">
             <Button
               data-testid="button-share-workflow"
-              className="gap-2 px-5 h-10 shadow-none"
+              className="gap-2 px-3 sm:px-5 h-10 shadow-none"
               style={{ background: T.primary, color: "#FBF8F4", borderRadius: 2 }}
             >
               <Plus className="w-4 h-4" strokeWidth={ICON} />
-              Share a workflow
+              <span className="hidden sm:inline">Share a workflow</span>
+              <span className="sm:hidden">Share</span>
             </Button>
           </Link>
         </div>
       </header>
 
-      <main className="max-w-[1180px] mx-auto px-10 pt-10 pb-24">
-        <div className="flex items-baseline justify-between mb-2">
+      <main className="max-w-[1180px] mx-auto px-5 sm:px-10 pt-8 sm:pt-10 pb-24">
+        <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between mb-2">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em]" style={{ color: T.mutedStrong }}>
             This Week · Vol. 12 · 9 May
           </p>
@@ -405,7 +408,7 @@ export default function FeedPage() {
         </div>
 
         <h1
-          className="text-[44px] leading-[1.05] tracking-tight mb-3"
+          className="text-[30px] sm:text-[44px] leading-[1.08] sm:leading-[1.05] tracking-tight mb-3"
           style={{ fontFamily: T.serif, color: T.text, fontWeight: 500 }}
         >
           What your colleagues <em style={{ fontStyle: "italic" }}>actually</em> shipped this week.

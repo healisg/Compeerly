@@ -334,11 +334,10 @@ export default function AboutPage() {
           </h2>
 
           <div
+            className="flex flex-col md:flex-row"
             style={{
               border: `1px solid ${TOKENS.rule}`,
               backgroundColor: TOKENS.card,
-              display: "flex",
-              flexDirection: "row",
               minHeight: "320px",
             }}
             data-testid="phase-stepper"
@@ -347,12 +346,9 @@ export default function AboutPage() {
             <div
               role="tablist"
               aria-label="Build phases"
+              className="w-full md:w-[220px] md:shrink-0 md:border-r border-b md:border-b-0 flex flex-col"
               style={{
-                width: "220px",
-                flexShrink: 0,
-                borderRight: `1px solid ${TOKENS.rule}`,
-                display: "flex",
-                flexDirection: "column",
+                borderColor: TOKENS.rule,
               }}
             >
               {PHASES.map((p, i) => {
@@ -444,12 +440,7 @@ export default function AboutPage() {
               role="tabpanel"
               aria-labelledby={`phase-tab-${phase.key}`}
               data-testid={`panel-${phase.key}`}
-              style={{
-                flex: 1,
-                padding: "32px 36px",
-                display: "flex",
-                flexDirection: "column",
-              }}
+              className="flex flex-col p-6 md:p-9 flex-1 min-w-0"
             >
               <div
                 style={{

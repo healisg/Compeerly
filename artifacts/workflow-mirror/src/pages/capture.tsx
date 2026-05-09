@@ -31,13 +31,15 @@ const TOOLS = ['Claude', 'ChatGPT', 'Cursor', 'Gemini', 'Perplexity', 'Other'];
 function PageHeader({ eyebrow = 'CONTRIBUTE · VOL. 1' }: { eyebrow?: string }) {
   return (
     <header className="border-b" style={{ borderColor: T.rule, backgroundColor: T.bg }}>
-      <div className="max-w-[1180px] mx-auto px-10 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-5">
-          <Link href="/feed" className="flex items-center gap-2 text-[13px]" style={{ color: T.mutedStrong }}>
-            <ArrowLeft className="w-4 h-4" strokeWidth={ICON} /> Back to Compass
+      <div className="max-w-[1180px] mx-auto px-5 sm:px-10 h-16 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3 sm:gap-5 min-w-0">
+          <Link href="/feed" className="flex items-center gap-2 text-[13px] shrink-0" style={{ color: T.mutedStrong }}>
+            <ArrowLeft className="w-4 h-4" strokeWidth={ICON} />
+            <span className="hidden sm:inline">Back to Compass</span>
+            <span className="sm:hidden">Back</span>
           </Link>
-          <span aria-hidden style={{ color: T.rule }}>·</span>
-          <div className="text-[11px] font-semibold" style={{ color: T.mutedStrong, letterSpacing: '0.32em' }}>
+          <span aria-hidden className="hidden sm:inline" style={{ color: T.rule }}>·</span>
+          <div className="text-[11px] font-semibold truncate" style={{ color: T.mutedStrong, letterSpacing: '0.32em' }}>
             {eyebrow}
           </div>
         </div>
@@ -126,7 +128,7 @@ export default function CapturePage() {
     return (
       <div className="min-h-screen" style={{ backgroundColor: T.bg }}>
         <PageHeader eyebrow="REVIEW & PUBLISH" />
-        <main className="max-w-[1180px] mx-auto px-10 py-12">
+        <main className="max-w-[1180px] mx-auto px-5 sm:px-10 py-8 sm:py-12">
           <div className="max-w-2xl space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div>
               <div className="text-[12px] font-semibold mb-4" style={{ color: T.mutedStrong, letterSpacing: '0.32em' }}>
@@ -263,14 +265,14 @@ export default function CapturePage() {
     <div className="min-h-screen" style={{ backgroundColor: T.bg, color: T.text, fontFamily: T.ui }}>
       <PageHeader />
 
-      <main className="max-w-[1180px] mx-auto px-10 pt-12 pb-16 grid grid-cols-12 gap-12">
+      <main className="max-w-[1180px] mx-auto px-5 sm:px-10 pt-8 sm:pt-12 pb-16 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
         {/* Left — three prompts (or freeform fallback) */}
-        <section className="col-span-8">
+        <section className="lg:col-span-8">
           <div className="text-[12px] font-semibold mb-4" style={{ color: T.mutedStrong, letterSpacing: '0.32em' }}>
             {freeformMode ? 'SHARE A WORKFLOW' : 'THREE QUESTIONS · 90 SECONDS'}
           </div>
           <h1
-            className="leading-[1.06] tracking-tight text-[44px]"
+            className="leading-[1.08] sm:leading-[1.06] tracking-tight text-[30px] sm:text-[44px]"
             style={{ fontFamily: T.serif, color: T.text }}
           >
             {freeformMode
@@ -331,23 +333,24 @@ export default function CapturePage() {
             <div className="mt-8">
               {/* Prompt 01 */}
               <div
-                className="grid grid-cols-12 gap-5 items-start py-6"
+                className="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-5 items-start py-6"
                 style={{ borderTop: `1px solid ${T.rule}`, borderBottom: `1px solid ${T.rule}` }}
               >
-                <div className="col-span-1 flex justify-end pt-1">
+                <div className="hidden sm:flex sm:col-span-1 justify-end pt-1">
                   <span className="text-[26px] leading-none" style={{ fontFamily: T.serif, color: workflow.trim() ? T.primary : T.muted }}>
                     <em className="italic">01</em>
                   </span>
                 </div>
-                <div className="col-span-4 pt-1">
+                <div className="sm:col-span-4 pt-1">
                   <label htmlFor="q-workflow" className="block text-[15px] font-medium" style={{ color: T.text, fontFamily: T.serif }}>
+                    <span className="sm:hidden" style={{ fontFamily: T.serif, color: T.primary }}><em className="italic">01.</em> </span>
                     What's the workflow?
                   </label>
                   <div className="text-[12px] mt-1.5 leading-[1.5]" style={{ color: T.mutedStrong }}>
                     A sentence or two. Plain English.
                   </div>
                 </div>
-                <div className="col-span-7">
+                <div className="sm:col-span-7">
                   <input
                     id="q-workflow"
                     type="text"
@@ -366,21 +369,22 @@ export default function CapturePage() {
               </div>
 
               {/* Prompt 02 */}
-              <div className="grid grid-cols-12 gap-5 items-start py-6" style={{ borderBottom: `1px solid ${T.rule}` }}>
-                <div className="col-span-1 flex justify-end pt-1">
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-5 items-start py-6" style={{ borderBottom: `1px solid ${T.rule}` }}>
+                <div className="hidden sm:flex sm:col-span-1 justify-end pt-1">
                   <span className="text-[26px] leading-none" style={{ fontFamily: T.serif, color: selectedTool ? T.primary : T.muted }}>
                     <em className="italic">02</em>
                   </span>
                 </div>
-                <div className="col-span-4 pt-1">
+                <div className="sm:col-span-4 pt-1">
                   <div className="text-[15px] font-medium" style={{ color: T.text, fontFamily: T.serif }}>
+                    <span className="sm:hidden" style={{ fontFamily: T.serif, color: T.primary }}><em className="italic">02.</em> </span>
                     Which AI tool?
                   </div>
                   <div className="text-[12px] mt-1.5 leading-[1.5]" style={{ color: T.mutedStrong }}>
                     Pick one — you can add more on the next step.
                   </div>
                 </div>
-                <div className="col-span-7">
+                <div className="sm:col-span-7">
                   <div className="flex flex-wrap gap-2">
                     {TOOLS.map((t) => (
                       <button
@@ -403,21 +407,22 @@ export default function CapturePage() {
               </div>
 
               {/* Prompt 03 */}
-              <div className="grid grid-cols-12 gap-5 items-start py-6" style={{ borderBottom: `1px solid ${T.rule}` }}>
-                <div className="col-span-1 flex justify-end pt-1">
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-5 items-start py-6" style={{ borderBottom: `1px solid ${T.rule}` }}>
+                <div className="hidden sm:flex sm:col-span-1 justify-end pt-1">
                   <span className="text-[26px] leading-none" style={{ fontFamily: T.serif, color: trick.trim() ? T.primary : T.muted }}>
                     <em className="italic">03</em>
                   </span>
                 </div>
-                <div className="col-span-4 pt-1">
+                <div className="sm:col-span-4 pt-1">
                   <label htmlFor="q-trick" className="block text-[15px] font-medium" style={{ color: T.text, fontFamily: T.serif }}>
+                    <span className="sm:hidden" style={{ fontFamily: T.serif, color: T.primary }}><em className="italic">03.</em> </span>
                     What's the trick?
                   </label>
                   <div className="text-[12px] mt-1.5 leading-[1.5]" style={{ color: T.mutedStrong }}>
                     The one thing a colleague needs to know to make it work.
                   </div>
                 </div>
-                <div className="col-span-7">
+                <div className="sm:col-span-7">
                   <textarea
                     id="q-trick"
                     value={trick}
@@ -434,12 +439,12 @@ export default function CapturePage() {
                 </div>
               </div>
 
-              <div className="mt-8 flex items-center justify-between">
+              <div className="mt-8 flex flex-col sm:flex-row gap-4 sm:gap-3 sm:items-center sm:justify-between">
                 <div className="flex items-center gap-2.5 text-[12px]" style={{ color: T.mutedStrong }}>
                   <Clock className="w-3.5 h-3.5" strokeWidth={ICON} />
                   Average so far: 1 min 12 sec
                 </div>
-                <div className="flex items-center gap-5">
+                <div className="flex flex-wrap items-center gap-4 sm:gap-5">
                   <button
                     type="button"
                     onClick={() => setFreeformMode(true)}
@@ -469,7 +474,7 @@ export default function CapturePage() {
         </section>
 
         {/* Right rail */}
-        <aside className="col-span-4 space-y-7 pt-[58px]">
+        <aside className="lg:col-span-4 space-y-7 lg:pt-[58px]">
           <div className="p-6" style={{ backgroundColor: T.card, borderRadius: '4px' }}>
             <div className="text-[11px] font-semibold mb-4" style={{ color: T.mutedStrong, letterSpacing: '0.28em' }}>
               JOIN YOUR PEERS

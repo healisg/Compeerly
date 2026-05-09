@@ -318,35 +318,38 @@ export default function DetailPage() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-card sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/feed" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors font-medium text-sm" data-testid="link-back">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-2">
+          <Link href="/feed" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors font-medium text-sm shrink-0" data-testid="link-back">
             <ArrowLeft className="w-4 h-4" />
-            Back to Compass
+            <span className="hidden sm:inline">Back to Compass</span>
+            <span className="sm:hidden">Back</span>
           </Link>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <Button
               variant="outline"
-              className="gap-2"
+              className="gap-2 px-2.5 sm:px-4"
               onClick={() => incrementWorkedForMe(workflow.id)}
               data-testid="button-worked"
             >
               <Check className="w-4 h-4 text-accent" />
-              Worked for me ({workflow.workedForMeCount})
+              <span className="hidden sm:inline">Worked for me ({workflow.workedForMeCount})</span>
+              <span className="sm:hidden">Worked ({workflow.workedForMeCount})</span>
             </Button>
             <Button
-              className="gap-2"
+              className="gap-2 px-2.5 sm:px-4"
               onClick={handleCopyAndOpen}
               data-testid="button-try"
             >
               <Zap className="w-4 h-4" />
-              Try in {workflow.aiTool}
+              <span className="hidden sm:inline">Try in {workflow.aiTool}</span>
+              <span className="sm:hidden">Try</span>
               <ExternalLink className="w-4 h-4" />
             </Button>
           </div>
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-6 py-12">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <div className="space-y-12">
           {/* Header Section */}
           <div className="space-y-6">
@@ -386,7 +389,7 @@ export default function DetailPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-6 text-sm font-medium text-muted-foreground bg-secondary/50 p-4 rounded-xl inline-flex">
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-medium text-muted-foreground bg-secondary/50 p-4 rounded-xl">
               <div className="flex items-center gap-2" data-testid="text-timeSaved">
                 <Clock className="w-4 h-4 text-primary" />
                 <span className="text-foreground">Saves {workflow.timeSaved}</span>
