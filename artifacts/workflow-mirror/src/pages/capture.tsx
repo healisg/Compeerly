@@ -26,7 +26,7 @@ const T = {
   ui: "'Inter', system-ui, sans-serif",
 };
 const ICON = 1.5;
-const TOOLS = ['Claude', 'ChatGPT', 'Cursor', 'Gemini', 'Perplexity', 'Other'];
+const TOOLS = ['Claude', 'ChatGPT', 'Gemini', 'Grok', 'Deepseek', 'Other'];
 
 function PageHeader({ eyebrow = 'CONTRIBUTE · VOL. 1' }: { eyebrow?: string }) {
   return (
