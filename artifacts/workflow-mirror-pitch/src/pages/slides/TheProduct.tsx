@@ -47,10 +47,10 @@ export default function TheProductSlide() {
             <Zap className="w-[2.6vw] h-[2.6vw] text-primary" strokeWidth={1.5} />
           </div>
           <h3 className="font-display text-[2.6vw] leading-[1.1] text-text mb-[1.5vh]">
-            Nudge Bar
+            Nudge Strip
           </h3>
           <p className="font-body text-[1.55vw] leading-[1.5] text-text/75">
-            A floating prompt that surfaces relevant peer workflows mid-session, exactly when a colleague's pattern would help.
+            Detects repetitive patterns mid-session, names them, and offers a pre-filled capture form or a peer workflow — collapsed to a single line until the user signals intent.
           </p>
         </div>
       </div>

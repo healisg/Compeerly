@@ -17,7 +17,7 @@ export default function TheDemoSlide() {
           <span className="text-white/30">—</span>
           <span>Workflow Capture</span>
           <span className="text-white/30">—</span>
-          <span>Nudge Bar</span>
+          <span>Nudge Strip</span>
         </div>
       </div>
     </div>
