@@ -232,6 +232,9 @@ function FileDropZone({
           <p className="text-xs text-muted-foreground/80 mt-1.5">
             Drop a file here or <span className="text-primary font-medium underline">browse</span>
           </p>
+          <p className="text-xs text-muted-foreground/55 mt-1">
+            Text files (txt, csv, md) embed in the prompt automatically — PDFs and images need re-attaching in the AI tool.
+          </p>
         </div>
       </div>
     </div>
