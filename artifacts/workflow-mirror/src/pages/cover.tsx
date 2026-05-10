@@ -127,36 +127,36 @@ export default function CoverPage() {
             </Link>
           </div>
 
-          <div className="mt-5 md:mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+          <div className="mt-5 md:mt-6 flex items-center gap-x-4">
             <Link
               href="/about"
               data-testid="link-about-build"
-              className="inline-flex items-center gap-2 text-[12px] font-medium uppercase hover:opacity-70 transition-opacity no-underline"
-              style={{ color: TOKENS.muted, letterSpacing: "0.28em" }}
+              className="inline-flex items-center gap-1.5 text-[11px] font-medium uppercase hover:opacity-70 transition-opacity no-underline whitespace-nowrap"
+              style={{ color: TOKENS.muted, letterSpacing: "0.18em" }}
             >
               About this build
-              <ArrowRight className="w-3 h-3" strokeWidth={1.75} />
+              <ArrowRight className="w-2.5 h-2.5" strokeWidth={1.75} />
             </Link>
             <span aria-hidden style={{ color: TOKENS.rule }}>·</span>
             <Link
               href="/essay"
               data-testid="link-essay"
-              className="inline-flex items-center gap-2 text-[12px] font-medium uppercase hover:opacity-70 transition-opacity no-underline"
-              style={{ color: TOKENS.muted, letterSpacing: "0.28em" }}
+              className="inline-flex items-center gap-1.5 text-[11px] font-medium uppercase hover:opacity-70 transition-opacity no-underline whitespace-nowrap"
+              style={{ color: TOKENS.muted, letterSpacing: "0.18em" }}
             >
               The argument
-              <ArrowRight className="w-3 h-3" strokeWidth={1.75} />
+              <ArrowRight className="w-2.5 h-2.5" strokeWidth={1.75} />
             </Link>
             <span aria-hidden style={{ color: TOKENS.rule }}>·</span>
             <a
               href={`${import.meta.env.BASE_URL}workflow-mirror-one-pager.pdf`}
               download
               data-testid="link-one-pager-pdf"
-              className="inline-flex items-center gap-2 text-[12px] font-medium uppercase hover:opacity-70 transition-opacity no-underline"
-              style={{ color: TOKENS.muted, letterSpacing: "0.28em" }}
+              className="inline-flex items-center gap-1.5 text-[11px] font-medium uppercase hover:opacity-70 transition-opacity no-underline whitespace-nowrap"
+              style={{ color: TOKENS.muted, letterSpacing: "0.18em" }}
             >
               One-pager (PDF)
-              <ArrowRight className="w-3 h-3" strokeWidth={1.75} />
+              <ArrowRight className="w-2.5 h-2.5" strokeWidth={1.75} />
             </a>
           </div>
         </div>
