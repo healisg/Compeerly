@@ -59,12 +59,12 @@ export default function CoverPage() {
           animation: "wm-cover-fade 900ms ease-out both",
         }}
       >
-        <div className="flex w-full flex-col justify-center px-[8vw] pt-12 pb-10 lg:w-[55%] lg:px-[6vw] lg:pt-12 lg:pb-14">
-          <div className="mb-10 lg:mb-12" style={{ color: TOKENS.primary }}>
-            <CompassMark size={48} />
+        <div className="flex w-full flex-col justify-center px-[8vw] pt-6 pb-4 lg:w-[55%] lg:px-[6vw] lg:pt-7 lg:pb-6">
+          <div className="mb-5 lg:mb-6" style={{ color: TOKENS.primary }}>
+            <CompassMark size={40} />
           </div>
 
-          <div className="max-w-[640px] space-y-5 lg:space-y-6">
+          <div className="max-w-[640px] space-y-3 lg:space-y-4">
             <div
               className="text-[12px] md:text-[13px] font-medium"
               style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}
@@ -73,21 +73,21 @@ export default function CoverPage() {
             </div>
 
             <h1
-              className="font-serif leading-[1.04] tracking-tight text-[44px] md:text-[68px]"
+              className="font-serif leading-[1.04] tracking-tight text-[38px] md:text-[56px]"
               style={{ color: TOKENS.text, fontFamily: "'Playfair Display', Georgia, serif" }}
             >
               Making private AI use <em className="italic">visible.</em>
             </h1>
 
             <h2
-              className="font-serif leading-[1.1] tracking-tight text-[26px] md:text-[36px]"
+              className="font-serif leading-[1.1] tracking-tight text-[22px] md:text-[30px]"
               style={{ color: TOKENS.primary, fontFamily: "'Playfair Display', Georgia, serif" }}
             >
               So the <em className="italic">460</em> can learn from the <em className="italic">40.</em>
             </h2>
 
             <p
-              className="text-[16px] md:text-[18px] leading-[1.6] max-w-[560px]"
+              className="text-[14px] md:text-[16px] leading-[1.6] max-w-[560px]"
               style={{ color: TOKENS.text }}
             >
               A peer-led workflow sharing feature built on Chico.ai. Active users share what works.
@@ -95,7 +95,7 @@ export default function CoverPage() {
             </p>
           </div>
 
-          <div className="mt-9 md:mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+          <div className="mt-5 md:mt-6 flex flex-wrap items-center gap-x-8 gap-y-4">
             <button
               type="button"
               onClick={handleEnter}
@@ -127,7 +127,7 @@ export default function CoverPage() {
             </Link>
           </div>
 
-          <div className="mt-11 md:mt-12 flex flex-wrap items-center gap-x-6 gap-y-3">
+          <div className="mt-5 md:mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
             <Link
               href="/about"
               data-testid="link-about-build"
