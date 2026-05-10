@@ -1,0 +1,255 @@
+
+Hi Gordon,
+Congratulations for passing through to our task stage. The task itself will be sent separately by Grace, but below is my prep guidance pack.
+Please also review the doc I sent you previously with the Chico AI Evaluation criteria on there. We will go through all of this on a prep call prior to your interview.
+
+Product Manager  &  Senior Product Manager Candidates
+What this guide covers:  A full overview of the assignment, what to look for during the session, the questions you should be asking, and how to score the candidate consistently.
+Confidentiality:  Do not share this document with candidates. The assignment brief they receive is separate.
+
+1. What is the Building Assignment?
+The building assignment is the third stage in our hiring process for PM and SPM candidates. At this point, we've already validated the candidate's background and operating principles. This stage is designed to answer one question:
+Can they actually build? Not spec, not strategise, not describe. Build.
+Candidates are given a brief featuring Chico.ai, a fictional B2B SaaS company focused on AI adoption for enterprise customers. They're asked to:
+Identify a specific product problem related to AI tool adoption in a commercial business
+Form a clear product bet with a deliberate point of view
+Build a working prototype or interactive demo using AI tools (Claude, Cursor, Replit, v0, Bolt, etc.)
+Present it live to this panel in 30 minutes, and defend their decisions under questioning
+The fictional Chico.ai scenario is intentional, it removes context advantage and puts every candidate on equal footing. What we're really evaluating is their thinking process, build velocity, and how they perform under live scrutiny, not how much they know about our specific product.
+The Assignment - Candidate View
+You can find the full assignment brief below. To open, download the file and save it locally. Then, extract the html file and click to open. The file should open on any browser.
+
+
+The 30-minute session structure  
+
+Time
+Section
+Purpose
+5 min
+The Problem
+Candidate sets the scene. Establishes who the user is, the pain point, and why it matters.
+5 min
+Their Bet
+Candidate pitches the product idea, the reasoning behind it, and the assumptions they're making.
+10 min
+The Demo
+The prototype walkthrough. This is the centrepiece. They show, not tell.
+5 min
+Business Case
+Candidate connects the product to measurable ROI and defines what success looks like.
+5 min
+Q&A
+Panel digs in. This is where you probe assumptions, challenge trade-offs, and assess how they think under pressure.
+
+2. Before the Session
+Candidates are asked to send the following to the recruiter at least 24 hours before the session:
+A link to their prototype or demo (hosted, or a Loom walkthrough)
+A 1-page written summary covering: the problem chosen, their product bet, and the core metric they'd use to measure success
+Any supporting context they feel is relevant
+Before the session, please review:
+Their 1-pager, note the problem they chose and the metric they're betting on
+The prototype link if available, get a feel for it before the live demo
+Any questions you want to probe based on their approach
+Do not pre-judge. First impressions of a rough prototype often don't reflect the quality of thinking behind it.
+Your role in the room
+Panel members play different roles depending on their function. Here's how to orient yourself:
+Product
+Does the problem framing make sense? Is the MVP scoped correctly? Would you actually build this?
+Engineering
+Is the prototype genuinely built or just mocked up? Did they use AI tools effectively? Is the technical reasoning credible?
+GTM / Sales
+Is the business case believable? Is the ROI story grounded? Could you sell this to a customer?
+Customer Success
+Does this solve a problem real customers actually have? Is the user insight specific and credible?
+Senior Leadership
+Does this person think strategically? Do they make bold calls and own them? Are they a culture fit for a fast-moving team?
+3. What We’re Assessing?
+We evaluate candidates across four dimensions. Every panel member scores all four — your perspective from your function adds signal, not noise. Use your instinct.
+Dimension 1: Builder Mindset
+Interview question to ask
+Walk us through how you built this. What did you start with, and how did you use AI tools in the process?
+Follow-up probes
+Which tools did you use? How did you decide what to build first?
+What did you throw away or change direction on mid-build?
+How long did the actual build take versus the thinking and planning?
+Score
+Rating
+What it looks like
+4
+Excellent
+Prototype is genuinely interactive and shows the core loop working. Candidate clearly used AI tools to accelerate — not just for aesthetics but for real functionality. They talk about iteration and trade-offs with fluency.
+3
+Strong
+Demo works and is more than a static mockup. AI tools were used substantively. Some rough edges but clear evidence of hands-on building.
+2
+Developing
+Demo is mostly static or descriptive. AI tools were used minimally (e.g. for copy or images only). Candidate describes what they'd build more than showing it.
+1
+Poor
+No working prototype. Presented slides or a written spec instead. No evidence of personal building.
+Dimension 2: Customer Obsession
+Interview question to ask
+Tell me about the user you designed this for. Why them, and how did you get to that problem?
+Follow-up probes
+How specific is this user? Is it a job title or a real person with a real workflow?
+What assumption are you making about their behaviour that could be wrong?
+If you spoke to this user tomorrow, what would you most want to learn?
+Score
+Rating
+What it looks like
+4
+Excellent
+The user is described with precision, a specific role, context, workflow, and pain point. The product is clearly designed around how that person actually works. Candidate shows genuine curiosity about the customer.
+3
+Strong
+User is reasonably specific. Problem is grounded in a real scenario. Some assumptions are implicit but overall the design feels user-led.
+2
+Developing
+User is generic (e.g. 'enterprise employees'). Problem is described at a high level without evidence of real insight. Solution feels technology-led.
+1
+Poor
+No clear user. Problem is abstract or buzzword-heavy. Solution has no identifiable customer.
+Dimension 3: Product Thinking
+Interview question to ask
+What did you decide not to build, and why? What's the riskiest assumption in this product?
+Follow-up probes
+If you had to cut this to a single feature, what would you keep?
+What would you do differently with four more weeks?
+What needs to be true for this to actually work at scale?
+Score
+Rating
+What it looks like
+4
+Excellent
+Clear, opinionated scope with sharp reasoning for trade-offs. Candidate names their riskiest assumption unprompted and has a credible way to test it. Thinking is structured but not rigid.
+3
+Strong
+Scope is focused. Trade-offs are acknowledged even if not all articulated. Candidate can engage with pushback thoughtfully.
+2
+Developing
+Scope is too broad or not clearly reasoned. Assumptions are implicit. Candidate becomes defensive or vague when challenged.
+1
+Poor
+No clear MVP logic. Candidate hasn't considered what could go wrong. Unable to engage meaningfully with trade-off questions.
+Dimension 4: Business Acumen
+Interview question to ask
+How would you know in 90 days whether this was working? What's the one number you'd track?
+Follow-up probes
+How does this connect to revenue, retention, or cost for Chico.ai's customers?
+What's a realistic target for that metric in the first quarter?
+Who in the customer's business would need to champion this for it to succeed?
+Score
+Rating
+What it looks like
+4
+Excellent
+Clear, single north star metric with a plausible baseline and target. ROI story is specific and connected to customer business outcomes (time saved, cost reduced, revenue protected). Candidate understands the commercial dynamics.
+3
+Strong
+Metric is named and the business case is directionally sound. Some hand-waving on specifics but the logic holds.
+2
+Developing
+Multiple metrics without prioritisation, or a metric that's output-based (e.g. 'more usage') rather than outcome-based. Business case is thin.
+1
+Poor
+No clear metric or ROI story. Business case relies on 'people will love it' without connecting to measurable value.
+4. Q&A Question Bank
+Use the 5-minute Q&A to go deeper on the dimension most relevant to your function, or to probe any gaps you spotted during the presentation. Below are questions you can pull from — you don't need to ask all of them.
+Probing the problem framing
+You chose this user, what made you rule out other options?
+How confident are you that this is actually a top-three pain point for them?
+What would change about your solution if the user was a VP rather than an analyst?
+Probing the build
+Show me the part of the prototype you're least happy with and tell me why.
+If you had a full engineering pod for two weeks, what would you prioritise building first?
+What's the biggest thing you couldn't get working in the time you had?
+Probing the business case
+What's the weakest part of your ROI story?
+How does this get sold to the economic buyer, the person signing the contract?
+What does a competitor's version of this look like, and why is yours better?
+Probing decisiveness and ambiguity
+If I told you your core assumption was wrong, what would you do tomorrow?
+What decision in this process are you least confident about, and why did you make it anyway?
+What would you have done differently if you had eight hours less?
+Good Q&A practice:
+Ask one question at a time. Don't stack questions.
+Let silence sit, the best answers often come after a pause.
+If an answer is vague, ask: 'Can you be more specific?' rather than moving on.
+Pushback is healthy. We're not trying to trip them up, but we do want to see how they handle pressure.
+
+5. Scoring & Decision Guide
+How to score
+Score each of the four dimensions independently on a 1–4 scale using the rubrics in Section 3. Complete your scorecard before the debrief, your uninfluenced view matters.
+Score
+Rating
+What it looks like
+4
+Excellent
+Sets a high bar. Evidence of real mastery. Should be noted as a standout signal.
+3
+Strong
+Solid evidence. Meets the bar for this role. This is a good hire.
+2
+Developing
+Partial evidence. Could grow into it, but not ready today.
+1
+Poor
+No evidence. A concern flag. One score of 1 is typically disqualifying.
+Overall hiring recommendation
+Recommendation
+When to use it
+Strong Yes
+Scores 4 in at least two dimensions. No score below 3. Standout builder with sharp thinking and a credible business case.
+Yes
+Scores 3 or 4 across most dimensions. Maximum one score of 2. Meets the bar — this is a good hire.
+Yes, with reservations
+Scores of 3, 2, 2, and above. A gap exists but the upside is clear. Bring specific coaching points to the debrief.
+No
+Any score of 1, or two or more scores of 2. Not ready for this role at this stage.
+6. Your Scorecard (fill in after the session)
+Complete this independently before the debrief call. Do not discuss your scores with other panellists first.
+Dimension
+Score (1–4)
+Key observations (be specific)
+Builder Mindset
+
+
+Customer Obsession
+
+
+Product Thinking
+
+
+Business Acumen
+
+
+Overall recommendation
+Strong Yes  /  Yes  /  Yes with reservations  /  No  (circle one)
+What swung your view?
+
+
+Biggest concern (if any)
+
+
+
+Img	
+Theadora Norris
+Tech Talent Partner
+Stroke
+thea.norris@multiverse.io
+www.multiverse.io
+
+Multiverse has acquired Stackfuel
+Hi Thea.
+
+Got the prep guide. Thanks for sending this over.
+
+When will you be available for a catch up? I have a few questions for you.
+
+Do you have any availability today?
+
+Talk soon.
+
+
+Gordon
+Show quoted text

@@ -18,3 +18,9 @@ id = "3wu7ME97VBbThC5EpHWaK"
 uri = "file://BRANDING.md"
 type = "text"
 title = "Compass — Brand Guide"
+
+[[outputs]]
+id = "-wmiqvbF3dkbx_-ayGJIG"
+uri = "file://.local/outputs/Compass.pdf"
+type = "pdf"
+title = "Compass.pdf"
