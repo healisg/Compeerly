@@ -189,10 +189,15 @@ export default function CoverPage() {
               })}
             </div>
             <div
-              className="mt-8 text-center text-[13px] tracking-wide"
-              style={{ color: TOKENS.muted }}
+              className="mt-4 pt-3 text-center text-[11px] font-medium uppercase"
+              style={{
+                borderTop: `1px solid ${TOKENS.rule}`,
+                color: TOKENS.muted,
+                letterSpacing: "0.2em",
+              }}
             >
-              40 of 500 users drive most AI activity.
+              <span style={{ color: TOKENS.primary, fontWeight: 600 }}>40</span>
+              {" "}of 500 users drive most AI activity
             </div>
           </div>
         </div>
