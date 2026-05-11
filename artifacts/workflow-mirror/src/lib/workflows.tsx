@@ -184,6 +184,7 @@ type WorkflowContextType = {
       { author?: string; timeManual?: string; timeWithAI?: string; peerCount?: number }
   ) => void;
   incrementWorkedForMe: (id: number) => void;
+  votedIds: Set<number>;
 };
 
 const STORAGE_KEY = "compass.userWorkflows";
@@ -210,8 +211,16 @@ const WorkflowContext = createContext<WorkflowContextType | null>(null);
 
 export function WorkflowProvider({ children }: { children: ReactNode }) {
   const [userWorkflows, setUserWorkflows] = useState<Workflow[]>(() => loadUserWorkflows());
+  const [seedVotes, setSeedVotes] = useState<Record<number, number>>({});
+  const [votedIds, setVotedIds] = useState<Set<number>>(new Set());
 
-  const workflows = [...userWorkflows, ...seedData];
+  const workflows = [
+    ...userWorkflows,
+    ...seedData.map((w) => ({
+      ...w,
+      workedForMeCount: w.workedForMeCount + (seedVotes[w.id] ?? 0),
+    })),
+  ];
 
   const addWorkflow = (
     workflow: Omit<Workflow, "id" | "workedForMeCount" | "author" | "timeManual" | "timeWithAI" | "peerCount"> &
@@ -234,8 +243,10 @@ export function WorkflowProvider({ children }: { children: ReactNode }) {
   };
 
   const incrementWorkedForMe = (id: number) => {
+    if (votedIds.has(id)) return;
+    setVotedIds((prev) => new Set([...prev, id]));
     if (seedIds.has(id)) {
-      // seed workflows are read-only; no-op for persistence (count resets on refresh by design)
+      setSeedVotes((prev) => ({ ...prev, [id]: (prev[id] ?? 0) + 1 }));
       return;
     }
     setUserWorkflows((prev) => {
@@ -248,7 +259,7 @@ export function WorkflowProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <WorkflowContext.Provider value={{ workflows, addWorkflow, incrementWorkedForMe }}>
+    <WorkflowContext.Provider value={{ workflows, addWorkflow, incrementWorkedForMe, votedIds }}>
       {children}
     </WorkflowContext.Provider>
   );

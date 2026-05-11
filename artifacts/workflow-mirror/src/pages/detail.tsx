@@ -243,7 +243,7 @@ function FileDropZone({
 
 export default function DetailPage() {
   const params = useParams();
-  const { workflows, incrementWorkedForMe } = useWorkflows();
+  const { workflows, incrementWorkedForMe, votedIds } = useWorkflows();
   const [copied, setCopied] = useState(false);
   const [attachments, setAttachments] = useState<Record<number, Attachment | null>>({});
 
@@ -330,14 +330,19 @@ export default function DetailPage() {
           </Link>
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <Button
-              variant="outline"
-              className="gap-2 px-2.5 sm:px-4"
+              variant={votedIds.has(workflow.id) ? "default" : "outline"}
+              className="gap-2 px-2.5 sm:px-4 transition-all"
               onClick={() => incrementWorkedForMe(workflow.id)}
               data-testid="button-worked"
+              aria-pressed={votedIds.has(workflow.id)}
             >
-              <Check className="w-4 h-4 text-accent" />
-              <span className="hidden sm:inline">Worked for me ({workflow.workedForMeCount})</span>
-              <span className="sm:hidden">Worked ({workflow.workedForMeCount})</span>
+              <Check className={`w-4 h-4 ${votedIds.has(workflow.id) ? "text-primary-foreground" : "text-accent"}`} />
+              <span className="hidden sm:inline">
+                {votedIds.has(workflow.id) ? "You endorsed this" : `Worked for me (${workflow.workedForMeCount})`}
+              </span>
+              <span className="sm:hidden">
+                {votedIds.has(workflow.id) ? "Endorsed" : `Worked (${workflow.workedForMeCount})`}
+              </span>
             </Button>
             <Button
               className="gap-2 px-2.5 sm:px-4"
