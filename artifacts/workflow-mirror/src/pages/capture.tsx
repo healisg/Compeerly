@@ -124,7 +124,7 @@ export default function CapturePage() {
         .filter((fi) => fi.label.length > 0);
       addWorkflow({ ...structuredData, fileInputs: cleanedInputs });
       toast({ title: "Workflow published successfully!" });
-      setLocation("/");
+      setLocation("/feed");
     }
   };
 
