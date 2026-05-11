@@ -59,7 +59,7 @@ export default function CapturePage() {
   const { addWorkflow } = useWorkflows();
   const { toast } = useToast();
 
-  const workflowInputRef = useRef<HTMLInputElement>(null);
+  const workflowInputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (prefilledDescription) {
@@ -360,18 +360,24 @@ export default function CapturePage() {
                   </div>
                 </div>
                 <div className="sm:col-span-7">
-                  <input
+                  <textarea
                     ref={workflowInputRef}
                     id="q-workflow"
-                    type="text"
+                    rows={1}
                     value={workflow}
-                    onChange={(e) => setWorkflow(e.target.value)}
+                    onChange={(e) => {
+                      setWorkflow(e.target.value);
+                      e.target.style.height = "auto";
+                      e.target.style.height = e.target.scrollHeight + "px";
+                    }}
                     placeholder="e.g. Drafting weekly pipeline updates for the leadership thread"
-                    className="w-full bg-transparent outline-none text-[15px] pb-2 placeholder:opacity-50"
+                    className="w-full bg-transparent outline-none resize-none text-[15px] pb-2 placeholder:opacity-50"
                     style={{
                       color: T.text,
                       borderBottom: `1px solid ${workflow.trim() ? T.primary : T.rule}`,
                       fontFamily: T.ui,
+                      overflow: "hidden",
+                      lineHeight: "1.6",
                     }}
                     data-testid="textarea-raw-workflow"
                   />
