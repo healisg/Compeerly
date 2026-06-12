@@ -265,7 +265,7 @@ export default function AboutPage() {
             className="text-[11px] font-medium uppercase"
             style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}
           >
-            Compass · About
+            Compeerly · About
           </div>
         </div>
       </header>
@@ -303,7 +303,7 @@ export default function AboutPage() {
               performative usage — not adoption.
             </p>
             <p>
-              Compass inverts it. Active users share what works. Non-adopters discover
+              Compeerly inverts it. Active users share what works. Non-adopters discover
               those workflows on their own terms, in role-relevant clusters, with no management
               visibility and no mandate. Visibility, not training, is the gap. This closes it.
             </p>

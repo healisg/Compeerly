@@ -212,7 +212,7 @@ export function NudgeStrip() {
                   <div className="px-4 pb-4 pt-3">
                     <p className="text-[11px] mb-2.5" style={{ color: T.mutedStrong }}>
                       We pre-filled what we detected — edit if needed, then hand to
-                      Compass:
+                      Compeerly:
                     </p>
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                       <input
@@ -241,7 +241,7 @@ export function NudgeStrip() {
                         }}
                         data-testid="nudge-strip-cta"
                       >
-                        ✨ Structure with Compass
+                        ✨ Structure with Compeerly
                       </a>
                     </div>
                     <p className="text-[11px] mt-2.5" style={{ color: T.muted }}>

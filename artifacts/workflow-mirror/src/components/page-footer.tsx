@@ -4,7 +4,7 @@ export function PageFooter() {
       className="flex items-center justify-between px-6 md:px-10 py-4 text-[12px] uppercase tracking-[0.28em]"
       style={{ color: "#8A7F70", borderTop: "1px solid #E5DBC8" }}
     >
-      <span>Compass</span>
+      <span>Compeerly</span>
       <a
         href="https://www.linkedin.com/in/gordonhealis/"
         target="_blank"

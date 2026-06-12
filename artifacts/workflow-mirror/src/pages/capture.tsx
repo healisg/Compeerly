@@ -36,7 +36,7 @@ function PageHeader({ eyebrow = 'CONTRIBUTE · VOL. 1' }: { eyebrow?: string }) 
         <div className="flex items-center gap-3 sm:gap-5 min-w-0">
           <Link href="/feed" className="flex items-center gap-2 text-[13px] shrink-0" style={{ color: T.mutedStrong }}>
             <ArrowLeft className="w-4 h-4" strokeWidth={ICON} />
-            <span className="hidden sm:inline">Back to Compass</span>
+            <span className="hidden sm:inline">Back to Compeerly</span>
             <span className="sm:hidden">Back</span>
           </Link>
           <span aria-hidden className="hidden sm:inline" style={{ color: T.rule }}>·</span>
@@ -261,7 +261,7 @@ export default function CapturePage() {
                 data-testid="button-publish"
                 style={{ backgroundColor: T.primary, borderRadius: '2px' }}
               >
-                Publish to Compass
+                Publish to Compeerly
               </button>
             </div>
           </div>

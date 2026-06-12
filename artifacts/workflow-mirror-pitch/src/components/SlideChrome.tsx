@@ -21,7 +21,7 @@ export default function SlideChrome({ slideNumber, totalSlides, inverted = false
       <div className={`absolute top-[3.5vh] left-[5.5vw] right-[5.5vw] flex items-center justify-between text-[1.5vw] font-medium uppercase tracking-[0.25em] ${inverted ? "text-white/50" : "text-muted"}`}>
         <span className="flex items-center gap-[0.7vw]">
           <CompassMark size="1.7vw" strokeWidth={3} />
-          Compass
+          Compeerly
         </span>
         <span className="font-body tabular-nums tracking-widest">
           {String(slideNumber).padStart(2, "0")} / {String(totalSlides).padStart(2, "0")}

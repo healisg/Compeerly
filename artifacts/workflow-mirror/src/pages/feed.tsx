@@ -87,7 +87,7 @@ function TimeStrip({ from, to }: { from: string; to: string }) {
     >
       <span style={{ color: T.mutedStrong, textDecoration: "line-through" }}>{from} manually</span>
       <span style={{ color: T.muted }}>→</span>
-      <span style={{ color: T.primary, fontWeight: 600 }}>{to} with Compass</span>
+      <span style={{ color: T.primary, fontWeight: 600 }}>{to} with Compeerly</span>
     </div>
   );
 }
@@ -358,7 +358,7 @@ function LeadStory({ workflow }: { workflow: Workflow }) {
           </span>
         </div>
         <p className="text-[12px] mb-5" style={{ color: T.mutedStrong }}>
-          {workflow.timeManual} manually → {workflow.timeWithAI} with Compass
+          {workflow.timeManual} manually → {workflow.timeWithAI} with Compeerly
         </p>
         <p className="text-[10px] font-semibold uppercase tracking-[0.22em] mb-2" style={{ color: T.mutedStrong }}>
           Cadence
@@ -430,7 +430,7 @@ export default function FeedPage() {
             <div className="flex items-center gap-3 hover:opacity-80 transition-opacity">
               <CompassMark size={22} className="text-primary" />
               <span className="text-[20px]" style={{ fontFamily: T.serif, fontWeight: 600, color: T.text }}>
-                Compass
+                Compeerly
               </span>
               <span
                 className="hidden sm:inline text-[10px] font-semibold uppercase tracking-[0.18em] pl-3 border-l"

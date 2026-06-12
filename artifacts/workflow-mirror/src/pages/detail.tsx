@@ -325,7 +325,7 @@ export default function DetailPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-2">
           <Link href="/feed" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors font-medium text-sm shrink-0" data-testid="link-back">
             <ArrowLeft className="w-4 h-4" />
-            <span className="hidden sm:inline">Back to Compass</span>
+            <span className="hidden sm:inline">Back to Compeerly</span>
             <span className="sm:hidden">Back</span>
           </Link>
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">

@@ -12,7 +12,7 @@ export default function TitleSlide() {
         </div>
         <h1 className="font-display text-[8.5vw] leading-[0.95] tracking-tight text-text flex items-center gap-[2.5vw]">
           <CompassMark size="7vw" strokeWidth={2.4} className="text-primary shrink-0" />
-          <span className="italic text-primary">Compass</span>
+          <span className="italic text-primary">Compeerly</span>
         </h1>
         <div className="mt-[5vh] h-[2px] w-[14vw] bg-primary" />
         <p className="mt-[4vh] font-display italic text-[2.6vw] text-text/80 max-w-[55vw] leading-[1.25]">

@@ -104,7 +104,7 @@ export function WorkflowCard({ workflow }: { workflow: Workflow }) {
             {workflow.timeManual} manually
           </span>
           <span className="text-muted-foreground/60">→</span>
-          <span className="font-semibold text-primary">{workflow.timeWithAI} with Compass</span>
+          <span className="font-semibold text-primary">{workflow.timeWithAI} with Compeerly</span>
         </div>
 
         {/* Meta line */}

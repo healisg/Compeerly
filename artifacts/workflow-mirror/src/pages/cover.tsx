@@ -69,7 +69,7 @@ export default function CoverPage() {
               className="text-[12px] md:text-[13px] font-medium"
               style={{ color: TOKENS.muted, letterSpacing: "0.32em" }}
             >
-              COMPASS
+              COMPEERLY
             </div>
 
             <h1
@@ -108,7 +108,7 @@ export default function CoverPage() {
                 letterSpacing: "0.01em",
               }}
             >
-              Explore Compass
+              Explore Compeerly
               <ArrowRight className="w-4 h-4" strokeWidth={1.75} />
             </button>
             <Link

@@ -74,7 +74,7 @@ export default function OgCard() {
               color: "#FBF8F4",
             }}
           >
-            Compass
+            Compeerly
           </div>
           <div style={{ flex: 1 }} />
           <div
