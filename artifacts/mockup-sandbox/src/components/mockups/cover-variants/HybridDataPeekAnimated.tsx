@@ -65,7 +65,7 @@ export function HybridDataPeekAnimated() {
               className="uppercase font-semibold text-sm tracking-[0.2em]"
               style={{ color: "#8A7F70" }}
             >
-              COMPASS
+              COMPEERLY
             </p>
             <h1
               className="text-5xl lg:text-6xl tracking-tight"
@@ -80,10 +80,10 @@ export function HybridDataPeekAnimated() {
                 color: "#166534",
               }}
             >
-              So the <i className="italic">460</i> can learn from the <i className="italic">40</i>.
+              So the <i className="italic">90%</i> can learn from the <i className="italic">10%</i>.
             </h2>
             <p className="text-lg leading-relaxed text-gray-700">
-              A peer-led workflow sharing feature built on Chico.ai. Active users share what works. Non-adopters discover it — filtered by role, surfaced at the right moment.
+              A peer-led AI adoption platform. Confident early adopters share what works; everyone else discovers it — filtered by role, surfaced at the right moment. Internal champions, not top-down mandates, drive the shift.
             </p>
           </div>
 
@@ -92,7 +92,7 @@ export function HybridDataPeekAnimated() {
               className="flex items-center gap-2 px-8 py-4 rounded-sm font-medium transition-opacity hover:opacity-90"
               style={{ backgroundColor: "#166534", color: "#FFFFFF", borderRadius: "2px" }}
             >
-              Explore Compass
+              Explore Compeerly
               <ArrowRight className="w-5 h-5" />
             </button>
             <a
@@ -226,7 +226,7 @@ export function HybridDataPeekAnimated() {
             className="mt-16 text-center text-sm"
             style={{ color: "#8A7F70" }}
           >
-            40 of 500 users drive most AI activity.
+            10% of users drive most AI activity.
           </p>
         </div>
       </main>

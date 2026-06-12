@@ -92,7 +92,7 @@ export function HybridDataPeek() {
             </div>
             
             <p className="mt-8 text-center text-sm font-medium" style={{ color: "#8A7F70" }}>
-              40 of 500 users drive most AI activity.
+              10% of users drive most AI activity.
             </p>
 
             {/* Overlapping Workflow Card */}

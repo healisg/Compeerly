@@ -99,7 +99,7 @@ export function DataAsHero() {
                 borderRadius: '2px'
               }}
             >
-              Explore Compass
+              Explore Compeerly
               <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
             </button>
             
@@ -159,7 +159,7 @@ export function DataAsHero() {
               className="mt-8 text-center text-sm tracking-wide"
               style={{ color: BRAND.mutedWarmGrey }}
             >
-              40 of 500 users drive most AI activity.
+              10% of users drive most AI activity.
             </div>
           </div>
         </div>
@@ -171,7 +171,7 @@ export function DataAsHero() {
           className="text-xs font-semibold tracking-[0.28em] uppercase"
           style={{ color: BRAND.mutedWarmGrey }}
         >
-          COMPASS
+          COMPEERLY
         </div>
         
         <a 

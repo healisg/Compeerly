@@ -190,7 +190,7 @@ const statW = CONTENT_W - leftW - 18;
 
 const probParaY = y;
 const probParaEnd = body(
-  "On a typical Chico.ai install, 40 of 500 users drive most AI activity. The dashboard tells leadership who is and isn't using AI. It does not give the other 460 a reason — or a way — to start. Training and mandates are the default response, and the default response is failing.",
+  "On a typical Chico.ai install, 10% of users drive most AI activity. The dashboard tells leadership who is and isn't using AI. It does not give the other 460 a reason — or a way — to start. Training and mandates are the default response, and the default response is failing.",
   MARGIN_X,
   y,
   leftW,

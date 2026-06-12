@@ -125,7 +125,7 @@ export default function OnePagerPage() {
               Chico.ai measures the adoption gap. It does not close it.
             </div>
             <p style={{ fontSize: 12.5, lineHeight: 1.65, color: T.text, marginBottom: 0 }}>
-              On a typical Chico.ai install, 40 of 500 users drive most AI activity. The dashboard
+              On a typical Chico.ai install, 10% of users drive most AI activity. The dashboard
               tells leadership who is and isn't using AI. It does not give the other 460 a reason —
               or a way — to start. Training and mandates are the default response, and the default
               response is failing.

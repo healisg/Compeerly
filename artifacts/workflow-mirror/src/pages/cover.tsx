@@ -83,7 +83,7 @@ export default function CoverPage() {
               className="font-serif leading-[1.1] tracking-tight text-[22px] md:text-[30px]"
               style={{ color: TOKENS.primary, fontFamily: "'Playfair Display', Georgia, serif" }}
             >
-              So the <em className="italic">460</em> can learn from the <em className="italic">40.</em>
+              So the <em className="italic">90%</em> can learn from the <em className="italic">10%.</em>
             </h2>
 
             <p
