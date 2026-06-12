@@ -207,8 +207,8 @@ export default function CoverPage() {
                 letterSpacing: "0.2em",
               }}
             >
-              <span style={{ color: TOKENS.primary, fontWeight: 600 }}>40</span>
-              {" "}of 500 users drive most AI activity
+              <span style={{ color: TOKENS.primary, fontWeight: 600 }}>10%</span>
+              {" "}of users drive most AI activity
             </div>
           </div>
         </div>
