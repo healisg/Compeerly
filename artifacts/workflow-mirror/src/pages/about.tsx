@@ -669,8 +669,7 @@ export default function AboutPage() {
               </div>
             </div>
             <a
-              href={`${import.meta.env.BASE_URL}workflow-mirror-one-pager.pdf`}
-              download
+              href="/one-pager"
               data-testid="link-one-pager"
               className="inline-flex items-center gap-3 px-6 py-3.5 text-[14px] font-medium text-white hover:opacity-90 transition-opacity self-start md:self-auto"
               style={{

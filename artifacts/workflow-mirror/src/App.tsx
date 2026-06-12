@@ -11,6 +11,7 @@ import AdminPage from "@/pages/admin";
 import AboutPage from "@/pages/about";
 import EssayPage from "@/pages/essay";
 import OgCard from "@/pages/og-card";
+import OnePagerPage from "@/pages/one-pager";
 import { WorkflowProvider } from "@/lib/workflows";
 import { NudgeStrip } from "@/components/nudge-strip";
 
@@ -27,6 +28,7 @@ function Router() {
       <Route path="/about" component={AboutPage} />
       <Route path="/essay" component={EssayPage} />
       <Route path="/og-card" component={OgCard} />
+      <Route path="/one-pager" component={OnePagerPage} />
       <Route component={NotFound} />
     </Switch>
   );
