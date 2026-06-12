@@ -20,7 +20,7 @@ export default function ThankYouSlide() {
         <CompassMark size="1.6vw" strokeWidth={3} />
         <span className="font-display italic">Compeerly</span>
         <span>·</span>
-        <span className="uppercase tracking-[0.2em]">Chico.ai</span>
+        <span className="uppercase tracking-[0.2em]">Peer-led AI adoption</span>
       </div>
     </div>
   );

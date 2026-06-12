@@ -21,7 +21,7 @@ export default function TitleSlide() {
       </div>
 
       <div className="absolute bottom-[4vh] left-[5.5vw] right-[5.5vw] flex items-end justify-between text-[1.5vw] text-muted">
-        <span className="uppercase tracking-[0.3em]">A Chico.ai concept</span>
+        <span className="uppercase tracking-[0.3em]">A standalone platform</span>
         <span className="font-display italic">Internal panel · 30 min</span>
       </div>
     </div>

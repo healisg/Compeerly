@@ -86,7 +86,7 @@ export default function OgCard() {
               opacity: 0.78,
             }}
           >
-            For Chico.ai
+            For the enterprise
           </div>
         </div>
 

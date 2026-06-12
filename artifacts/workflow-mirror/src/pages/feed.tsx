@@ -436,7 +436,7 @@ export default function FeedPage() {
                 className="hidden sm:inline text-[10px] font-semibold uppercase tracking-[0.18em] pl-3 border-l"
                 style={{ color: T.mutedStrong, borderColor: T.rule }}
               >
-                Chico.ai Internal
+                Internal
               </span>
             </div>
           </Link>
@@ -473,7 +473,7 @@ export default function FeedPage() {
           What your colleagues <em style={{ fontStyle: "italic" }}>actually</em> shipped this week.
         </h1>
         <p className="text-[15px] max-w-[640px] mb-8" style={{ color: T.mutedStrong, lineHeight: 1.6 }}>
-          Real workflows from people across Chico.ai. Try one this week and let them know it helped.
+          Real workflows from people across your organisation. Try one this week and let them know it helped.
         </p>
 
         <ActivityNudgeBanner />

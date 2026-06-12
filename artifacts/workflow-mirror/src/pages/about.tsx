@@ -690,8 +690,7 @@ export default function AboutPage() {
           style={{ color: TOKENS.muted, borderTop: `1px solid ${TOKENS.rule}` }}
         >
           <div>
-            Built solo, using Replit Agent + Claude Opus 4.6 · May 2026 · for Chico.ai's AI
-            Adoption PM submission.
+            Built solo, using Replit Agent + Claude Opus 4.6 · May 2026 · AI Adoption PM submission.
           </div>
           <Link
             href="/admin"

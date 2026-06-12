@@ -77,7 +77,7 @@
                 "filepath": "src/pages/slides/RoiModel.tsx",
                 "title": "ROI Model",
                 "description": "69 users × 2 hr/week × £50 = £6,900/week, £358,800 annualised",
-                "speakerNotes": "\"If we take Chico.ai's own stat — 40 active out of 500 — and apply a conservative 15% activation rate to the non-active pool, that's 69 new active users.\"\n\n2 hours saved per week at a £50 blended rate — £6,900 per week. Annualised,\nper enterprise client: £358,800.\"\n\nThe weakest assumption is the £50 blended rate — it varies by role and industry. The model is\ndirectionally correct but that number should be validated against Chico.ai's actual customer data in the\npilot. I'm presenting this as a model, not a fact.\""
+                "speakerNotes": "\"If we take a typical enterprise install — 10% of licensed users meaningfully active in a 500-seat deployment — and apply a conservative 15% activation rate to the non-active pool, that's around 67 new active users.\"\n\n\"2 hours saved per week at a £50 blended rate — £6,900 per week. Annualised,\nper enterprise client: £358,800.\"\n\nThe weakest assumption is the £50 blended rate — it varies by role and industry. The model is\ndirectionally correct but that number should be validated against real customer data in the\npilot. I'm presenting this as a model, not a fact.\""
         },
         {
                 "id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
@@ -85,7 +85,7 @@
                 "filepath": "src/pages/slides/ThePilot.tsx",
                 "title": "The Pilot",
                 "description": "Five-step concierge pilot plan",
-                "speakerNotes": "\"We don't need to build more to validate this. The pilot is five steps: one client, 10 active users interviewed, their workflows manually curated and published, surfaced to 50 non-active users in matched roles, 30 days, measure activation rate. No additional engineering lift beyond a new tab in the existing dashboard.\"\n\n\"The companies that win with AI won't be the ones who bought the best tools. They'll be the ones who made AI genuinely useful for every person — at the role level. Compeerly is how Chico.ai owns that layer.\""
+                "speakerNotes": "\"We don't need to build more to validate this. The pilot is five steps: one client, 10 active users interviewed, their workflows manually curated and published, surfaced to 50 non-active users in matched roles, 30 days, measure activation rate. No additional engineering lift beyond a new tab in the existing dashboard.\"\n\n\"The companies that win with AI won't be the ones who bought the best tools. They'll be the ones who made AI genuinely useful for every person — at the role level. Compeerly is how an enterprise owns that layer.\""
         },
         {
                 "id": "cccccccc-cccc-4ccc-8ccc-cccccccccccc",

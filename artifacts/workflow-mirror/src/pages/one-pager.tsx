@@ -122,13 +122,13 @@ export default function OnePagerPage() {
             {/* 01 · THE PROBLEM */}
             <Label n="01" text="The Problem" />
             <div style={{ fontFamily: T.serif, fontStyle: "italic", fontSize: 17, lineHeight: 1.3, color: T.text, marginBottom: 10 }}>
-              Chico.ai measures the adoption gap. It does not close it.
+              Enterprise software measures the adoption gap. It does not close it.
             </div>
             <p style={{ fontSize: 12.5, lineHeight: 1.65, color: T.text, marginBottom: 0 }}>
-              On a typical Chico.ai install, 10% of users drive most AI activity. The dashboard
-              tells leadership who is and isn't using AI. It does not give the other 460 a reason —
-              or a way — to start. Training and mandates are the default response, and the default
-              response is failing.
+              On a typical enterprise AI install, 10% of users drive most AI activity. The
+              dashboard tells leadership who is and isn't using AI. It does not give the other 90%
+              a reason — or a way — to start. Training and mandates are the default response, and
+              the default response is failing.
             </p>
             <Rule />
 
@@ -140,7 +140,7 @@ export default function OnePagerPage() {
             <p style={{ fontSize: 12.5, lineHeight: 1.65, color: T.text, marginBottom: 0 }}>
               Harvard Business Review (2026): peer influence is the single biggest predictor of
               whether an employee adopts AI tools at work. The knowledge already exists inside
-              every Chico.ai client. It is locked inside a few people's private prompts.
+              every organisation. It is locked inside a few people's private prompts.
               The intervention is visibility, not training.
             </p>
             <Rule />
@@ -212,7 +212,7 @@ export default function OnePagerPage() {
               <Stat
                 value="40"
                 label="of 500 licensed users drive most AI activity on a typical enterprise install."
-                source="Chico.ai platform data"
+                source="Enterprise platform data"
               />
             </div>
 
@@ -278,7 +278,7 @@ export default function OnePagerPage() {
         >
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <CompassMark size={14} strokeWidth={2.2} style={{ color: T.muted } as React.CSSProperties} />
-            <span style={{ fontSize: 10, color: T.muted, letterSpacing: "0.2em", textTransform: "uppercase" }}>Compeerly · Chico.ai · 2026</span>
+            <span style={{ fontSize: 10, color: T.muted, letterSpacing: "0.2em", textTransform: "uppercase" }}>Compeerly · 2026</span>
           </div>
           <span style={{ fontSize: 10, color: T.muted }}>gordon.healis@outlook.com</span>
         </div>

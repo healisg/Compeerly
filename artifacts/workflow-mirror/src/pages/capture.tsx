@@ -285,7 +285,7 @@ export default function CapturePage() {
             style={{ fontFamily: T.serif, color: T.text }}
           >
             {freeformMode
-              ? <>How do you use <em className="italic">AI</em> at Chico.ai?</>
+              ? <>How do you use <em className="italic">AI</em> at work?</>
               : <>Tell us about one workflow that <em className="italic">actually</em> saves you time.</>
             }
           </h1>
@@ -499,7 +499,7 @@ export default function CapturePage() {
               <em className="italic">38</em>
             </div>
             <p className="mt-3 text-[13px] leading-[1.55]" style={{ color: T.text }}>
-              colleagues at Chico.ai have shared a workflow this quarter. Sara, Marcus and 6 others shared this week.
+              colleagues have shared a workflow this quarter. Sara, Marcus and 6 others shared this week.
             </p>
           </div>
 
@@ -528,7 +528,7 @@ export default function CapturePage() {
 
           <div className="pt-5" style={{ borderTop: `1px solid ${T.rule}` }}>
             <p className="text-[12px] leading-[1.6]" style={{ color: T.mutedStrong }}>
-              Visible only to your Chico.ai team. You can edit or remove anytime.
+              Visible only to your team. You can edit or remove anytime.
             </p>
           </div>
         </aside>

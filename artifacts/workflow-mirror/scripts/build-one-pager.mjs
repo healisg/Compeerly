@@ -41,8 +41,8 @@ const doc = new PDFDocument({
   info: {
     Title: "Compass — One-pager",
     Author: "Compass",
-    Subject: "Peer-led AI workflow sharing for Chico.ai",
-    Keywords: "Chico.ai, AI adoption, peer learning, workflow",
+    Subject: "Peer-led AI workflow sharing for the enterprise",
+    Keywords: "Compeerly, AI adoption, peer learning, workflow",
   },
 });
 
@@ -180,7 +180,7 @@ function body(text, x, yPos, width, opts = {}) {
 const probEyebrowY = y;
 eyebrow("01 · THE PROBLEM", MARGIN_X, y);
 y += 14;
-heading("Chico.ai measures the adoption gap. It does not close it.", MARGIN_X, y, 13);
+heading("Enterprise software measures the adoption gap. It does not close it.", MARGIN_X, y, 13);
 y += 22;
 
 // Two columns: paragraph (left, 65%) + stat (right, 35%)
@@ -190,7 +190,7 @@ const statW = CONTENT_W - leftW - 18;
 
 const probParaY = y;
 const probParaEnd = body(
-  "On a typical Chico.ai install, 10% of users drive most AI activity. The dashboard tells leadership who is and isn't using AI. It does not give the other 460 a reason — or a way — to start. Training and mandates are the default response, and the default response is failing.",
+  "On a typical enterprise AI install, 10% of users drive most AI activity. The dashboard tells leadership who is and isn't using AI. It does not give the other 90% a reason — or a way — to start. Training and mandates are the default response, and the default response is failing.",
   MARGIN_X,
   y,
   leftW,
@@ -385,7 +385,7 @@ y = Math.max(riskY, nextY) + 8;
 const footerY = PAGE_H - MARGIN_BOTTOM - 8;
 rule(footerY - 12);
 doc.font("sans").fontSize(7).fillColor(C.muted).text(
-  "Built for Chico.ai  ·  AI Adoption PM submission  ·  Solo build  ·  May 2026",
+  "Compeerly  ·  AI Adoption PM submission  ·  Solo build  ·  May 2026",
   MARGIN_X,
   footerY,
   { characterSpacing: 1.4, width: CONTENT_W * 0.75, lineBreak: false },
