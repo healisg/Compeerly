@@ -50,7 +50,7 @@ export function ProductPeek() {
                 className="text-4xl md:text-5xl font-normal tracking-tight italic" 
                 style={{ fontFamily: brandTokens.fontHeadline, color: brandTokens.primaryForestGreen }}
               >
-                So the 460 can learn from the 40.
+                So the 90% can learn from the 10%.
               </h2>
             </div>
 

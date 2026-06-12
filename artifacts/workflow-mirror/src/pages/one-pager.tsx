@@ -109,7 +109,7 @@ export default function OnePagerPage() {
           </div>
         </div>
         <div style={{ fontFamily: T.serif, fontStyle: "italic", fontSize: 16, color: T.primary, marginBottom: 4, lineHeight: 1.3 }}>
-          Peer-led AI workflow sharing, so the 460 can learn from the 40.
+          Peer-led AI workflow sharing, so the 90% can learn from the 10%.
         </div>
         <Rule />
 

@@ -115,7 +115,7 @@ export default function OgCard() {
               fontWeight: 400,
             }}
           >
-            Peer-led workflow sharing — so the 460 can learn from the 40.
+            Peer-led workflow sharing — so the 90% can learn from the 10%.
           </div>
         </div>
 

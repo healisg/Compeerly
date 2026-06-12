@@ -89,10 +89,7 @@ export default function CoverPage() {
             <p
               className="text-[14px] md:text-[16px] leading-[1.6] max-w-[560px]"
               style={{ color: TOKENS.text }}
-            >
-              A peer-led workflow sharing feature built on Chico.ai. Active users share what works.
-              Non-adopters discover it — filtered by role, surfaced at the right moment.
-            </p>
+            >A peer-led AI adoption platform. Confident early adopters share what works; everyone else discovers it — filtered by role, surfaced at the right moment. Internal champions, not top-down mandates, drive the shift.</p>
           </div>
 
           <div className="mt-5 md:mt-6 flex flex-wrap items-center gap-x-8 gap-y-4">
@@ -216,7 +213,6 @@ export default function CoverPage() {
           </div>
         </div>
       </main>
-
       <div
         aria-hidden
         className="absolute inset-0 pointer-events-none flex items-center px-[8vw] md:px-[10vw] z-20"
@@ -239,8 +235,6 @@ export default function CoverPage() {
           Making private AI use visible.
         </div>
       </div>
-
-
       <style>{`
         @keyframes wm-cover-fade {
           from { opacity: 0; transform: translateY(8px); }

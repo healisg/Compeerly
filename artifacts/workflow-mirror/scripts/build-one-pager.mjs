@@ -137,7 +137,7 @@ y += 48;
 
 // Tagline (per spec)
 doc.font("serif-italic").fontSize(15).fillColor(C.primary).text(
-  "Peer-led AI workflow sharing, so the 460 can learn from the 40.",
+  "Peer-led AI workflow sharing, so the 90% can learn from the 10%.",
   MARGIN_X,
   y,
   { width: CONTENT_W },

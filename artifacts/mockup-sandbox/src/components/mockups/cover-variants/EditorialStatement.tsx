@@ -31,7 +31,7 @@ export function EditorialStatement() {
             <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
               <div className="md:col-span-7">
                 <h2 className="text-4xl md:text-5xl font-light leading-tight" style={{ fontFamily: "'Playfair Display', Georgia, serif", color: '#166534' }}>
-                  <span className="italic">So the 460 can learn from the 40.</span>
+                  <span className="italic">So the 90% can learn from the 10%.</span>
                 </h2>
               </div>
               <div className="md:col-span-5 flex flex-col items-start gap-8">
